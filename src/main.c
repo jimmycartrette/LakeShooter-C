@@ -1,4 +1,5 @@
 #include "wasm4.h"
+#include "utils.h"
 
 #define SCREEN_WIDTH 160
 #define SCREEN_HEIGHT 160
@@ -58,6 +59,11 @@ const char SHIPRIGHT[8] = {
     0b10000011,
     0b01011011,
 };
+typedef enum
+{
+    false,
+    true
+} bool;
 
 typedef enum
 {
@@ -89,6 +95,11 @@ typedef struct
     int height;
 
 } Camera;
+typedef struct
+{
+    bool over;
+} Game;
+static Game game;
 
 static Camera mycamera;
 
@@ -135,14 +146,8 @@ void draw_land()
 {
     float startRowF = (mycamera.y / 4) / TILESIZEY;
     int startRow = (int)startRowF;
-    // if (startRow > 16)
-    // {
-    //     startRow = startRow - 16;
-    // }
     int endRow = startRow + (mycamera.height / TILESIZEY);
-
     mycamera.offsetY = -mycamera.y / 4 + startRow * TILESIZEY;
-
     for (int column = 0; column < SCREEN_WIDTH / TILESIZEX; column++)
     {
         for (int row = startRow; row <= endRow; row++)
@@ -167,44 +172,80 @@ void draw_land()
     }
 }
 
-void update()
+bool collision_detected()
 {
 
-    mycamera.y = mycamera.y - myship.accel * 4;
-    if (mycamera.y < 0)
+    for (int column = myship.posX; column < myship.posX + myship.width; column++)
     {
-        mycamera.y = 1920;
-    }
-    draw_land();
-    myship.dir = None;
-    myship.sprite = &SHIPFORWARD[0];
+        for (int row = myship.posY; row < myship.posY + myship.height; row++)
+        {
+            unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
 
-    char gamepad = *GAMEPAD1;
-    if (gamepad & BUTTON_1)
-    {
-        *DRAW_COLORS = 4;
+            char buffer[256];
+            int val = *checkframe;
+
+            if (val == 170)
+            {
+                return true;
+            }
+        }
     }
-    if (gamepad & BUTTON_LEFT)
+    return false;
+}
+
+void update()
+{
+    if (game.over)
     {
-        moveShipLeft();
-    }
-    if (gamepad & BUTTON_RIGHT)
-    {
-        moveShipRight();
-    }
-    if (gamepad & BUTTON_UP)
-    {
-        myship.accel = 1.4;
-    }
-    else if (gamepad & BUTTON_DOWN)
-    {
-        //moveShipDown();
-        myship.accel = .5;
+        *DRAW_COLORS = 1;
+        rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        *DRAW_COLORS = 2;
+
+        text("GAME OVER", SCREEN_WIDTH / 2 - 35, SCREEN_HEIGHT / 2 - 20);
     }
     else
     {
-        myship.accel = 1;
+        mycamera.y = mycamera.y - myship.accel * 4;
+        if (mycamera.y < 0)
+        {
+            mycamera.y = 1920;
+        }
+        draw_land();
+        myship.dir = None;
+        myship.sprite = &SHIPFORWARD[0];
+
+        char gamepad = *GAMEPAD1;
+        if (gamepad & BUTTON_1)
+        {
+            *DRAW_COLORS = 4;
+        }
+        if (gamepad & BUTTON_LEFT)
+        {
+            moveShipLeft();
+        }
+        if (gamepad & BUTTON_RIGHT)
+        {
+            moveShipRight();
+        }
+        if (gamepad & BUTTON_UP)
+        {
+            myship.accel = 1.4;
+        }
+        else if (gamepad & BUTTON_DOWN)
+        {
+            //moveShipDown();
+            myship.accel = .5;
+        }
+        else
+        {
+            myship.accel = 1;
+        }
+        bool collided = collision_detected();
+        if (collided)
+        {
+            game.over = true;
+        }
+        *DRAW_COLORS = 2;
+        blit(myship.sprite, myship.posX, myship.posY, myship.width, myship.height, BLIT_1BPP | (myship.dir == Left ? BLIT_FLIP_X : 0));
     }
-    *DRAW_COLORS = 2;
-    blit(myship.sprite, myship.posX, myship.posY, myship.width, myship.height, BLIT_1BPP | (myship.dir == Left ? BLIT_FLIP_X : 0));
 }
