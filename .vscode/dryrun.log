@@ -1,0 +1,8 @@
+make.exe --dry-run --keep-going --print-directory
+make: Entering directory 'c:/Users/jimmy/source/repos/LakeShooter'
+if not exist build (mkdir build)
+clang -c src/main.c -o build/main.o -std=c99 -nostdlib --target=wasm32 -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -DDEBUG -O0 -g
+ 
+wasm-ld -o build/cart.wasm  build/main.o --no-entry --import-memory --initial-memory=65536 --max-memory=65536 --global-base=6560 -zstack-size=1024 --export-all --no-gc-sections
+make: Leaving directory 'c:/Users/jimmy/source/repos/LakeShooter'
+ 
