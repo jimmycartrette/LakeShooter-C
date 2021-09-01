@@ -73,6 +73,7 @@ typedef struct
     int posY;
     int width;
     int height;
+    float accel;
 
 } Ship;
 
@@ -103,9 +104,9 @@ void start()
     myship.width = 8;
     myship.height = 8;
     myship.posX = SCREEN_WIDTH / 2 - myship.width / 2;
-    myship.posY = SCREEN_HEIGHT - 20;
+    myship.posY = SCREEN_HEIGHT - 10;
     myship.sprite = &SHIPFORWARD[0];
-
+    myship.accel = 1;
     mycamera.width = SCREEN_WIDTH;
     mycamera.height = SCREEN_HEIGHT;
 }
@@ -130,25 +131,9 @@ void moveShipRight()
     }
 }
 
-void moveShipUp()
-{
-    if (myship.posY - 1 > 120)
-    {
-        myship.posY--;
-    }
-}
-
-void moveShipDown()
-{
-    if (myship.posY + 1 < SCREEN_WIDTH - myship.height)
-    {
-        myship.posY++;
-    }
-}
-
 void draw_land()
 {
-    float startRowF = mycamera.y / TILESIZEY;
+    float startRowF = (mycamera.y / 4) / TILESIZEY;
     int startRow = (int)startRowF;
     // if (startRow > 16)
     // {
@@ -156,7 +141,7 @@ void draw_land()
     // }
     int endRow = startRow + (mycamera.height / TILESIZEY);
 
-    mycamera.offsetY = -mycamera.y + startRow * TILESIZEY;
+    mycamera.offsetY = -mycamera.y / 4 + startRow * TILESIZEY;
 
     for (int column = 0; column < SCREEN_WIDTH / TILESIZEX; column++)
     {
@@ -185,10 +170,10 @@ void draw_land()
 void update()
 {
 
-    mycamera.y--;
+    mycamera.y = mycamera.y - myship.accel * 4;
     if (mycamera.y < 0)
     {
-        mycamera.y = 480;
+        mycamera.y = 1920;
     }
     draw_land();
     myship.dir = None;
@@ -209,11 +194,16 @@ void update()
     }
     if (gamepad & BUTTON_UP)
     {
-        moveShipUp();
+        myship.accel = 1.4;
     }
-    if (gamepad & BUTTON_DOWN)
+    else if (gamepad & BUTTON_DOWN)
     {
-        moveShipDown();
+        //moveShipDown();
+        myship.accel = .5;
+    }
+    else
+    {
+        myship.accel = 1;
     }
     *DRAW_COLORS = 2;
     blit(myship.sprite, myship.posX, myship.posY, myship.width, myship.height, BLIT_1BPP | (myship.dir == Left ? BLIT_FLIP_X : 0));
