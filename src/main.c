@@ -7,6 +7,8 @@
 #define TILESIZEY 20
 #define TILESIZEX 16
 
+#define MAX_BULLETS 20
+
 const char WORLDMAP[32][10] = {
 
     "**......**",
@@ -80,10 +82,16 @@ typedef struct
     int width;
     int height;
     float accel;
+    int prePosX, prePosY;
 
 } Ship;
 
 static Ship myship;
+
+typedef struct
+{
+    int x, y;
+} Sprite;
 
 typedef struct
 {
@@ -95,6 +103,16 @@ typedef struct
     int height;
 
 } Camera;
+
+typedef struct
+{
+    int x;
+    int y;
+    float velocity;
+    int alive;
+} Bullet;
+Bullet *bullets[MAX_BULLETS];
+
 typedef struct
 {
     bool over;
@@ -102,6 +120,7 @@ typedef struct
 static Game game;
 
 static Camera mycamera;
+unsigned char previousGamepad;
 
 void start()
 {
@@ -120,6 +139,31 @@ void start()
     myship.accel = 1;
     mycamera.width = SCREEN_WIDTH;
     mycamera.height = SCREEN_HEIGHT;
+
+    for (int n = 0; n < MAX_BULLETS; n++)
+    {
+        bullets[n] = malloc(sizeof(Sprite));
+        bullets[n]->x = 0;
+        bullets[n]->y = 0;
+    }
+}
+
+void updatebullet(Bullet *spr)
+{
+
+    spr->x = spr->x + myship.posX - myship.prePosX;
+}
+
+void updatebullets()
+{
+    int n;
+    //update/draw bullets
+    for (n = 0; n < MAX_BULLETS; n++)
+        if (bullets[n]->alive)
+        {
+            updatebullet(bullets[n]);
+            // draw_sprite(buffer,bullet_images[0], bullets[n]->x, bullets[n]->y);
+        }
 }
 
 void moveShipLeft()
@@ -179,18 +223,36 @@ bool collision_detected()
     {
         for (int row = myship.posY; row < myship.posY + myship.height; row++)
         {
-            unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
-
-            char buffer[256];
-            int val = (*checkframe) >> (2 ^ (2 - (column % 4)));
-
-            if ((val & 3) == 2)
+            // TODO add pixel check on myship.sprite
+            if (myship.sprite[row - myship.posY] & 1 << (7 - column - myship.posX))
             {
-                return true;
+                unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
+
+                char buffer[256];
+                int val = (*checkframe) >> (2 ^ (2 - (column % 4)));
+
+                if ((val & 3) == 2)
+                {
+                    return true;
+                }
             }
         }
     }
     return false;
+}
+void fireatenemy()
+{
+    int n;
+    for (n = 0; n < MAX_BULLETS; n++)
+    {
+        if (!bullets[n]->alive)
+        {
+            bullets[n]->alive++;
+            bullets[n]->x = myship.posX;
+            bullets[n]->y = myship.posY;
+            return;
+        }
+    }
 }
 
 void update()
@@ -215,6 +277,9 @@ void update()
         myship.sprite = &SHIPFORWARD[0];
 
         char gamepad = *GAMEPAD1;
+        unsigned char pressedThisFrame = gamepad & (gamepad ^ previousGamepad);
+        previousGamepad = gamepad;
+
         if (gamepad & BUTTON_1)
         {
             *DRAW_COLORS = 4;
@@ -239,6 +304,10 @@ void update()
         else
         {
             myship.accel = 1;
+        }
+        if (pressedThisFrame & BUTTON_1)
+        {
+            fireatenemy();
         }
         bool collided = collision_detected();
         if (collided)

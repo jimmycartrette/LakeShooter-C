@@ -6,10 +6,12 @@ This program is built by Equation Solution <http://www.Equation.com>.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Sep 01 10:07:04 2021
+# Make data base, printed on Thu Sep 02 08:03:17 2021
 
 # Variables
 
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -21,9 +23,11 @@ USERPROFILE = C:\Users\jimmy
 # environment
 LOCALAPPDATA = C:\Users\jimmy\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-4ba775f9-1522-41f8-a679-411e3ad8a126-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-75db2466-4090-44c5-9978-bface2b112ae-sock
 # environment
 VSCODE_CWD = C:\Program Files\Microsoft VS Code
+# environment
+CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 SYSTEMROOT = C:\WINDOWS
 # environment
@@ -32,12 +36,16 @@ PROCESSOR_LEVEL = 23
 PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
 # default
 MAKE_COMMAND := make.exe
+# environment
+GOPATH = C:\Users\jimmy\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_12092_WMKAUIFPMOSWVPLF
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_11536_PTEJPBKVXLARGAOI
 # environment
 VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -55,7 +63,8 @@ VSCODE_CODE_CACHE_PATH = C:\Users\jimmy\AppData\Roaming\Code\CachedData\3866c355
 # environment
 LANG = C
 # default
-.LOADED := 
+.LOADED : 
+= 
 # environment
 TMP = C:\Users\jimmy\AppData\Local\Temp
 # environment
@@ -84,15 +93,14 @@ MFLAGS = -pqrR
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # automatic
 +D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
-# makefile (from 'makefile', lin 
-e 1)
-MAKEFILE_LIST := Makefile
+# makefile (from 'build/utils.d', line 1)
+MAKEFILE_LIST := Makefile build/main.d build/utils.d
 # automatic
 @F = $(notdir $@)
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 12092
+VSCODE_PID = 11536
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -124,7 +132,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = C:\Program Files\Python38\Scripts\;C:\Program Files\Python38\;C:\Program Files (x86)\Python39-32\Scripts\;C:\Program Files (x86)\Python39-32\;C:\Program Files\Python39\Scripts\;C:\Program Files\Python39\;C:\Program Files\Oculus\Support\oculus-runtime;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\PuTTY\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\Llvm\x64\bin;C:\Users\jimmy\.cargo\bin;C:\Users\jimmy\go\bin;C:\Users\jimmy\scoop\shims;C:\Users\jimmy\AppData\Local\Microsoft\WindowsApps;C:\Users\jimmy\AppData\Roaming\npm;C:\Users\jimmy\.dotnet\tools;C:\Users\jimmy\AppData\Local\Programs\Fiddler;C:\Users\jimmy\.dotnet\tools;c:\dapr
+PATH = C:\Python39\Scripts\;C:\Python39\;C:\Program Files\Python38\Scripts\;C:\Program Files\Python38\;C:\Program Files (x86)\Python39-32\Scripts\;C:\Program Files (x86)\Python39-32\;C:\Program Files\Python39\Scripts\;C:\Program Files\Python39\;C:\Program Files\Oculus\Support\oculus-runtime;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\PuTTY\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\Llvm\x64\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\Go\bin;C:\Users\jimmy\.cargo\bin;C:\Users\jimmy\go\bin;C:\Users\jimmy\scoop\shims;C:\Users\jimmy\AppData\Local\Microsoft\WindowsApps;C:\Users\jimmy\AppData\Roaming\npm;C:\Users\jimmy\.dotnet\tools;C:\Users\jimmy\AppData\Local\Programs\Fiddler;C:\Users\jimmy\.dotnet\tools;c:\dapr;C:\Users\jimmy\go\bin
 # environment
 COMPUTERNAME = DESKTOP-8RO0NCS
 # default
@@ -133,6 +141,8 @@ MAKEFILES :=
 ^F = $(notdir $^)
 # environment
 PROMPT = $P$G
+# environment
+CHOCOLATEYLASTPATHUPDATE = 132749180395681330
 # environment
 GOROOT = C:\Users\jimmy\scoop\apps\go\current
 # environment
@@ -222,7 +232,7 @@ SOURCES = $(wildcard src/*.c)
 # environment
 PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 # variable set hash-table stats:
-# Load=105/1024=10%, Rehash=0, Collisions=9/148=6%
+# Load=110/1024=11%, Rehash=0, Collisions=10/157=6%
 
 # Pattern-specific Variable Values
 
@@ -230,10 +240,10 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 
 # Directories
 
-# . (key c:/Users/jimmy/source/repos/LakeShooter, mtime 1630415805): 6 files, no impossibilities.
-# src (key c:/Users/jimmy/source/repos/LakeShooter/src, mtime 1630414906): 4 files, no impossibilities.
+# . (key c:/Users/jimmy/source/repos/LakeShooter, mtime 1630516159): 7 files, no impossibilities.
+# src (key c:/Users/jimmy/source/repos/LakeShooter/src, mtime 1630534835): 7 files, no impossibilities.
 
-# 10 files, no impossibilities in 2 directories.
+# 14 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -245,7 +255,7 @@ build/%.o: src/%.c
 # 1 implicit rules, 0 (0.0%) terminal.
 # Files
 
-build/main.o: src/main.c
+build/main.o: src/main.c src\main.c src\wasm4.h src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
 #  File does not exist.
@@ -258,13 +268,13 @@ build/main.o: src/main.c
 # automatic
 # < := src/main.c
 # automatic
-# + := src/main.c
+# + := src/main.c src\main.c src\wasm4.h src\utils.h
 # automatic
 # % := 
 # automatic
-# ^ := src/main.c
+# ^ := src/main.c src\main.c src\wasm4.h src\utils.h
 # automatic
-# ? := src/main.c
+# ? := src/main.c src\main.c src\wasm4.h src\utils.h
 # automatic
 # | := 
 # variable set hash-table stats:
@@ -282,6 +292,12 @@ all: build/cart.wasm
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/5=0%
 
+src\wasm4.h:
+#  Implicit rule search has been done.
+#  Last modified 1985-10-26 04:15:00
+#  File has been updated.
+#  Successfully updated.
+
 .PHONY: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -294,16 +310,40 @@ all: build/cart.wasm
 #  File has not been updated.
 
 # Not a target:
+build/utils.d:
+#  Implicit rule search has been done.
+#  Last modified 2021-09-01 18:20:36
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+src\utils.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 Makefile:
 #  Implicit rule search has been done.
 #  Last modified 2021-09-01 10:07:04
 #  File has been updated.
 #  Successfully updated.
 
-# Not a target:
-src/main.c:
+src\utils.h:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-01 09:56:09
+#  Last modified 2021-09-01 18:20:21
+#  File has been updated.
+#  Successfully updated.
+
+build/utils.o: src\utils.c
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src\main.c:
+#  Implicit rule search has been done.
+#  Last modified 2021-09-01 21:03:20
 #  File has been updated.
 #  Successfully updated.
 
@@ -318,13 +358,13 @@ clean:
 # Not a target:
 build/main.d:
 #  Implicit rule search has been done.
-#  File does not exist.
+#  Last modified 2021-09-01 21:03:21
 #  File has been updated.
-#  Failed to be updated.
+#  Successfully updated.
 
-build/cart.wasm: build/main.o
+build/cart.wasm: build/main.o build/utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2021-09-01 09:38:37
+#  Last modified 2021-09-01 20:49:09
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
@@ -332,20 +372,27 @@ build/cart.wasm: build/main.o
 #  recipe to execute (from 'makefile', line 37):
 	$(LD) -o $@ $(OBJECTS) $(LDFLAGS)
 
+# Not a target:
+src/main.c:
+#  Implicit rule search has been done.
+#  Last modified 2021-09-01 21:03:20
+#  File has been updated.
+#  Successfully updated.
+
 # files hash-table stats:
-# Load=10/1024=1%, Rehash=0, Collisions=0/30=0%
+# Load=16/1024=2%, Rehash=0, Collisions=5/46=11%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 20 / storage = 159 B / avg = 7 B
-# current buf: size = 8162 B / used = 159 B / count = 20 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 30 / storage = 264 B / avg = 8 B
+# current buf: size = 8162 B / used = 264 B / count = 30 / avg = 8 B
 
-# strcache performance: lookups = 35 / hit rate = 42%
+# strcache performance: lookups = 54 / hit rate = 44%
 # hash-table stats:
-# Load=20/8192=0%, Rehash=0, Collisions=2/35=6%
-# Finished Make data base on Wed Sep 01 10:07:04 2021
+# Load=30/8192=0%, Rehash=0, Collisions=2/54=4%
+# Finished Make data base on Thu Sep 02 08:03:17 2021
 
  
