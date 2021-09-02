@@ -62,9 +62,9 @@ const char SHIPRIGHT[8] = {
     0b01011011,
 };
 const char BULLET[3] = {
-    0b11100111,
-    0b11100111,
-    0b11100111,
+    0b11101111,
+    0b11101111,
+    0b11101111,
 };
 
 typedef enum
@@ -179,7 +179,7 @@ void updatebullets()
             else
             {
                 //updatebullet(bullets + n);
-                bullets[n].y = bullets[n].y - 3;
+                bullets[n].y = bullets[n].y - 4;
                 bullets[n].x = bullets[n].x + (myship.posX - myship.prePosX);
 
                 //draw_sprite(BULLET[0], bullet_images[0], bullets[n]->x, bullets[n]->y);
