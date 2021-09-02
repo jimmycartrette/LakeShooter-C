@@ -50,6 +50,6 @@ build/%.o: src/%.c
 
 .PHONY: clean
 clean:
-	rm -rf build
+	rd build /s /q
 
 -include $(DEPS)

@@ -61,6 +61,12 @@ const char SHIPRIGHT[8] = {
     0b10000011,
     0b01011011,
 };
+const char BULLET[3] = {
+    0b11100111,
+    0b11100111,
+    0b11100111,
+};
+
 typedef enum
 {
     false,
@@ -111,7 +117,8 @@ typedef struct
     float velocity;
     int alive;
 } Bullet;
-Bullet *bullets[MAX_BULLETS];
+Bullet bulletsra[MAX_BULLETS];
+Bullet *bullets = bulletsra;
 
 typedef struct
 {
@@ -135,6 +142,8 @@ void start()
     myship.height = 8;
     myship.posX = SCREEN_WIDTH / 2 - myship.width / 2;
     myship.posY = SCREEN_HEIGHT - 10;
+    myship.prePosX = myship.posX;
+    myship.prePosY = myship.posY;
     myship.sprite = &SHIPFORWARD[0];
     myship.accel = 1;
     mycamera.width = SCREEN_WIDTH;
@@ -142,16 +151,18 @@ void start()
 
     for (int n = 0; n < MAX_BULLETS; n++)
     {
-        bullets[n] = malloc(sizeof(Sprite));
-        bullets[n]->x = 0;
-        bullets[n]->y = 0;
+        //bullets[n] = malloc(sizeof(Sprite));
+
+        bullets[n].x = 0;
+        bullets[n].y = 0;
     }
 }
 
 void updatebullet(Bullet *spr)
 {
+    spr->x++;
 
-    spr->x = spr->x + myship.posX - myship.prePosX;
+    spr->y = spr->y + myship.posY - myship.prePosY;
 }
 
 void updatebullets()
@@ -159,10 +170,22 @@ void updatebullets()
     int n;
     //update/draw bullets
     for (n = 0; n < MAX_BULLETS; n++)
-        if (bullets[n]->alive)
+        if (bullets[n].alive)
         {
-            updatebullet(bullets[n]);
-            // draw_sprite(buffer,bullet_images[0], bullets[n]->x, bullets[n]->y);
+            if (bullets[n].y < mycamera.offsetY)
+            {
+                bullets[n].alive = false;
+            }
+            else
+            {
+                //updatebullet(bullets + n);
+                bullets[n].y = bullets[n].y - 3;
+                bullets[n].x = bullets[n].x + (myship.posX - myship.prePosX);
+
+                //draw_sprite(BULLET[0], bullet_images[0], bullets[n]->x, bullets[n]->y);
+                *DRAW_COLORS = 2;
+                blit(BULLET, bullets[n].x, bullets[n].y, 8, 3, BLIT_1BPP);
+            }
         }
 }
 
@@ -170,6 +193,7 @@ void moveShipLeft()
 {
     if (myship.posX - 1 > 0)
     {
+
         myship.posX--;
         myship.sprite = &SHIPRIGHT[0];
         myship.dir = Left;
@@ -178,8 +202,10 @@ void moveShipLeft()
 
 void moveShipRight()
 {
+
     if (myship.posX + 1 < SCREEN_WIDTH - myship.width)
     {
+
         myship.posX++;
         myship.sprite = &SHIPRIGHT[0];
         myship.dir = Right;
@@ -245,11 +271,11 @@ void fireatenemy()
     int n;
     for (n = 0; n < MAX_BULLETS; n++)
     {
-        if (!bullets[n]->alive)
+        if (!bullets[n].alive)
         {
-            bullets[n]->alive++;
-            bullets[n]->x = myship.posX;
-            bullets[n]->y = myship.posY;
+            bullets[n].alive++;
+            bullets[n].x = myship.posX;
+            bullets[n].y = myship.posY;
             return;
         }
     }
@@ -279,7 +305,8 @@ void update()
         char gamepad = *GAMEPAD1;
         unsigned char pressedThisFrame = gamepad & (gamepad ^ previousGamepad);
         previousGamepad = gamepad;
-
+        myship.prePosY = myship.posY;
+        myship.prePosX = myship.posX;
         if (gamepad & BUTTON_1)
         {
             *DRAW_COLORS = 4;
@@ -316,5 +343,6 @@ void update()
         }
         *DRAW_COLORS = 2;
         blit(myship.sprite, myship.posX, myship.posY, myship.width, myship.height, BLIT_1BPP | (myship.dir == Left ? BLIT_FLIP_X : 0));
+        updatebullets();
     }
 }

@@ -6,7 +6,7 @@ This program is built by Equation Solution <http://www.Equation.com>.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Sep 02 08:03:17 2021
+# Make data base, printed on Thu Sep 02 08:33:57 2021
 
 # Variables
 
@@ -232,7 +232,7 @@ SOURCES = $(wildcard src/*.c)
 # environment
 PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 # variable set hash-table stats:
-# Load=110/1024=11%, Rehash=0, Collisions=10/157=6%
+# Load=110/1024=11%, Rehash=0, Collisions=10/152=7%
 
 # Pattern-specific Variable Values
 
@@ -240,10 +240,10 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 
 # Directories
 
-# . (key c:/Users/jimmy/source/repos/LakeShooter, mtime 1630516159): 7 files, no impossibilities.
+# . (key c:/Users/jimmy/source/repos/LakeShooter, mtime 1630586015): 8 files, no impossibilities.
 # src (key c:/Users/jimmy/source/repos/LakeShooter/src, mtime 1630534835): 7 files, no impossibilities.
 
-# 14 files, no impossibilities in 2 directories.
+# 15 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -258,27 +258,9 @@ build/%.o: src/%.c
 build/main.o: src/main.c src\main.c src\wasm4.h src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  File does not exist.
+#  Last modified 2021-09-02 08:33:35
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := build/main.o
-# automatic
-# * := main
-# automatic
-# < := src/main.c
-# automatic
-# + := src/main.c src\main.c src\wasm4.h src\utils.h
-# automatic
-# % := 
-# automatic
-# ^ := src/main.c src\main.c src\wasm4.h src\utils.h
-# automatic
-# ? := src/main.c src\main.c src\wasm4.h src\utils.h
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=2/15=13%
+#  Successfully updated.
 #  recipe to execute (from 'makefile', line 48):
 	@if not exist build (mkdir build)
 	$(CC) -c $< -o $@ $(CFLAGS)
@@ -288,9 +270,7 @@ all: build/cart.wasm
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+#  Successfully updated.
 
 src\wasm4.h:
 #  Implicit rule search has been done.
@@ -312,20 +292,21 @@ src\wasm4.h:
 # Not a target:
 build/utils.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-01 18:20:36
+#  Last modified 2021-09-02 08:33:35
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src\utils.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit rule search has been done.
+#  Last modified 2021-09-01 18:20:36
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-01 10:07:04
+#  Last modified 2021-09-02 08:33:32
 #  File has been updated.
 #  Successfully updated.
 
@@ -335,15 +316,20 @@ src\utils.h:
 #  File has been updated.
 #  Successfully updated.
 
-build/utils.o: src\utils.c
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+build/utils.o: src/utils.c src\utils.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'utils'
+#  Last modified 2021-09-02 08:33:35
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 48):
+	@if not exist build (mkdir build)
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Not a target:
 src\main.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-01 21:03:20
+#  Last modified 2021-09-02 08:31:41
 #  File has been updated.
 #  Successfully updated.
 
@@ -353,46 +339,51 @@ clean:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 53):
-	rm -rf build
+	rd build /s /q
 
 # Not a target:
 build/main.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-01 21:03:21
+#  Last modified 2021-09-02 08:33:35
 #  File has been updated.
 #  Successfully updated.
 
 build/cart.wasm: build/main.o build/utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2021-09-01 20:49:09
+#  Last modified 2021-09-02 08:33:35
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+#  Successfully updated.
 #  recipe to execute (from 'makefile', line 37):
 	$(LD) -o $@ $(OBJECTS) $(LDFLAGS)
 
 # Not a target:
+src/utils.c:
+#  Implicit rule search has been done.
+#  Last modified 2021-09-01 18:20:36
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-01 21:03:20
+#  Last modified 2021-09-02 08:31:41
 #  File has been updated.
 #  Successfully updated.
 
 # files hash-table stats:
-# Load=16/1024=2%, Rehash=0, Collisions=5/46=11%
+# Load=17/1024=2%, Rehash=0, Collisions=5/50=10%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 30 / storage = 264 B / avg = 8 B
-# current buf: size = 8162 B / used = 264 B / count = 30 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 293 B / avg = 8 B
+# current buf: size = 8162 B / used = 293 B / count = 33 / avg = 8 B
 
-# strcache performance: lookups = 54 / hit rate = 44%
+# strcache performance: lookups = 58 / hit rate = 43%
 # hash-table stats:
-# Load=30/8192=0%, Rehash=0, Collisions=2/54=4%
-# Finished Make data base on Thu Sep 02 08:03:17 2021
+# Load=33/8192=0%, Rehash=0, Collisions=2/58=3%
+# Finished Make data base on Thu Sep 02 08:33:57 2021
 
  
