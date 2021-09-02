@@ -182,9 +182,9 @@ bool collision_detected()
             unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
 
             char buffer[256];
-            int val = *checkframe;
+            int val = (*checkframe) >> (2 ^ (2 - (column % 4)));
 
-            if (val == 170)
+            if ((val & 3) == 2)
             {
                 return true;
             }
