@@ -1,3 +1,6 @@
+
+#define __uint32_t unsigned int
+
 static char *itoa_helper(char *dest, int i)
 {
     if (i <= -10)
@@ -28,4 +31,9 @@ int rand()
 {
     seed = 6364136223846793005ULL * seed + 1;
     return seed >> 33;
+}
+
+int fake_fround(float x)
+{
+    return (int)(x + 0.5);
 }

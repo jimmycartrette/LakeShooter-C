@@ -7,6 +7,9 @@
 #define TILESIZEY 20
 #define TILESIZEX 16
 
+#define PLAY_WIDTH 160
+#define PLAY_HEIGHT 120
+
 #define MAX_BULLETS 20
 
 const char WORLDMAP[32][10] = {
@@ -42,14 +45,14 @@ const char WORLDMAP[32][10] = {
 };
 
 const char SHIPFORWARD[8] = {
-    0b11100111,
-    0b11000011,
-    0b10000001,
-    0b00100100,
-    0b01100110,
-    0b11100111,
-    0b11000011,
-    0b10011001,
+    0b11101111,
+    0b11000111,
+    0b10000011,
+    0b00000001,
+    0b00101001,
+    0b01101101,
+    0b11000111,
+    0b00101001,
 };
 const char SHIPRIGHT[8] = {
     0b11001111,
@@ -83,12 +86,12 @@ typedef struct
 {
     char const *sprite;
     LRDirection dir;
-    int posX;
-    int posY;
+    float posX, posY;
     int width;
     int height;
-    float accel;
-    int prePosX, prePosY;
+    float haccel, vaccel;
+    float prePosX, prePosY;
+    int animCount, animDelay;
 
 } Ship;
 
@@ -123,11 +126,13 @@ Bullet *bullets = bulletsra;
 typedef struct
 {
     bool over;
+    int score;
 } Game;
 static Game game;
 
 static Camera mycamera;
 unsigned char previousGamepad;
+static char *debugtext;
 
 void start()
 {
@@ -135,19 +140,21 @@ void start()
     PALETTE[0] = 0x2a3abd;
     PALETTE[1] = 0xcdc23c;
     PALETTE[2] = 0x335715;
-    PALETTE[3] = 0x7c3f58;
+    PALETTE[3] = 0x909090;
 
     myship.dir = None;
     myship.width = 8;
     myship.height = 8;
-    myship.posX = SCREEN_WIDTH / 2 - myship.width / 2;
-    myship.posY = SCREEN_HEIGHT - 10;
+    myship.posX = PLAY_WIDTH / 2 - myship.width / 2;
+    myship.posY = PLAY_HEIGHT - 10;
     myship.prePosX = myship.posX;
     myship.prePosY = myship.posY;
     myship.sprite = &SHIPFORWARD[0];
-    myship.accel = 1;
-    mycamera.width = SCREEN_WIDTH;
-    mycamera.height = SCREEN_HEIGHT;
+    myship.vaccel = 1;
+    myship.haccel = 0;
+    myship.animDelay = 4;
+    mycamera.width = PLAY_WIDTH;
+    mycamera.height = PLAY_HEIGHT;
 
     for (int n = 0; n < MAX_BULLETS; n++)
     {
@@ -191,24 +198,22 @@ void updatebullets()
 
 void moveShipLeft()
 {
+    myship.sprite = &SHIPRIGHT[0];
+    myship.dir = Left;
     if (myship.posX - 1 > 0)
     {
-
-        myship.posX--;
-        myship.sprite = &SHIPRIGHT[0];
-        myship.dir = Left;
+        myship.posX = myship.posX - myship.haccel;
     }
 }
 
 void moveShipRight()
 {
 
-    if (myship.posX + 1 < SCREEN_WIDTH - myship.width)
+    myship.sprite = &SHIPRIGHT[0];
+    myship.dir = Right;
+    if (myship.posX + 1 < PLAY_WIDTH - myship.width)
     {
-
-        myship.posX++;
-        myship.sprite = &SHIPRIGHT[0];
-        myship.dir = Right;
+        myship.posX = myship.posX + myship.haccel;
     }
 }
 
@@ -218,7 +223,7 @@ void draw_land()
     int startRow = (int)startRowF;
     int endRow = startRow + (mycamera.height / TILESIZEY);
     mycamera.offsetY = -mycamera.y / 4 + startRow * TILESIZEY;
-    for (int column = 0; column < SCREEN_WIDTH / TILESIZEX; column++)
+    for (int column = 0; column < PLAY_WIDTH / TILESIZEX; column++)
     {
         for (int row = startRow; row <= endRow; row++)
         {
@@ -241,16 +246,34 @@ void draw_land()
         }
     }
 }
+int digitsofbase10(int num, int counter)
+{
+    if (num < 10)
+    {
+        return counter;
+    }
+    return digitsofbase10(num / 10, counter + 1);
+}
+void draw_status()
+{
+    *DRAW_COLORS = 4;
+    rect(0, PLAY_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - PLAY_HEIGHT);
+    char scoretext[10];
+    itoa(scoretext, game.score);
+    *DRAW_COLORS = 2;
+    int scoreoffset = digitsofbase10(game.score, 0);
+    text(scoretext, 100 - scoreoffset * 8, PLAY_HEIGHT + 4);
+}
 
 bool collision_detected()
 {
-
+    return false;
     for (int column = myship.posX; column < myship.posX + myship.width; column++)
     {
         for (int row = myship.posY; row < myship.posY + myship.height; row++)
         {
             // TODO add pixel check on myship.sprite
-            if (myship.sprite[row - myship.posY] & 1 << (7 - column - myship.posX))
+            if (myship.sprite[row - (int)myship.posY] & 1 << (7 - column - (int)myship.posX))
             {
                 unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
 
@@ -268,6 +291,8 @@ bool collision_detected()
 }
 void fireatenemy()
 {
+
+    game.score += 10;
     int n;
     for (n = 0; n < MAX_BULLETS; n++)
     {
@@ -285,20 +310,20 @@ void update()
 {
     if (game.over)
     {
-        *DRAW_COLORS = 1;
-        rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        *DRAW_COLORS = 2;
-
-        text("GAME OVER", SCREEN_WIDTH / 2 - 35, SCREEN_HEIGHT / 2 - 20);
+        // *DRAW_COLORS = 1;
+        // rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        // *DRAW_COLORS = 2;
+        // text("GAME OVER", SCREEN_WIDTH / 2 - 35, SCREEN_HEIGHT / 2 - 20);
     }
     else
     {
-        mycamera.y = mycamera.y - myship.accel * 4;
+        mycamera.y = mycamera.y - myship.vaccel * 4;
         if (mycamera.y < 0)
         {
             mycamera.y = 1920;
         }
         draw_land();
+        draw_status();
         myship.dir = None;
         myship.sprite = &SHIPFORWARD[0];
 
@@ -309,28 +334,44 @@ void update()
         myship.prePosX = myship.posX;
         if (gamepad & BUTTON_1)
         {
-            *DRAW_COLORS = 4;
+        }
+        if (!(gamepad & BUTTON_LEFT || gamepad & BUTTON_RIGHT))
+        {
+            myship.haccel = 0;
+        }
+        else
+        {
+            if (myship.haccel < 1)
+            {
+                myship.haccel += .04;
+            }
+            else if (myship.haccel < .3)
+            {
+                myship.haccel += .03;
+            }
         }
         if (gamepad & BUTTON_LEFT)
         {
+
             moveShipLeft();
         }
         if (gamepad & BUTTON_RIGHT)
         {
             moveShipRight();
         }
+
         if (gamepad & BUTTON_UP)
         {
-            myship.accel = 1.4;
+            myship.vaccel = 1.4;
         }
         else if (gamepad & BUTTON_DOWN)
         {
             //moveShipDown();
-            myship.accel = .5;
+            myship.vaccel = .5;
         }
         else
         {
-            myship.accel = 1;
+            myship.vaccel = 1;
         }
         if (pressedThisFrame & BUTTON_1)
         {
