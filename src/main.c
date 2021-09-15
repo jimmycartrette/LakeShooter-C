@@ -64,6 +64,16 @@ const char SHIPRIGHT[8] = {
     0b10000011,
     0b01011011,
 };
+const char EXPLOSION[8] = {
+    0b11111101,
+    0b01111111,
+    0b11101111,
+    0b10111111,
+    0b11111101,
+    0b11011111,
+    0b10111101,
+    0b11101111,
+};
 const char BULLET[3] = {
     0b11101111,
     0b11101111,
@@ -126,7 +136,10 @@ Bullet *bullets = bulletsra;
 typedef struct
 {
     bool over;
+    int collidedCounter;
     int score;
+    int backgroundNoiseCounter;
+    float currentFuel;
 } Game;
 static Game game;
 
@@ -139,7 +152,7 @@ void start()
 
     PALETTE[0] = 0x2a3abd;
     PALETTE[1] = 0xcdc23c;
-    PALETTE[2] = 0x335715;
+    PALETTE[2] = 0x6c9850;
     PALETTE[3] = 0x909090;
 
     myship.dir = None;
@@ -153,9 +166,12 @@ void start()
     myship.vaccel = 1;
     myship.haccel = 0;
     myship.animDelay = 4;
+    game.collidedCounter = 0;
     mycamera.width = PLAY_WIDTH;
     mycamera.height = PLAY_HEIGHT;
-
+    game.over = false;
+    game.backgroundNoiseCounter = 0;
+    game.currentFuel = 100;
     for (int n = 0; n < MAX_BULLETS; n++)
     {
         //bullets[n] = malloc(sizeof(Sprite));
@@ -263,11 +279,18 @@ void draw_status()
     *DRAW_COLORS = 2;
     int scoreoffset = digitsofbase10(game.score, 0);
     text(scoretext, 100 - scoreoffset * 8, PLAY_HEIGHT + 4);
+    *DRAW_COLORS = 0x10;
+    rect(60, PLAY_HEIGHT + 14, 50, 11);
+    *DRAW_COLORS = 1;
+    line(70 + .30 * game.currentFuel, PLAY_HEIGHT + 16, 70 + .3 * game.currentFuel, PLAY_HEIGHT + 22);
+    *DRAW_COLORS = 2;
+    text("E", 62, PLAY_HEIGHT + 16);
+    text("F", 101, PLAY_HEIGHT + 16);
 }
 
 bool collision_detected()
 {
-    return false;
+
     for (int column = myship.posX; column < myship.posX + myship.width; column++)
     {
         for (int row = myship.posY; row < myship.posY + myship.height; row++)
@@ -310,18 +333,22 @@ void update()
 {
     if (game.over)
     {
-        // *DRAW_COLORS = 1;
-        // rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        // *DRAW_COLORS = 2;
-        // text("GAME OVER", SCREEN_WIDTH / 2 - 35, SCREEN_HEIGHT / 2 - 20);
+        char gamepad = *GAMEPAD1;
+        if (gamepad & BUTTON_2)
+        {
+            start();
+        }
+        else
+        {
+            *DRAW_COLORS = 1;
+            rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            *DRAW_COLORS = 2;
+            text("GAME OVER", SCREEN_WIDTH / 2 - 35, SCREEN_HEIGHT / 2 - 20);
+        }
     }
     else
     {
-        mycamera.y = mycamera.y - myship.vaccel * 4;
-        if (mycamera.y < 0)
-        {
-            mycamera.y = 1920;
-        }
+
         draw_land();
         draw_status();
         myship.dir = None;
@@ -332,58 +359,116 @@ void update()
         previousGamepad = gamepad;
         myship.prePosY = myship.posY;
         myship.prePosX = myship.posX;
-        if (gamepad & BUTTON_1)
+
+        if (game.collidedCounter > 0)
         {
-        }
-        if (!(gamepad & BUTTON_LEFT || gamepad & BUTTON_RIGHT))
-        {
-            myship.haccel = 0;
+            if (game.collidedCounter++ > 100)
+            {
+                game.over = true;
+            }
+            else
+            {
+                blit(EXPLOSION, myship.posX, myship.posY, myship.width, myship.height, BLIT_1BPP);
+            }
         }
         else
         {
-            if (myship.haccel < 1)
+            mycamera.y = mycamera.y - myship.vaccel * 2.2;
+            if (mycamera.y < 0)
             {
-                myship.haccel += .04;
+                mycamera.y = 1920;
             }
-            else if (myship.haccel < .3)
+            if (gamepad & BUTTON_1)
             {
-                myship.haccel += .03;
+            }
+            if (!(gamepad & BUTTON_LEFT || gamepad & BUTTON_RIGHT))
+            {
+                myship.haccel = 0;
+            }
+            else
+            {
+                if (myship.haccel < 1)
+                {
+                    myship.haccel += .04;
+                }
+                else if (myship.haccel < .3)
+                {
+                    myship.haccel += .03;
+                }
+            }
+            if (gamepad & BUTTON_LEFT)
+            {
+
+                moveShipLeft();
+            }
+            if (gamepad & BUTTON_RIGHT)
+            {
+                moveShipRight();
+            }
+            if (!(gamepad & BUTTON_UP || gamepad & BUTTON_DOWN))
+            {
+                if (myship.vaccel > 1)
+                {
+                    myship.vaccel -= .04;
+                }
+                else
+                {
+                    myship.vaccel += .04;
+                }
+            }
+            if (gamepad & BUTTON_UP)
+            {
+                if (myship.vaccel < 2)
+                {
+                    myship.vaccel += .04;
+                }
+                else if (myship.vaccel < 1.3)
+                {
+                    myship.vaccel += .03;
+                }
+            }
+            else if (gamepad & BUTTON_DOWN)
+            {
+                if (myship.vaccel > .3)
+                {
+                    myship.vaccel -= .04;
+                }
+                else if (myship.vaccel > .7)
+                {
+                    myship.vaccel -= .03;
+                }
+            }
+            if (pressedThisFrame & BUTTON_1)
+            {
+                fireatenemy();
+            }
+            bool collided = collision_detected();
+            if (collided)
+            {
+                tone(250 | (0 << 16), (8 << 24) | (10 << 16) | 8 | (8 << 8), 34, 3 | (0 << 0));
+                game.collidedCounter++;
+            }
+            game.currentFuel -= myship.vaccel * .03;
+            if (game.currentFuel <= 0)
+            {
+
+                game.over = true;
+            }
+
+            *DRAW_COLORS = 2;
+            blit(myship.sprite, myship.posX, myship.posY, myship.width, myship.height, BLIT_1BPP | (myship.dir == Left ? BLIT_FLIP_X : 0));
+            updatebullets();
+
+            if (game.backgroundNoiseCounter == 0)
+            {
+                tone(320 + (int)(myship.vaccel * (float)40) | (0 << 16), (0 << 24) | (0 << 16) | 20 | (0 << 8), 34, 3 | (0 << 2));
+            }
+
+            game.backgroundNoiseCounter++;
+            if (game.backgroundNoiseCounter == 20)
+            {
+                game.backgroundNoiseCounter = 0;
             }
         }
-        if (gamepad & BUTTON_LEFT)
-        {
-
-            moveShipLeft();
-        }
-        if (gamepad & BUTTON_RIGHT)
-        {
-            moveShipRight();
-        }
-
-        if (gamepad & BUTTON_UP)
-        {
-            myship.vaccel = 1.4;
-        }
-        else if (gamepad & BUTTON_DOWN)
-        {
-            //moveShipDown();
-            myship.vaccel = .5;
-        }
-        else
-        {
-            myship.vaccel = 1;
-        }
-        if (pressedThisFrame & BUTTON_1)
-        {
-            fireatenemy();
-        }
-        bool collided = collision_detected();
-        if (collided)
-        {
-            game.over = true;
-        }
-        *DRAW_COLORS = 2;
-        blit(myship.sprite, myship.posX, myship.posY, myship.width, myship.height, BLIT_1BPP | (myship.dir == Left ? BLIT_FLIP_X : 0));
-        updatebullets();
     }
 }

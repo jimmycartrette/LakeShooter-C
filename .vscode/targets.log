@@ -6,7 +6,7 @@ This program is built by Equation Solution <http://www.Equation.com>.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Sep 14 17:53:08 2021
+# Make data base, printed on Wed Sep 15 07:35:39 2021
 
 # Variables
 
@@ -23,10 +23,11 @@ USERPROFILE = C:\Users\jimmy
 # environment
 LOCALAPPDATA = C:\Users\jimmy\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-6cbf292f-a08f-4b49-b80b-dabbe463124f-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-a4c0451d-c757-4a25-8908-f61bf4e1cc9f-sock
 # environment
 VSCODE_CWD = C:\Program Files\Microsoft VS Code
-# environment
+# env 
+ironment
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 SYSTEMROOT = C:\WINDOWS
@@ -41,9 +42,7 @@ GOPATH = C:\Users\jimmy\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_10336_PHXIFOZXXDHPDRMI
-# environment
-VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_16580_SQRVHOIAVMBAFCMH
 # environment
 FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
@@ -63,8 +62,7 @@ VSCODE_CODE_CACHE_PATH = C:\Users\jimmy\AppData\Roaming\Code\CachedData\e7d7e9a9
 # environment
 LANG = C
 # default
-.LOADED : 
-= 
+.LOADED := 
 # environment
 TMP = C:\Users\jimmy\AppData\Local\Temp
 # environment
@@ -100,7 +98,7 @@ MAKEFILE_LIST := Makefile build/main.d build/utils.d
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 10336
+VSCODE_PID = 16580
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -232,7 +230,7 @@ SOURCES = $(wildcard src/*.c)
 # environment
 PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 # variable set hash-table stats:
-# Load=110/1024=11%, Rehash=0, Collisions=10/152=7%
+# Load=109/1024=11%, Rehash=0, Collisions=10/151=7%
 
 # Pattern-specific Variable Values
 
@@ -258,7 +256,7 @@ build/%.o: src/%.c
 build/main.o: src/main.c src\main.c src\wasm4.h src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2021-09-14 17:52:48
+#  Last modified 2021-09-14 19:32:57
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 48):
@@ -329,7 +327,7 @@ build/utils.o: src/utils.c src\utils.c
 # Not a target:
 src\main.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-14 17:52:35
+#  Last modified 2021-09-14 19:32:56
 #  File has been updated.
 #  Successfully updated.
 
@@ -344,13 +342,13 @@ clean:
 # Not a target:
 build/main.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-14 17:52:48
+#  Last modified 2021-09-14 19:32:57
 #  File has been updated.
 #  Successfully updated.
 
 build/cart.wasm: build/main.o build/utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2021-09-14 17:52:57
+#  Last modified 2021-09-14 19:32:57
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 37):
@@ -366,7 +364,7 @@ src/utils.c:
 # Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-14 17:52:35
+#  Last modified 2021-09-14 19:32:56
 #  File has been updated.
 #  Successfully updated.
 
@@ -384,6 +382,6 @@ src/main.c:
 # strcache performance: lookups = 58 / hit rate = 43%
 # hash-table stats:
 # Load=33/8192=0%, Rehash=0, Collisions=2/58=3%
-# Finished Make data base on Tue Sep 14 17:53:08 2021
+# Finished Make data base on Wed Sep 15 07:35:39 2021
 
  
