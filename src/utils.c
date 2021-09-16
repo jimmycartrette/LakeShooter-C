@@ -37,3 +37,13 @@ int fake_fround(float x)
 {
     return (int)(x + 0.5);
 }
+int min(int a, int b) { return (a < b) ? a : b; }
+int max(int a, int b) { return (a > b) ? a : b; }
+int digitsofbase10(int num, int counter)
+{
+    if (num < 10)
+    {
+        return counter;
+    }
+    return digitsofbase10(num / 10, counter + 1);
+}
