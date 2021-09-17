@@ -41,6 +41,10 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
 {
     game->m_ticks += ticks;
     Input_Update(&game->m_input);
+    if (game->m_fuellevel <= 0)
+    {
+        game->m_state = GAMESTATE_GAMEOVER;
+    }
     if (game->m_state == GAMESTATE_GAMEOVER && Input_GamepadButtonPress(&game->m_input, 2))
     {
         Game_NewGame(game);
@@ -61,7 +65,7 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         }
         else
         {
-            //Sound_PlayBackgroundNoise(game);
+            Sound_PlayBackgroundNoise(game);
             PlayArea_Update(&game->m_playarea, &game->m_ship, ticks);
             Ship_Update(&game->m_ship, &game->m_input);
 
