@@ -39,6 +39,7 @@ const char WORLDMAP[32][11] = {
 void PlayArea_Initialize(struct PlayArea *p)
 {
     p->m_y = 0;
+    p->m_x = 0;
     p->m_width = PLAY_WIDTH;
     p->m_height = PLAY_HEIGHT;
     p->m_worldmap = (char *)WORLDMAP;

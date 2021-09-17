@@ -36,6 +36,7 @@ void Ship_Initialize(struct Ship *s)
     o->m_posY = PLAY_HEIGHT - 10;
     o->m_prePosX = o->m_posX;
     o->m_prePosY = o->m_posY;
+    o->m_tickssincecollision = 0;
     o->m_haccel = 0;
     o->m_vaccel = 1;
     o->m_spritefacingup = &SHIPFACINGUP[0];
@@ -113,4 +114,8 @@ void Ship_Update(struct Ship *s, struct Input *i)
 void Ship_Draw(struct Ship *s)
 {
     GameObject_Draw(&s->m_obj);
+}
+void Ship_CollisionDetect(struct Ship *s)
+{
+    GameObject_CollisionDetect(&s->m_obj);
 }

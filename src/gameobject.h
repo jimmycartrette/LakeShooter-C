@@ -35,3 +35,4 @@ struct GameObject
 void GameObject_Initialize(struct GameObject *o);
 void GameObject_Update(struct GameObject *o);
 void GameObject_Draw(struct GameObject *o);
+void GameObject_CollisionDetect(struct GameObject *o);

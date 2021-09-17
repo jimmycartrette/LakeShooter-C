@@ -9,6 +9,4 @@
 #define PLAY_WIDTH 160
 #define PLAY_HEIGHT 120
 
-#include "game.h"
-
 extern struct Game game;

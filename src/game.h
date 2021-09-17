@@ -30,6 +30,8 @@ struct Game
 };
 
 void Game_Init(struct Game *game);
-void Game_Update(struct Game *game, const int ticks);
-void Game_Draw(struct Game *game);
+void Game_UpdateBackground(struct Game *game, const int ticks);
+void Game_UpdateObjects(struct Game *game);
+void Game_DrawBackground(struct Game *game);
+void Game_DrawObjects(struct Game *game);
 void Game_NewGame(struct Game *game);

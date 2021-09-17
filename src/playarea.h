@@ -1,6 +1,5 @@
 #pragma once
 #include "ship.h"
-
 struct PlayArea
 {
     int m_x, m_y;

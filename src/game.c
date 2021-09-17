@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "ship.h"
 #include "gameobject.h"
+#include "sound.h"
 
 void Draw_Status(struct Game *game)
 {
@@ -34,15 +35,20 @@ void Game_Init(struct Game *game)
     Ship_Initialize(&game->m_ship);
     PlayArea_Initialize(&game->m_playarea);
 }
-void Game_Update(struct Game *game, const int ticks)
+void Game_UpdateBackground(struct Game *game, const int ticks)
 {
     game->m_ticks += ticks;
     Input_Update(&game->m_input);
+    if (game->m_state == GAMESTATE_GAMEOVER && Input_GamepadButtonPress(&game->m_input, 2))
+    {
+        Game_NewGame(game);
+    }
+    if (game->m_state == GAMESTATE_STARTUP)
+    {
+        game->m_state = GAMESTATE_PLAY;
+    }
     switch (game->m_state)
     {
-    case GAMESTATE_STARTUP:
-        game->m_state = GAMESTATE_PLAY;
-        break;
     case GAMESTATE_PLAY:
         if (game->m_tickssincecollision > 0)
         {
@@ -53,8 +59,10 @@ void Game_Update(struct Game *game, const int ticks)
         }
         else
         {
+            //Sound_PlayBackgroundNoise(game);
             PlayArea_Update(&game->m_playarea, &game->m_ship, ticks);
             Ship_Update(&game->m_ship, &game->m_input);
+
             if (game->m_ship.m_obj.m_tickssincecollision > 0)
             {
                 game->m_tickssincecollision++;
@@ -62,22 +70,25 @@ void Game_Update(struct Game *game, const int ticks)
             game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * .03) / 10;
         }
         break;
-    case GAMESTATE_GAMEOVER:
-        if (Input_GamepadButtonPress(&game->m_input, 2))
-        {
-            Game_NewGame(game);
-        }
+    }
+}
+void Game_UpdateObjects(struct Game *game)
+{
+
+    switch (game->m_state)
+    {
+    case GAMESTATE_PLAY:
+        Ship_CollisionDetect(&game->m_ship);
         break;
     }
 }
-void Game_Draw(struct Game *game)
+void Game_DrawBackground(struct Game *game)
 {
     switch (game->m_state)
     {
     case GAMESTATE_PLAY:
         PlayArea_Draw(&game->m_playarea);
         Draw_Status(game);
-        Ship_Draw(&game->m_ship);
         break;
     case GAMESTATE_GAMEOVER:
         *DRAW_COLORS = 1;
@@ -88,7 +99,17 @@ void Game_Draw(struct Game *game)
         break;
     }
 }
+void Game_DrawObjects(struct Game *game)
+{
+    switch (game->m_state)
+    {
+    case GAMESTATE_PLAY:
+        Ship_Draw(&game->m_ship);
+
+        break;
+    }
+}
 void Game_NewGame(struct Game *game)
 {
-    game->m_fuellevel = 1;
+    Game_Init(game);
 }
