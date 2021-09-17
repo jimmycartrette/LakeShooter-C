@@ -15,6 +15,7 @@ enum Direction
     DIRECTION_LEFT,
     DIRECTION_RIGHT
 };
+struct Game;
 
 struct GameObject
 {
@@ -34,5 +35,5 @@ struct GameObject
 
 void GameObject_Initialize(struct GameObject *o);
 void GameObject_Update(struct GameObject *o);
-void GameObject_Draw(struct GameObject *o);
+void GameObject_Draw(struct GameObject *o, struct Game *game);
 void GameObject_CollisionDetect(struct GameObject *o);

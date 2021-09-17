@@ -3,6 +3,7 @@
 #include "wasm4.h"
 #include "ship.h"
 #include "utils.h"
+#include "sound.h"
 
 const char BULLET[3] = {
     0b11101111,
@@ -19,7 +20,7 @@ void Bullets_Init(struct Bullets *bullets)
         bullets->bullet[n].m_obj.m_alive = false;
     }
 }
-void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship)
+void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship, struct Game *game)
 {
 
     int n;
@@ -30,6 +31,7 @@ void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship)
             bullets->bullet[n].m_obj.m_alive = true;
             bullets->bullet[n].m_obj.m_posX = ship->m_obj.m_posX;
             bullets->bullet[n].m_obj.m_posY = ship->m_obj.m_posY;
+            Sound_PlayBulletShoot(game);
             return;
         }
     }

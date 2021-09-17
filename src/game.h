@@ -22,6 +22,7 @@ struct Game
     int64_t m_fuellevel;
     int64_t m_score;
     int64_t m_tickssincecollision;
+    int16_t m_soundeffectcountdown;
     char *m_worldmap;
 
     struct Input m_input;

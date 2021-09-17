@@ -113,9 +113,9 @@ void Ship_Update(struct Ship *s, struct Input *i)
     }
     GameObject_Update(&s->m_obj);
 }
-void Ship_Draw(struct Ship *s)
+void Ship_Draw(struct Ship *s, struct Game *game)
 {
-    GameObject_Draw(&s->m_obj);
+    GameObject_Draw(&s->m_obj, game);
 }
 void Ship_CollisionDetect(struct Ship *s)
 {

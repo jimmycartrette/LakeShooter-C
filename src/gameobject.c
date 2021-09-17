@@ -46,14 +46,14 @@ void GameObject_Initialize(struct GameObject *o)
     o->m_type = OBJECT_NONE;
     o->m_alive = false;
 }
-void GameObject_Draw(struct GameObject *o)
+void GameObject_Draw(struct GameObject *o, struct Game *game)
 {
     if (o->m_type == OBJECT_SHIP && o->m_tickssincecollision > 0)
     {
 
         if (o->m_tickssincecollision == 1)
         {
-            Sound_PlayShipCollision();
+            Sound_PlayShipCollision(game);
         }
         blit(EXPLOSION, o->m_posX, o->m_posY, o->m_width, o->m_height, BLIT_1BPP);
         return;
