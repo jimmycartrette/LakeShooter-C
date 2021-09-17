@@ -5,7 +5,16 @@
 
 bool Detect_SpriteCollision(float posX, float posY, int width, int height, const char *sprite)
 {
+    for (int i = 0; i < 20; i++)
+    {
+        unsigned char *checkframe = FRAMEBUFFER + i;
 
+        int val = (*checkframe);
+        //trace("val is");
+        char colorvalue[10];
+        itoa(colorvalue, *checkframe);
+        trace(colorvalue);
+    }
     for (int column = posX; column < posX + width; column++)
     {
         for (int row = posY; row < posY + height; row++)
@@ -16,10 +25,10 @@ bool Detect_SpriteCollision(float posX, float posY, int width, int height, const
                 unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
 
                 int val = (*checkframe) >> (2 ^ (2 - (column % 4)));
-                trace("val is");
+                //trace("val is");
                 char colorvalue[10];
-                itoa(colorvalue, val);
-                trace(colorvalue);
+                itoa(colorvalue, *checkframe);
+                //trace(colorvalue);
                 if ((val & 3) == 2)
                 {
                     return true;
