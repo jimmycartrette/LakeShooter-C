@@ -52,6 +52,6 @@ build/%.o: src/%.c
 clean:
 	rd build /s /q
 bundle:
-	w4 bundle build/cart.wasm --html lakeshooter.html
+	w4 bundle build/cart.wasm --html index.html
 
 -include $(DEPS)
