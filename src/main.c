@@ -5,12 +5,6 @@
 #include <stdbool.h>
 #include "sound.h"
 
-const char BULLET[3] = {
-    0b11101111,
-    0b11101111,
-    0b11101111,
-};
-
 typedef struct
 {
     int x;

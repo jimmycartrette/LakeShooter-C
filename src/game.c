@@ -5,6 +5,7 @@
 #include "ship.h"
 #include "gameobject.h"
 #include "sound.h"
+#include "bullets.h"
 
 void Draw_Status(struct Game *game)
 {
@@ -34,6 +35,7 @@ void Game_Init(struct Game *game)
 
     Ship_Initialize(&game->m_ship);
     PlayArea_Initialize(&game->m_playarea);
+    Bullets_Init(&game->m_bullets);
 }
 void Game_UpdateBackground(struct Game *game, const int ticks)
 {
@@ -78,7 +80,12 @@ void Game_UpdateObjects(struct Game *game)
     switch (game->m_state)
     {
     case GAMESTATE_PLAY:
+        if (Input_GamepadButtonPress(&game->m_input, 1))
+        {
+            Bullets_GenerateBullet(&game->m_bullets, &game->m_ship);
+        }
         Ship_CollisionDetect(&game->m_ship);
+        Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_ship);
         break;
     }
 }
@@ -105,6 +112,7 @@ void Game_DrawObjects(struct Game *game)
     {
     case GAMESTATE_PLAY:
         Ship_Draw(&game->m_ship);
+        Bullets_Draw(&game->m_bullets);
 
         break;
     }

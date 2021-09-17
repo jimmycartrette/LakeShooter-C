@@ -44,6 +44,8 @@ void Ship_Initialize(struct Ship *s)
 }
 void Ship_Update(struct Ship *s, struct Input *i)
 {
+    s->m_obj.m_prePosX = s->m_obj.m_posX;
+    s->m_obj.m_prePosY = s->m_obj.m_posY;
     if (!(Input_GamepadLeftHeld(i) || Input_GamepadRightHeld(i)))
     {
         s->m_obj.m_haccel = 0;

@@ -66,7 +66,7 @@ void GameObject_Draw(struct GameObject *o)
 }
 void GameObject_Update(struct GameObject *o)
 {
-    o->m_prePosX++;
+    o->m_height = o->m_height;
 }
 void GameObject_CollisionDetect(struct GameObject *o)
 {
