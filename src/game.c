@@ -2,6 +2,8 @@
 #include "global.h"
 #include "wasm4.h"
 #include "utils.h"
+#include "ship.h"
+#include "gameobject.h"
 
 void Draw_Status(struct Game *game)
 {
@@ -52,6 +54,12 @@ void Game_Update(struct Game *game, const int ticks)
         else
         {
             PlayArea_Update(&game->m_playarea, &game->m_ship, ticks);
+            Ship_Update(&game->m_ship, &game->m_input);
+            if (game->m_ship.m_obj.m_tickssincecollision > 0)
+            {
+                game->m_tickssincecollision++;
+            }
+            game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * .03) / 10;
         }
         break;
     case GAMESTATE_GAMEOVER:
@@ -69,6 +77,7 @@ void Game_Draw(struct Game *game)
     case GAMESTATE_PLAY:
         PlayArea_Draw(&game->m_playarea);
         Draw_Status(game);
+        Ship_Draw(&game->m_ship);
         break;
     case GAMESTATE_GAMEOVER:
         *DRAW_COLORS = 1;

@@ -5,7 +5,8 @@
 enum ObjectType
 {
     OBJECT_NONE = 0,
-    OBJECT_SHIP = 1
+    OBJECT_SHIP = 1,
+    OBJECT_BULLET = 2
 };
 
 enum Direction
@@ -19,9 +20,10 @@ struct GameObject
 {
     uint8_t m_type;
     float m_posX, m_posY;
-    int m_width, m_height;
+    uint8_t m_width, m_height;
     float m_prePosX, m_prePosY;
     float m_vaccel, m_haccel;
+    uint8_t m_tickssincecollision;
     enum Direction m_dir;
     bool m_animated;
     bool m_alive;
@@ -31,3 +33,5 @@ struct GameObject
 };
 
 void GameObject_Initialize(struct GameObject *o);
+void GameObject_Update(struct GameObject *o);
+void GameObject_Draw(struct GameObject *o);

@@ -33,7 +33,7 @@ bool Input_GamepadButtonPress(struct Input *i, const int button)
     }
 }
 
-bool Input_GamepadButtonDown(struct Input *i, const int button)
+bool Input_GamepadButtonHeld(struct Input *i, const int button)
 {
     if (button < 0 || button > 3)
     {
@@ -52,17 +52,21 @@ bool Input_GamepadButtonDown(struct Input *i, const int button)
     }
 }
 
-bool Input_GamepadLeftDown(struct Input *i)
+bool Input_GamepadLeftHeld(struct Input *i)
 {
     return (i->m_gamepad & BUTTON_LEFT) == BUTTON_LEFT;
 }
 
-bool Input_GamepadRightDown(struct Input *i)
+bool Input_GamepadRightHeld(struct Input *i)
 {
     return (i->m_gamepad & BUTTON_RIGHT) == BUTTON_RIGHT;
 }
 
-bool Input_GamepadUpDown(struct Input *i)
+bool Input_GamepadUpHeld(struct Input *i)
 {
     return (i->m_gamepad & BUTTON_UP) == BUTTON_UP;
+}
+bool Input_GamepadDownHeld(struct Input *i)
+{
+    return (i->m_gamepad & BUTTON_DOWN) == BUTTON_DOWN;
 }

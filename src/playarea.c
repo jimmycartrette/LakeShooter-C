@@ -47,6 +47,10 @@ void PlayArea_Initialize(struct PlayArea *p)
 void PlayArea_Update(struct PlayArea *p, struct Ship *ship, const int ticks)
 {
     p->m_y = p->m_y - ship->m_obj.m_vaccel * 2.2 * ticks;
+    if (p->m_y < 0)
+    {
+        p->m_y = 1920;
+    }
 }
 void PlayArea_Draw(struct PlayArea *p)
 {
