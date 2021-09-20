@@ -5,7 +5,8 @@
 struct PlayBlock
 {
     int16_t m_edgewidth;
-    //uint8_t m_transitionspeed;
+    uint8_t m_edgetransitionspeed;
+    uint8_t m_islandtransitionspeed;
     uint8_t m_islandwidth;
     char m_displaypattern[200];
 };
