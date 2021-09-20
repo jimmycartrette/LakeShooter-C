@@ -31,6 +31,7 @@ struct GameObject
     char const *m_spritefacingright1;
     char const *m_spritefacingright2;
     char const *m_spritefacingup;
+    char const *m_spriteexplosion;
 };
 
 void GameObject_Initialize(struct GameObject *o);

@@ -1,5 +1,7 @@
+#include <stdint.h>
+#include "utils.h"
 
-#define __uint32_t unsigned int
+extern struct LSFR lsfr;
 
 static char *itoa_helper(char *dest, int i)
 {
@@ -46,4 +48,23 @@ int digitsofbase10(int num, int counter)
         return counter;
     }
     return digitsofbase10(num / 10, counter + 1);
+}
+void lfsr_start(uint16_t seed, struct Lsfr *lsfr)
+{
+    lsfr->m_lfsrvalue = seed;
+    lsfr->m_start_state = seed;
+}
+uint16_t lfsr_next(struct Lsfr *lsfr)
+{
+    unsigned lsb = lsfr->m_lfsrvalue & 1;
+    lsfr->m_lfsrvalue >>= 1;
+    if (lsb == 1)
+    {
+        lsfr->m_lfsrvalue ^= 0xB400u; // taps at 11, 13, 14, 16
+    }
+    return lsfr->m_lfsrvalue;
+}
+int abs(int i)
+{
+    return i < 0 ? -i : i;
 }

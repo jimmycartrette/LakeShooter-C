@@ -1,13 +1,25 @@
 #pragma once
 #include "ship.h"
+#include <stdint.h>
+
+struct PlayBlock
+{
+    int16_t m_edgewidth;
+    //uint8_t m_transitionspeed;
+    uint8_t m_islandwidth;
+    char m_displaypattern[200];
+};
+
 struct PlayArea
 {
-    int m_x, m_y;
-    int m_offsetX, m_offsetY;
-    int m_width, m_height;
-    char *m_worldmap;
+    int16_t m_x, m_y;
+    int16_t m_offsetX, m_offsetY;
+    uint16_t m_width, m_height;
+    uint8_t m_currenttopblock;
+    struct PlayBlock m_playblocks[7];
 };
 
 void PlayArea_Initialize(struct PlayArea *p);
-void PlayArea_Update(struct PlayArea *p, struct Ship *ship, const int ticks);
+void PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const int ticks);
 void PlayArea_Draw(struct PlayArea *p);
+void PlayArea_NewDraw(struct PlayArea *p);

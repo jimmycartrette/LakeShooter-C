@@ -7,7 +7,7 @@ WASM_OPT = wasm-opt
 DEBUG = 1
 
 # Compilation flags
-CFLAGS = -std=c99 -nostdlib --target=wasm32 -W -Wall -Wextra -Werror -Wno-unused -MMD -MP
+CFLAGS = -std=c99  -nostdlib --target=wasm32 -W -Wall -Wextra -Werror -Wno-unused -MMD -MP
 ifeq ($(DEBUG), 1)
 	CFLAGS += -DDEBUG -O0 -g
 else

@@ -26,6 +26,7 @@ void start()
     PALETTE[2] = 0x6c9850; // 3 = green
     PALETTE[3] = 0x909090; // 4 = grey
 
+    lfsr_start(0xB3C4u, &lsfr);
     Game_Init(&game);
 }
 

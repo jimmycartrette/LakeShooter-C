@@ -55,7 +55,7 @@ void GameObject_Draw(struct GameObject *o, struct Game *game)
         {
             Sound_PlayShipCollision(game);
         }
-        blit(EXPLOSION, o->m_posX, o->m_posY, o->m_width, o->m_height, BLIT_1BPP);
+        blit(o->m_spriteexplosion, o->m_posX, o->m_posY, o->m_width, o->m_height, BLIT_1BPP);
         return;
     }
     else
@@ -77,7 +77,7 @@ void GameObject_CollisionDetect(struct GameObject *o)
         if (Detect_SpriteCollision(o->m_posX, o->m_posY, o->m_width, o->m_height, o->m_spritefacingup))
         {
 
-            o->m_tickssincecollision++;
+            //o->m_tickssincecollision++;
         }
     }
 }

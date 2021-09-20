@@ -27,11 +27,11 @@ void Draw_Status(struct Game *game)
 
 void Game_Init(struct Game *game)
 {
+
     game->m_state = GAMESTATE_STARTUP;
     game->m_fuellevel = 1000;
     game->m_score = 0;
     game->m_ticks = 0;
-    game->m_tickssincecollision = 0;
 
     Ship_Initialize(&game->m_ship);
     PlayArea_Initialize(&game->m_playarea);
@@ -60,20 +60,20 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         {
             if (game->m_tickssincecollision++ > 100)
             {
-                game->m_state = GAMESTATE_GAMEOVER;
+                //game->m_state = GAMESTATE_GAMEOVER;
             }
         }
         else
         {
             Sound_PlayBackgroundNoise(game);
-            PlayArea_Update(&game->m_playarea, &game->m_ship, ticks);
+            PlayArea_Update(&game->m_playarea, &game->m_ship, game->m_ticks, ticks);
             Ship_Update(&game->m_ship, &game->m_input);
 
             if (game->m_ship.m_obj.m_tickssincecollision > 0)
             {
                 game->m_tickssincecollision++;
             }
-            game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * .03) / 10;
+            //  game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * .03) / 10;
         }
         break;
     }
@@ -88,7 +88,7 @@ void Game_UpdateObjects(struct Game *game)
         {
             Bullets_GenerateBullet(&game->m_bullets, &game->m_ship, game);
         }
-        Ship_CollisionDetect(&game->m_ship);
+        //Ship_CollisionDetect(&game->m_ship);
         Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_ship);
         break;
     }
@@ -98,7 +98,7 @@ void Game_DrawBackground(struct Game *game)
     switch (game->m_state)
     {
     case GAMESTATE_PLAY:
-        PlayArea_Draw(&game->m_playarea);
+        PlayArea_NewDraw(&game->m_playarea);
         Draw_Status(game);
         break;
     case GAMESTATE_GAMEOVER:

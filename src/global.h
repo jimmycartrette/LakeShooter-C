@@ -10,3 +10,4 @@
 #define PLAY_HEIGHT 120
 
 extern struct Game game;
+extern struct Lsfr lsfr;

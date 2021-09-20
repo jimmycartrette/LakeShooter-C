@@ -30,7 +30,7 @@ void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship, struct G
         {
             bullets->bullet[n].m_obj.m_alive = true;
             bullets->bullet[n].m_obj.m_posX = ship->m_obj.m_posX;
-            bullets->bullet[n].m_obj.m_posY = ship->m_obj.m_posY;
+            bullets->bullet[n].m_obj.m_posY = ship->m_obj.m_posY + 8;
             Sound_PlayBulletShoot(game);
             return;
         }
