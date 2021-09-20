@@ -92,11 +92,10 @@ void Generate_PlayBlock(bool start, bool noisland, const char seed, struct PlayB
 
         generatedplayblock->m_edgewidth = previousplayblock->m_edgewidth;
         generatedplayblock->m_islandwidth = previousplayblock->m_islandwidth;
-        //   generatedplayblock.m_transitionspeed = 0;
     }
     generatedplayblock->m_edgetransitionspeed = 2 + (abs(seed) % 5);
     generatedplayblock->m_islandtransitionspeed = 2 + (abs(seed) >> 2 % 5);
-    Generate_PlayBlock_Pattern(generatedplayblock, previousplayblock);
+    Generate_PlayBlock_Pattern(generatedplayblock, start ? generatedplayblock : previousplayblock);
 }
 
 void PlayArea_Initialize(struct PlayArea *p)

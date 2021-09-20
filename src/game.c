@@ -60,7 +60,7 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         {
             if (game->m_tickssincecollision++ > 100)
             {
-                //game->m_state = GAMESTATE_GAMEOVER;
+                game->m_state = GAMESTATE_GAMEOVER;
             }
         }
         else
@@ -73,7 +73,7 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
             {
                 game->m_tickssincecollision++;
             }
-            //  game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * .03) / 10;
+            game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * .03) / 10;
         }
         break;
     }
@@ -88,7 +88,7 @@ void Game_UpdateObjects(struct Game *game)
         {
             Bullets_GenerateBullet(&game->m_bullets, &game->m_ship, game);
         }
-        //Ship_CollisionDetect(&game->m_ship);
+        Ship_CollisionDetect(&game->m_ship);
         Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_ship);
         break;
     }

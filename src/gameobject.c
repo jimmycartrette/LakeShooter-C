@@ -77,7 +77,7 @@ void GameObject_CollisionDetect(struct GameObject *o)
         if (Detect_SpriteCollision(o->m_posX, o->m_posY, o->m_width, o->m_height, o->m_spritefacingup))
         {
 
-            //o->m_tickssincecollision++;
+            o->m_tickssincecollision++;
         }
     }
 }
