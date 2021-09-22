@@ -6,6 +6,7 @@
 #include "gameobject.h"
 #include "sound.h"
 #include "bullets.h"
+#include "fuel.h"
 
 void Draw_Status(struct Game *game)
 {
@@ -36,6 +37,7 @@ void Game_Init(struct Game *game)
     Ship_Initialize(&game->m_ship);
     PlayArea_Initialize(&game->m_playarea);
     Bullets_Init(&game->m_bullets);
+    Fuels_Initialize(&game->m_fuels);
 }
 void Game_UpdateBackground(struct Game *game, const int ticks)
 {
@@ -65,7 +67,14 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         }
         else
         {
-            Sound_PlayBackgroundNoise(game);
+            if (game->m_ship.fuelingtickscountdown == 0)
+            {
+                Sound_PlayBackgroundNoise(game);
+            }
+            else
+            {
+                game->m_ship.fuelingtickscountdown--;
+            }
             PlayArea_Update(&game->m_playarea, &game->m_ship, game->m_ticks, ticks);
             Ship_Update(&game->m_ship, &game->m_input);
 
@@ -84,12 +93,22 @@ void Game_UpdateObjects(struct Game *game)
     switch (game->m_state)
     {
     case GAMESTATE_PLAY:
-        if (Input_GamepadButtonPress(&game->m_input, 1))
+        if (game->m_tickssincecollision == 0)
         {
-            Bullets_GenerateBullet(&game->m_bullets, &game->m_ship, game);
+
+            if (game->m_ticks % 100 == 0)
+            {
+                Fuels_Create(&game->m_fuels, 30, 40);
+            }
+            if (Input_GamepadButtonPress(&game->m_input, 1))
+            {
+                Bullets_GenerateBullet(&game->m_bullets, &game->m_ship, game);
+            }
+            Ship_CollisionDetect(&game->m_ship);
+            Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_ship);
+            Fuels_Update(&game->m_fuels, &game->m_playarea);
+            Fuels_CollisionDetect(&game->m_fuels, &game->m_ship, game);
         }
-        Ship_CollisionDetect(&game->m_ship);
-        Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_ship);
         break;
     }
 }
@@ -99,7 +118,6 @@ void Game_DrawBackground(struct Game *game)
     {
     case GAMESTATE_PLAY:
         PlayArea_NewDraw(&game->m_playarea);
-        Draw_Status(game);
         break;
     case GAMESTATE_GAMEOVER:
         *DRAW_COLORS = 1;
@@ -117,7 +135,8 @@ void Game_DrawObjects(struct Game *game)
     case GAMESTATE_PLAY:
         Ship_Draw(&game->m_ship, game);
         Bullets_Draw(&game->m_bullets);
-
+        Fuels_Draw(&game->m_fuels);
+        Draw_Status(game);
         break;
     }
 }

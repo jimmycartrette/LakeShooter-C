@@ -14,6 +14,8 @@ struct PlayBlock
 struct PlayArea
 {
     int16_t m_x, m_y;
+    int16_t m_previousx, m_previousy;
+    int16_t m_changedy;
     int16_t m_offsetX, m_offsetY;
     uint16_t m_width, m_height;
     uint8_t m_currenttopblock;

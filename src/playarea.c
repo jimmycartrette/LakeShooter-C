@@ -118,15 +118,21 @@ void PlayArea_Initialize(struct PlayArea *p)
 
 void PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const int ticks)
 {
+    p->m_previousx = p->m_x;
+    p->m_previousy = p->m_y;
+
     p->m_y = p->m_y - ship->m_obj.m_vaccel * 2.2 * ticks;
+
     if (p->m_y < 0)
     {
         p->m_y = 1920;
     }
     int previousyoffset = p->m_offsetY;
+
     float startRowF = (p->m_y / 4) / TILESIZEY;
     int startRow = (int)startRowF;
     p->m_offsetY = -p->m_y / 4 + startRow * TILESIZEY;
+    p->m_changedy = (p->m_y / 4) - (p->m_previousy / 4);
 
     gameticks;
     if (abs(previousyoffset) % 20 == 0 && previousyoffset != p->m_offsetY)
@@ -148,9 +154,9 @@ void PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const
 }
 void PlayArea_NewDraw(struct PlayArea *p)
 {
-    float startRowF = (p->m_y / 4) / TILESIZEY;
-    int startRow = (int)startRowF;
-    p->m_offsetY = -p->m_y / 4 + startRow * TILESIZEY;
+    // float startRowF = (p->m_y / 4) / TILESIZEY;
+    // int startRow = (int)startRowF;
+    // p->m_offsetY = -p->m_y / 4 + startRow * TILESIZEY;
 
     *DRAW_COLORS = 3;
     for (uint8_t pb = 0; pb < 7; pb++)

@@ -7,6 +7,7 @@
 #include "playarea.h"
 #include "input.h"
 #include "bullets.h"
+#include "fuel.h"
 
 enum GameState
 {
@@ -30,6 +31,7 @@ struct Game
     struct Ship m_ship;
     struct PlayArea m_playarea;
     struct Bullets m_bullets;
+    struct Fuels m_fuels;
 };
 
 void Game_Init(struct Game *game);

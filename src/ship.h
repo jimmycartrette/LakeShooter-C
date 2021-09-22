@@ -6,6 +6,7 @@
 struct Ship
 {
     struct GameObject m_obj;
+    int8_t fuelingtickscountdown;
 };
 
 struct Game;

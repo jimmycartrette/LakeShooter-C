@@ -47,3 +47,9 @@ void Sound_PlayBulletShoot(struct Game *game)
 
     PlaySoundEffect(&bulletshoot, false, game);
 }
+void Sound_PlayFuelUp(struct Game *game)
+{
+    struct SoundEffect fuelup = {.m_freq1 = 830, .m_freq2 = 860, .m_attack = 8, .m_decay = 0, .m_sustain = 10, .m_release = 0, .m_volume = 37, .m_channel = 1, .m_mode = 2};
+
+    PlaySoundEffect(&fuelup, false, game);
+}

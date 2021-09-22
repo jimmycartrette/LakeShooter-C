@@ -6,7 +6,8 @@ enum ObjectType
 {
     OBJECT_NONE = 0,
     OBJECT_SHIP = 1,
-    OBJECT_BULLET = 2
+    OBJECT_BULLET = 2,
+    OBJECT_FUEL = 3
 };
 
 enum Direction
@@ -16,6 +17,7 @@ enum Direction
     DIRECTION_RIGHT
 };
 struct Game;
+struct Ship;
 
 struct GameObject
 {
@@ -37,4 +39,4 @@ struct GameObject
 void GameObject_Initialize(struct GameObject *o);
 void GameObject_Update(struct GameObject *o);
 void GameObject_Draw(struct GameObject *o, struct Game *game);
-void GameObject_CollisionDetect(struct GameObject *o);
+bool GameObject_CollisionDetect(struct GameObject *o, struct Ship *ship);

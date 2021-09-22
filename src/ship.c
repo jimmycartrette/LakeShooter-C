@@ -50,6 +50,32 @@ const char JETEXPLOSION[16] = {
 
 };
 
+bool Detect_SpriteCollision(float posX, float posY, int width, int height, const char *sprite)
+{
+    for (int column = posX; column < posX + width; column++)
+    {
+        for (int row = posY; row < posY + height; row++)
+        {
+            // TODO add pixel check on myship.sprite
+            if (sprite[row - (int)posY] & 1 << (7 - column - (int)posX))
+            {
+                unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
+
+                int val = (*checkframe) >> (2 ^ (2 - (column % 4)));
+                // char buffer[25];
+                // itoa(buffer, val & 2);
+                // trace(buffer);
+                if ((val & 3) == 2) // if hit green
+                {
+
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 void Ship_Initialize(struct Ship *s)
 {
     struct GameObject *o = &s->m_obj;
@@ -90,12 +116,13 @@ void Ship_Update(struct Ship *s, struct Input *i)
             s->m_obj.m_haccel += .03;
         }
     }
+    //tracef("haccel is %d", s->m_obj.m_haccel);
     if (Input_GamepadLeftHeld(i))
     {
         s->m_obj.m_dir = DIRECTION_LEFT;
         if (s->m_obj.m_posX - 1 > 0)
         {
-            s->m_obj.m_posX = s->m_obj.m_posX - s->m_obj.m_haccel;
+            s->m_obj.m_posX -= s->m_obj.m_haccel;
         }
     }
     if (Input_GamepadRightHeld(i))
@@ -103,7 +130,7 @@ void Ship_Update(struct Ship *s, struct Input *i)
         s->m_obj.m_dir = DIRECTION_RIGHT;
         if (s->m_obj.m_posX + 1 < PLAY_WIDTH - s->m_obj.m_width)
         {
-            s->m_obj.m_posX = s->m_obj.m_posX + s->m_obj.m_haccel;
+            s->m_obj.m_posX += s->m_obj.m_haccel;
         }
     }
     if (!(Input_GamepadUpHeld(i) || Input_GamepadDownHeld(i)))
@@ -147,5 +174,10 @@ void Ship_Draw(struct Ship *s, struct Game *game)
 }
 void Ship_CollisionDetect(struct Ship *s)
 {
-    GameObject_CollisionDetect(&s->m_obj);
+
+    if (Detect_SpriteCollision(s->m_obj.m_posX, s->m_obj.m_posY, s->m_obj.m_width, s->m_obj.m_height, s->m_obj.m_spritefacingup))
+    {
+
+        s->m_obj.m_tickssincecollision++;
+    }
 }
