@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "wasm4.h"
 #include "ship.h"
+#include "fuel.h"
 
 void Generate_PlayBlock_Pattern(struct PlayBlock *playblock, struct PlayBlock *previousplayblock)
 {
@@ -116,7 +117,7 @@ void PlayArea_Initialize(struct PlayArea *p)
     }
 }
 
-void PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const int ticks)
+bool PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const int ticks)
 {
     p->m_previousx = p->m_x;
     p->m_previousy = p->m_y;
@@ -147,10 +148,13 @@ void PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const
             p->m_currenttopblock--;
         }
         Generate_PlayBlock(false, false, lsfr.m_lfsrvalue, &p->m_playblocks[(p->m_currenttopblock + 1) % 7], &p->m_playblocks[p->m_currenttopblock]);
+
         lfsr_next(&lsfr);
+        return true;
         // tracef("lfsr is %x", lsfr.m_lfsrvalue);
         // tracef("playblock %x has width %d", p->m_currenttopblock, p->m_playblocks[p->m_currenttopblock].m_edgewidth);
     }
+    return false;
 }
 void PlayArea_NewDraw(struct PlayArea *p)
 {
@@ -162,7 +166,15 @@ void PlayArea_NewDraw(struct PlayArea *p)
     for (uint8_t pb = 0; pb < 7; pb++)
     {
         uint8_t wantedindex = (pb + p->m_currenttopblock) % 7;
+        *DRAW_COLORS = 3;
         blit(p->m_playblocks[wantedindex].m_displaypattern, 0, (pb * 20) + p->m_offsetY, 80, 20, 0);
         blit(p->m_playblocks[wantedindex].m_displaypattern, 80, (pb * 20) + p->m_offsetY, 80, 20, BLIT_FLIP_X);
+        char buffer[4];
+        itoa(buffer, wantedindex);
+        *DRAW_COLORS = 1;
+        if (DEBUG == 1)
+        {
+            text(buffer, 0, (pb * 20) + p->m_offsetY);
+        }
     }
 }

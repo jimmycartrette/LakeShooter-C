@@ -4,7 +4,7 @@ LD = wasm-ld
 WASM_OPT = wasm-opt
 
 # Whether to build for debugging instead of release
-DEBUG = 1
+DEBUG = 0
 
 # Compilation flags
 CFLAGS = -std=c99  -nostdlib --target=wasm32 -W -Wall -Wextra -Werror -Wno-unused -MMD -MP

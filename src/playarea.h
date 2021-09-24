@@ -23,6 +23,6 @@ struct PlayArea
 };
 
 void PlayArea_Initialize(struct PlayArea *p);
-void PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const int ticks);
+bool PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const int ticks); // true if created playblock
 void PlayArea_Draw(struct PlayArea *p);
 void PlayArea_NewDraw(struct PlayArea *p);

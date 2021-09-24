@@ -2,7 +2,9 @@
 #include "wasm4.h"
 #include "playarea.h"
 #include "game.h"
+#include "global.h"
 #include "sound.h"
+#include "utils.h"
 
 const char FUELSPRITE[23] = {
     0b00000000,
@@ -43,16 +45,20 @@ void Fuels_Initialize(struct Fuels *fuels)
         fuels->fuel[n].m_obj.m_alive = false;
     }
 }
-void Fuels_Create(struct Fuels *fuels, int x, int y)
+void Fuels_Create(struct Fuels *fuels, struct PlayArea *p)
 {
-
     for (int i = 0; i < MAXFUELS; i++)
     {
         if (!fuels->fuel[i].m_obj.m_alive)
         {
             fuels->fuel[i].m_obj.m_alive = true;
-            fuels->fuel[i].m_obj.m_posX = x;
-            fuels->fuel[i].m_obj.m_posY = y;
+
+            // fuels->fuel[i].m_obj.m_posX = p->m_playblocks[p->m_currenttopblock].m_edgewidth + (lsfr.m_lfsrvalue % (160 - p->m_playblocks[p->m_currenttopblock].m_edgewidth * 2) - 8);
+            fuels->fuel[i].m_obj.m_posX = p->m_playblocks[p->m_currenttopblock].m_edgewidth + 1 + (lsfr.m_lfsrvalue % (80 - fuels->fuel[i].m_obj.m_width - p->m_playblocks[p->m_currenttopblock].m_islandwidth - p->m_playblocks[p->m_currenttopblock].m_edgewidth));
+            int toint = fuels->fuel[i].m_obj.m_posX;
+            //tracef("currentblock is %d", p->m_currenttopblock);
+            tracef("x for fuel %d is %d edgewidth %d and islandwidth %d cb %d", i, toint, p->m_playblocks[p->m_currenttopblock].m_edgewidth, p->m_playblocks[p->m_currenttopblock].m_islandwidth, p->m_currenttopblock);
+            fuels->fuel[i].m_obj.m_posY = p->m_offsetY;
 
             return;
         }
@@ -65,10 +71,10 @@ void Fuels_Update(struct Fuels *fuels, struct PlayArea *p)
         if (fuels->fuel[n].m_obj.m_alive)
         {
             fuels->fuel[n].m_obj.m_posY -= p->m_changedy;
-
             if (fuels->fuel[n].m_obj.m_posY > 120)
             {
                 fuels->fuel[n].m_obj.m_alive = false;
+                tracef("fuel cleanup %d", n);
             }
         }
 }
@@ -82,6 +88,12 @@ void Fuels_Draw(struct Fuels *fuels)
 
             *DRAW_COLORS = 40;
             blit(FUELSPRITE, fuels->fuel[n].m_obj.m_posX, fuels->fuel[n].m_obj.m_posY, fuels->fuel[n].m_obj.m_width, fuels->fuel[n].m_obj.m_height, BLIT_1BPP);
+            char buffer[4];
+            itoa(buffer, n);
+            if (DEBUG == 1)
+            {
+                text(buffer, fuels->fuel[n].m_obj.m_posX + 1, fuels->fuel[n].m_obj.m_posY);
+            }
         }
     }
 }
@@ -103,13 +115,9 @@ void Fuels_CollisionDetect(struct Fuels *fuels, struct Ship *ship, struct Game *
                     ship->fuelingtickscountdown = 25;
                 }
 
-                if (game->m_fuellevel > 995)
+                if (game->m_fuellevel <= 9950)
                 {
-                    game->m_fuellevel = 1000;
-                }
-                if (game->m_fuellevel <= 995)
-                {
-                    game->m_fuellevel += 5;
+                    game->m_fuellevel += 50;
                 }
             }
         }

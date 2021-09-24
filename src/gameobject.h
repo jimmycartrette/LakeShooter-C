@@ -22,9 +22,9 @@ struct Ship;
 struct GameObject
 {
     uint8_t m_type;
-    float m_posX, m_posY;
+    double m_posX, m_posY;
     uint8_t m_width, m_height;
-    float m_prePosX, m_prePosY;
+    double m_prePosX, m_prePosY;
     float m_vaccel, m_haccel;
     uint8_t m_tickssincecollision;
     enum Direction m_dir;

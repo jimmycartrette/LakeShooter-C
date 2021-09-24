@@ -20,17 +20,24 @@ void Draw_Status(struct Game *game)
     *DRAW_COLORS = 0x10;
     rect(60, PLAY_HEIGHT + 14, 50, 11);
     *DRAW_COLORS = 1;
-    line(70 + .30 * game->m_fuellevel / 10, PLAY_HEIGHT + 16, 70 + .3 * game->m_fuellevel / 10, PLAY_HEIGHT + 22);
+    line(70 + .30 * game->m_fuellevel / 100, PLAY_HEIGHT + 16, 70 + .3 * game->m_fuellevel / 100, PLAY_HEIGHT + 22);
     *DRAW_COLORS = 2;
     text("E", 62, PLAY_HEIGHT + 16);
     text("F", 101, PLAY_HEIGHT + 16);
+    if (DEBUG == 1)
+    {
+        char buffer[3];
+        itoa(buffer, game->m_playarea.m_currenttopblock);
+
+        text(buffer, 20, 140);
+    }
 }
 
 void Game_Init(struct Game *game)
 {
 
     game->m_state = GAMESTATE_STARTUP;
-    game->m_fuellevel = 1000;
+    game->m_fuellevel = 10000;
     game->m_score = 0;
     game->m_ticks = 0;
 
@@ -75,14 +82,20 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
             {
                 game->m_ship.fuelingtickscountdown--;
             }
-            PlayArea_Update(&game->m_playarea, &game->m_ship, game->m_ticks, ticks);
+            if (PlayArea_Update(&game->m_playarea, &game->m_ship, game->m_ticks, ticks) && lsfr.m_lfsrvalue % 5 == 0)
+            {
+                Fuels_Create(&game->m_fuels, &game->m_playarea);
+            }
             Ship_Update(&game->m_ship, &game->m_input);
 
             if (game->m_ship.m_obj.m_tickssincecollision > 0)
             {
                 game->m_tickssincecollision++;
             }
-            game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * .03) / 10;
+            if (DEBUG == 0)
+            {
+                game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * 4);
+            }
         }
         break;
     }
@@ -96,10 +109,11 @@ void Game_UpdateObjects(struct Game *game)
         if (game->m_tickssincecollision == 0)
         {
 
-            if (game->m_ticks % 100 == 0)
-            {
-                Fuels_Create(&game->m_fuels, 30, 40);
-            }
+            // if (game->m_ticks % 100 == 0)
+            // {
+
+            //     Fuels_Create(&game->m_fuels, &game->m_playarea);
+            // }
             if (Input_GamepadButtonPress(&game->m_input, 1))
             {
                 Bullets_GenerateBullet(&game->m_bullets, &game->m_ship, game);
