@@ -53,3 +53,9 @@ void Sound_PlayFuelUp(struct Game *game)
 
     PlaySoundEffect(&fuelup, false, game);
 }
+void Sound_PlayFuelAlarm(struct Game *game)
+{
+    struct SoundEffect fuelalarm = {.m_freq1 = 220, .m_freq2 = 300, .m_attack = 8, .m_decay = 16, .m_sustain = 14, .m_release = 0, .m_volume = 40, .m_channel = 1, .m_mode = 1};
+
+    PlaySoundEffect(&fuelalarm, false, game);
+}

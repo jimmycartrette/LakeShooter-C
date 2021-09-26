@@ -18,3 +18,4 @@ void Sound_PlayBackgroundNoise(struct Game *game);
 void Sound_PlayShipCollision(struct Game *game);
 void Sound_PlayBulletShoot(struct Game *game);
 void Sound_PlayFuelUp(struct Game *game);
+void Sound_PlayFuelAlarm(struct Game *game);

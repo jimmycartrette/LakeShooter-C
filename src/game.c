@@ -28,8 +28,7 @@ void Draw_Status(struct Game *game)
     {
         char buffer[3];
         itoa(buffer, game->m_playarea.m_currenttopblock);
-
-        text(buffer, 20, 140);
+        // text(buffer, 20, 140);
     }
 }
 
@@ -82,6 +81,7 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
             {
                 game->m_ship.fuelingtickscountdown--;
             }
+            // tracef("y is %d", game->m_playarea.m_y);
             if (PlayArea_Update(&game->m_playarea, &game->m_ship, game->m_ticks, ticks) && lsfr.m_lfsrvalue % 5 == 0)
             {
                 Fuels_Create(&game->m_fuels, &game->m_playarea);
@@ -92,9 +92,13 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
             {
                 game->m_tickssincecollision++;
             }
-            if (DEBUG == 0)
+            // if (DEBUG == 0)
+            // {
+            game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * 4);
+            // }
+            if (game->m_fuellevel < 1800 && game->m_ticks % 33 == 0)
             {
-                game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * 4);
+                Sound_PlayFuelAlarm(game);
             }
         }
         break;

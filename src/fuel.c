@@ -92,7 +92,7 @@ void Fuels_Draw(struct Fuels *fuels)
             itoa(buffer, n);
             if (DEBUG == 1)
             {
-                text(buffer, fuels->fuel[n].m_obj.m_posX + 1, fuels->fuel[n].m_obj.m_posY);
+                //text(buffer, fuels->fuel[n].m_obj.m_posX + 1, fuels->fuel[n].m_obj.m_posY);
             }
         }
     }

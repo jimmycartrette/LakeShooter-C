@@ -101,7 +101,7 @@ void Generate_PlayBlock(bool start, bool noisland, const char seed, struct PlayB
 
 void PlayArea_Initialize(struct PlayArea *p)
 {
-    p->m_y = 0;
+    p->m_y = 983040;
     p->m_x = 0;
     p->m_width = PLAY_WIDTH;
     p->m_height = PLAY_HEIGHT;
@@ -124,10 +124,6 @@ bool PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const
 
     p->m_y = p->m_y - ship->m_obj.m_vaccel * 2.2 * ticks;
 
-    if (p->m_y < 0)
-    {
-        p->m_y = 1920;
-    }
     int previousyoffset = p->m_offsetY;
 
     float startRowF = (p->m_y / 4) / TILESIZEY;
@@ -135,8 +131,10 @@ bool PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const
     p->m_offsetY = -p->m_y / 4 + startRow * TILESIZEY;
     p->m_changedy = (p->m_y / 4) - (p->m_previousy / 4);
 
+    int32_t abspreviouslymodtwenty = abs(previousyoffset) % 20 < abs(p->m_offsetY) % 20;
+
     gameticks;
-    if (abs(previousyoffset) % 20 == 0 && previousyoffset != p->m_offsetY)
+    if (abspreviouslymodtwenty && previousyoffset != p->m_offsetY)
     {
 
         if (p->m_currenttopblock == 0)
@@ -174,7 +172,7 @@ void PlayArea_NewDraw(struct PlayArea *p)
         *DRAW_COLORS = 1;
         if (DEBUG == 1)
         {
-            text(buffer, 0, (pb * 20) + p->m_offsetY);
+            //  text(buffer, 0, (pb * 20) + p->m_offsetY);
         }
     }
 }
