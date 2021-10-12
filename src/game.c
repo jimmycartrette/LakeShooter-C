@@ -2,7 +2,7 @@
 #include "global.h"
 #include "wasm4.h"
 #include "utils.h"
-#include "ship.h"
+#include "jet.h"
 #include "gameobject.h"
 #include "sound.h"
 #include "bullets.h"
@@ -40,7 +40,7 @@ void Game_Init(struct Game *game)
     game->m_score = 0;
     game->m_ticks = 0;
 
-    Ship_Initialize(&game->m_ship);
+    Jet_Initialize(&game->m_jet);
     PlayArea_Initialize(&game->m_playarea);
     Bullets_Init(&game->m_bullets);
     Fuels_Initialize(&game->m_fuels);
@@ -62,7 +62,7 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
     case GAMESTATE_STARTUP:
         game->m_state = GAMESTATE_PLAY;
         break;
-    case GAMESTATE_SHIPCOLLISION:
+    case GAMESTATE_JETCOLLISION:
         if (game->m_tickssincecollision++ > 100)
         {
             game->m_state = GAMESTATE_GAMEOVER;
@@ -72,31 +72,31 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
     case GAMESTATE_PLAY:
         if (game->m_tickssincecollision == 1)
         {
-            game->m_state = GAMESTATE_SHIPCOLLISION;
+            game->m_state = GAMESTATE_JETCOLLISION;
             return;
         }
-        if (game->m_ship.fuelingtickscountdown == 0)
+        if (game->m_jet.fuelingtickscountdown == 0)
         {
             Sound_PlayBackgroundNoise(game);
         }
         else
         {
-            game->m_ship.fuelingtickscountdown--;
+            game->m_jet.fuelingtickscountdown--;
         }
         // tracef("y is %d", game->m_playarea.m_y);
-        if (PlayArea_Update(&game->m_playarea, &game->m_ship, game->m_ticks, ticks) && lsfr.m_lfsrvalue % 5 == 0)
+        if (PlayArea_Update(&game->m_playarea, &game->m_jet, game->m_ticks, ticks) && lsfr.m_lfsrvalue % 5 == 0)
         {
             Fuels_Create(&game->m_fuels, &game->m_playarea);
         }
-        Ship_Update(&game->m_ship, &game->m_input);
+        Jet_Update(&game->m_jet, &game->m_input);
 
-        if (game->m_ship.m_obj.m_tickssincecollision > 0)
+        if (game->m_jet.m_obj.m_tickssincecollision > 0)
         {
             game->m_tickssincecollision++;
         }
         // if (DEBUG == 0)
         // {
-        game->m_fuellevel -= (game->m_ship.m_obj.m_vaccel * 4);
+        game->m_fuellevel -= (game->m_jet.m_obj.m_vaccel * 4);
         // }
         if (game->m_fuellevel < 1800 && game->m_ticks % 33 == 0)
         {
@@ -111,7 +111,7 @@ void Game_UpdateObjects(struct Game *game)
 
     switch (game->m_state)
     {
-    case GAMESTATE_SHIPCOLLISION:
+    case GAMESTATE_JETCOLLISION:
 
         break;
     case GAMESTATE_PLAY:
@@ -123,14 +123,14 @@ void Game_UpdateObjects(struct Game *game)
         // }
         if (Input_GamepadButtonPress(&game->m_input, 1))
         {
-            Bullets_GenerateBullet(&game->m_bullets, &game->m_ship, game);
+            Bullets_GenerateBullet(&game->m_bullets, &game->m_jet, game);
         }
-        Ship_CollisionDetect(&game->m_ship);
+        Jet_CollisionDetect(&game->m_jet);
         Bullets_CollisionDetect(&game->m_bullets, game);
-        Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_ship);
-        Fuels_AndShipCollisionDetect(&game->m_fuels, &game->m_ship, game);
+        Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_jet);
+        Fuels_AndJetCollisionDetect(&game->m_fuels, &game->m_jet, game);
         Fuels_Update(&game->m_fuels, &game->m_playarea);
-        // fuels colliding with ship
+        // fuels colliding with jet
 
         break;
     }
@@ -140,7 +140,7 @@ void Game_DrawBackground(struct Game *game)
     switch (game->m_state)
     {
     case GAMESTATE_PLAY:
-    case GAMESTATE_SHIPCOLLISION:
+    case GAMESTATE_JETCOLLISION:
         PlayArea_NewDraw(&game->m_playarea);
         break;
     case GAMESTATE_GAMEOVER:
@@ -156,9 +156,9 @@ void Game_DrawObjects(struct Game *game)
 {
     switch (game->m_state)
     {
-    case GAMESTATE_SHIPCOLLISION:
+    case GAMESTATE_JETCOLLISION:
     case GAMESTATE_PLAY:
-        Ship_Draw(&game->m_ship, game);
+        Jet_Draw(&game->m_jet, game);
         Bullets_Draw(&game->m_bullets);
         Fuels_Draw(&game->m_fuels);
         Draw_Status(game);

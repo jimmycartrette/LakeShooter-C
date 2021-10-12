@@ -5,7 +5,7 @@
 enum ObjectType
 {
     OBJECT_NONE = 0,
-    OBJECT_SHIP = 1,
+    OBJECT_JET = 1,
     OBJECT_BULLET = 2,
     OBJECT_FUEL = 3
 };
@@ -17,7 +17,7 @@ enum Direction
     DIRECTION_RIGHT
 };
 struct Game;
-struct Ship;
+struct Jet;
 
 struct GameObject
 {

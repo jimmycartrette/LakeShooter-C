@@ -17,4 +17,4 @@ void Fuels_Initialize(struct Fuels *fuels);
 void Fuels_Update(struct Fuels *fuels, struct PlayArea *p);
 void Fuels_Draw(struct Fuels *fuels);
 void Fuels_Create(struct Fuels *fuels, struct PlayArea *p);
-void Fuels_AndShipCollisionDetect(struct Fuels *fuels, struct Ship *ship, struct Game *game);
+void Fuels_AndJetCollisionDetect(struct Fuels *fuels, struct Jet *jet, struct Game *game);

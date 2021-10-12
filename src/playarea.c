@@ -2,7 +2,7 @@
 #include "global.h"
 #include "utils.h"
 #include "wasm4.h"
-#include "ship.h"
+#include "jet.h"
 #include "fuel.h"
 
 void Generate_PlayBlock_Pattern(struct PlayBlock *playblock, struct PlayBlock *previousplayblock)
@@ -117,12 +117,12 @@ void PlayArea_Initialize(struct PlayArea *p)
     }
 }
 
-bool PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const int ticks)
+bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, const int ticks)
 {
     p->m_previousx = p->m_x;
     p->m_previousy = p->m_y;
 
-    p->m_y = p->m_y - ship->m_obj.m_vaccel * 2.2 * ticks;
+    p->m_y = p->m_y - jet->m_obj.m_vaccel * 2.2 * ticks;
 
     int previousyoffset = p->m_offsetY;
 

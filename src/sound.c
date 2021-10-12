@@ -30,22 +30,22 @@ void Sound_PlayBackgroundNoise(struct Game *game)
 
     {
         struct SoundEffect bgnoise = {.m_freq1 = 320, .m_sustain = 20, .m_volume = 32, .m_channel = 3, .m_mode = 2};
-        bgnoise.m_freq1 += (int)game->m_ship.m_obj.m_vaccel * (float)40;
+        bgnoise.m_freq1 += (int)game->m_jet.m_obj.m_vaccel * (float)40;
 
         PlaySoundEffect(&bgnoise, true, game);
     }
 }
-void Sound_PlayShipCollision(struct Game *game)
+void Sound_PlayJetCollision(struct Game *game)
 {
-    struct SoundEffect shipcollision = {.m_freq1 = 230, .m_attack = 8, .m_decay = 10, .m_sustain = 8, .m_release = 8, .m_volume = 34, .m_channel = 3};
+    struct SoundEffect jetcollision = {.m_freq1 = 230, .m_attack = 8, .m_decay = 10, .m_sustain = 8, .m_release = 8, .m_volume = 34, .m_channel = 3};
 
-    PlaySoundEffect(&shipcollision, false, game);
+    PlaySoundEffect(&jetcollision, false, game);
 }
 void Sound_PlayOtherCollision(struct Game *game)
 {
-    struct SoundEffect shipcollision = {.m_freq1 = 260, .m_attack = 4, .m_decay = 6, .m_sustain = 5, .m_release = 4, .m_volume = 34, .m_channel = 3};
+    struct SoundEffect jetcollision = {.m_freq1 = 260, .m_attack = 4, .m_decay = 6, .m_sustain = 5, .m_release = 4, .m_volume = 34, .m_channel = 3};
 
-    PlaySoundEffect(&shipcollision, false, game);
+    PlaySoundEffect(&jetcollision, false, game);
 }
 void Sound_PlayBulletShoot(struct Game *game)
 {

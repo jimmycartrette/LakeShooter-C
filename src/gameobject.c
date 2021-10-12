@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "utils.h"
 #include "sound.h"
-#include "ship.h"
+#include "jet.h"
 
 const char EXPLOSION[8] = {
     0b11111101,
@@ -72,9 +72,9 @@ void GameObject_Draw(struct GameObject *o, struct Game *game)
 
         if (o->m_tickssincecollision == 1)
         {
-            if (o->m_type == OBJECT_SHIP)
+            if (o->m_type == OBJECT_JET)
             {
-                Sound_PlayShipCollision(game);
+                Sound_PlayJetCollision(game);
             }
             else
             {
@@ -82,7 +82,7 @@ void GameObject_Draw(struct GameObject *o, struct Game *game)
             }
         }
         *DRAW_COLORS = 2;
-        if (o->m_type == OBJECT_SHIP)
+        if (o->m_type == OBJECT_JET)
         {
             blit(o->m_spriteexplosion, o->m_posX, o->m_posY, o->m_width, o->m_height, BLIT_1BPP);
         }
@@ -100,7 +100,7 @@ void GameObject_Draw(struct GameObject *o, struct Game *game)
 }
 void GameObject_Update(struct GameObject *o)
 {
-    if (o->m_type != OBJECT_SHIP)
+    if (o->m_type != OBJECT_JET)
     {
         if (o->m_tickssincecollision > 0)
         {
