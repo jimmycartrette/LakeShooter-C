@@ -65,7 +65,7 @@ void Fuels_Create(struct Fuels *fuels, struct PlayArea *p)
             fuels->fuel[i].m_obj.m_alive = true;
             fuels->fuel[i].m_obj.m_width = 7;
             fuels->fuel[i].m_obj.m_height = 23;
-
+            fuels->fuel[i].m_obj.m_tickssincecollision = 0;
             fuels->fuel[i].m_obj.m_posX = p->m_playblocks[p->m_currenttopblock].m_edgewidth + 1 + (lsfr.m_lfsrvalue % (80 - fuels->fuel[i].m_obj.m_width - p->m_playblocks[p->m_currenttopblock].m_islandwidth - p->m_playblocks[p->m_currenttopblock].m_edgewidth));
             if (lsfr.m_lfsrvalue % 2 == 0)
             {
