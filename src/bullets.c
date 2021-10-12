@@ -32,6 +32,8 @@ void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship, struct G
         if (!bullets->bullet[n].m_obj.m_alive)
         {
             bullets->bullet[n].m_obj.m_alive = true;
+            bullets->bullet[n].m_obj.m_width = 8;
+            bullets->bullet[n].m_obj.m_height = 3;
             bullets->bullet[n].m_obj.m_posX = ship->m_obj.m_posX;
             bullets->bullet[n].m_obj.m_posY = ship->m_obj.m_posY + 6;
             Sound_PlayBulletShoot(game);
@@ -77,7 +79,7 @@ void Bullets_CollisionDetect(struct Bullets *bullets, struct Game *game)
         {
 
             // check land
-            if (Detect_PixelCollision(bullets->bullet[i].m_obj.m_posX, bullets->bullet[i].m_obj.m_posY))
+            if (bullets->bullet[i].m_obj.m_posY > 0 && Detect_PixelCollision(bullets->bullet[i].m_obj.m_posX, bullets->bullet[i].m_obj.m_posY))
             {
                 bullets->bullet[i].m_obj.m_alive = false;
                 continue;
@@ -91,9 +93,10 @@ void Bullets_CollisionDetect(struct Bullets *bullets, struct Game *game)
                     if (GameObject_CollisionDetect(&game->m_fuels.fuel[f].m_obj, &bullets->bullet[i].m_obj))
                     {
                         //   tracef("fuel collision with bullet %d", f);
-                        game->m_fuels.fuel[f].m_obj.m_tickssincecollision++;
-                        bullets->bullet[i].m_obj.m_alive = false;
-                        continue;
+                        bullets->bullet[i]
+                            .m_obj.m_alive = false;
+                        GameObject_StartExplosion(&game->m_fuels.fuel[f].m_obj);
+                        break;
                     }
                 }
             }

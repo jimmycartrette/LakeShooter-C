@@ -63,6 +63,8 @@ void Fuels_Create(struct Fuels *fuels, struct PlayArea *p)
         if (!fuels->fuel[i].m_obj.m_alive)
         {
             fuels->fuel[i].m_obj.m_alive = true;
+            fuels->fuel[i].m_obj.m_width = 7;
+            fuels->fuel[i].m_obj.m_height = 23;
 
             fuels->fuel[i].m_obj.m_posX = p->m_playblocks[p->m_currenttopblock].m_edgewidth + 1 + (lsfr.m_lfsrvalue % (80 - fuels->fuel[i].m_obj.m_width - p->m_playblocks[p->m_currenttopblock].m_islandwidth - p->m_playblocks[p->m_currenttopblock].m_edgewidth));
             if (lsfr.m_lfsrvalue % 2 == 0)
@@ -87,7 +89,7 @@ void Fuels_Update(struct Fuels *fuels, struct PlayArea *p)
             if (fuels->fuel[n].m_obj.m_posY > 120)
             {
                 fuels->fuel[n].m_obj.m_alive = false;
-                tracef("fuel cleanup %d", n);
+                // tracef("fuel cleanup %d", n);
             }
         }
 }
@@ -117,7 +119,7 @@ void Fuels_Draw(struct Fuels *fuels)
         }
     }
 }
-void Fuels_CollisionDetect(struct Fuels *fuels, struct Ship *ship, struct Game *game)
+void Fuels_AndShipCollisionDetect(struct Fuels *fuels, struct Ship *ship, struct Game *game)
 {
     int n;
     for (n = 0; n < MAXFUELS; n++)

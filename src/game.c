@@ -128,7 +128,7 @@ void Game_UpdateObjects(struct Game *game)
         Ship_CollisionDetect(&game->m_ship);
         Bullets_CollisionDetect(&game->m_bullets, game);
         Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_ship);
-        Fuels_CollisionDetect(&game->m_fuels, &game->m_ship, game);
+        Fuels_AndShipCollisionDetect(&game->m_fuels, &game->m_ship, game);
         Fuels_Update(&game->m_fuels, &game->m_playarea);
         // fuels colliding with ship
 

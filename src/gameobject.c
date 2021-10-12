@@ -125,3 +125,13 @@ bool GameObject_CollisionDetect(struct GameObject *o1, struct GameObject *o2)
     }
     return false;
 }
+void GameObject_StartExplosion(struct GameObject *o1)
+{
+    o1->m_spriteexplosion = EXPLOSION;
+    o1->m_posX = o1->m_posX + (o1->m_width / 2) - 4;
+    o1->m_posY = o1->m_posY + (o1->m_height / 2) - 4;
+    o1->m_width = 8;
+    o1->m_height = 8;
+
+    o1->m_tickssincecollision++;
+}
