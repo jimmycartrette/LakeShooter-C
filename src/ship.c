@@ -50,32 +50,6 @@ const char JETEXPLOSION[16] = {
 
 };
 
-bool Detect_SpriteCollision(float posX, float posY, int width, int height, const char *sprite)
-{
-    for (int column = posX; column < posX + width; column++)
-    {
-        for (int row = posY; row < posY + height; row++)
-        {
-            // TODO add pixel check on myship.sprite
-            if (sprite[row - (int)posY] & 1 << (7 - column - (int)posX))
-            {
-                unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
-
-                int val = (*checkframe) >> (2 ^ (2 - (column % 4)));
-                // char buffer[25];
-                // itoa(buffer, val & 2);
-                // trace(buffer);
-                if ((val & 3) == 2) // if hit green
-                {
-
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
 void Ship_Initialize(struct Ship *s)
 {
     struct GameObject *o = &s->m_obj;
@@ -177,7 +151,6 @@ void Ship_CollisionDetect(struct Ship *s)
 
     if (Detect_SpriteCollision(s->m_obj.m_posX, s->m_obj.m_posY, s->m_obj.m_width, s->m_obj.m_height, s->m_obj.m_spritefacingup))
     {
-
         s->m_obj.m_tickssincecollision++;
     }
 }

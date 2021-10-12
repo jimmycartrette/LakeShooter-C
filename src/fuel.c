@@ -33,6 +33,17 @@ const char FUELSPRITE[23] = {
 
 };
 
+const char FUELEXPLOSION[8] = {
+    0b11111101,
+    0b01111111,
+    0b11101111,
+    0b10111111,
+    0b11111101,
+    0b11011111,
+    0b10111101,
+    0b11101111,
+};
+
 void Fuels_Initialize(struct Fuels *fuels)
 {
     for (int n = 0; n < MAXFUELS; n++)
@@ -53,11 +64,12 @@ void Fuels_Create(struct Fuels *fuels, struct PlayArea *p)
         {
             fuels->fuel[i].m_obj.m_alive = true;
 
-            // fuels->fuel[i].m_obj.m_posX = p->m_playblocks[p->m_currenttopblock].m_edgewidth + (lsfr.m_lfsrvalue % (160 - p->m_playblocks[p->m_currenttopblock].m_edgewidth * 2) - 8);
             fuels->fuel[i].m_obj.m_posX = p->m_playblocks[p->m_currenttopblock].m_edgewidth + 1 + (lsfr.m_lfsrvalue % (80 - fuels->fuel[i].m_obj.m_width - p->m_playblocks[p->m_currenttopblock].m_islandwidth - p->m_playblocks[p->m_currenttopblock].m_edgewidth));
+            if (lsfr.m_lfsrvalue % 2 == 0)
+            {
+                fuels->fuel[i].m_obj.m_posX = 160 - fuels->fuel[i].m_obj.m_posX;
+            }
             int toint = fuels->fuel[i].m_obj.m_posX;
-            //tracef("currentblock is %d", p->m_currenttopblock);
-            tracef("x for fuel %d is %d edgewidth %d and islandwidth %d cb %d", i, toint, p->m_playblocks[p->m_currenttopblock].m_edgewidth, p->m_playblocks[p->m_currenttopblock].m_islandwidth, p->m_currenttopblock);
             fuels->fuel[i].m_obj.m_posY = p->m_offsetY;
 
             return;
@@ -70,6 +82,7 @@ void Fuels_Update(struct Fuels *fuels, struct PlayArea *p)
     for (n = 0; n < MAXFUELS; n++)
         if (fuels->fuel[n].m_obj.m_alive)
         {
+            GameObject_Update(&fuels->fuel[n].m_obj);
             fuels->fuel[n].m_obj.m_posY -= p->m_changedy;
             if (fuels->fuel[n].m_obj.m_posY > 120)
             {
@@ -85,14 +98,21 @@ void Fuels_Draw(struct Fuels *fuels)
     {
         if (fuels->fuel[n].m_obj.m_alive)
         {
-
-            *DRAW_COLORS = 40;
-            blit(FUELSPRITE, fuels->fuel[n].m_obj.m_posX, fuels->fuel[n].m_obj.m_posY, fuels->fuel[n].m_obj.m_width, fuels->fuel[n].m_obj.m_height, BLIT_1BPP);
-            char buffer[4];
-            itoa(buffer, n);
-            if (DEBUG == 1)
+            if (fuels->fuel[n].m_obj.m_tickssincecollision == 0)
             {
-                //text(buffer, fuels->fuel[n].m_obj.m_posX + 1, fuels->fuel[n].m_obj.m_posY);
+                *DRAW_COLORS = 40;
+                blit(FUELSPRITE, fuels->fuel[n].m_obj.m_posX, fuels->fuel[n].m_obj.m_posY, fuels->fuel[n].m_obj.m_width, fuels->fuel[n].m_obj.m_height, BLIT_1BPP);
+                // char buffer[4];
+                // itoa(buffer, n);
+                // if (DEBUG == 1)
+                // {
+                //     //text(buffer, fuels->fuel[n].m_obj.m_posX + 1, fuels->fuel[n].m_obj.m_posY);
+                // }
+            }
+            else
+            {
+                *DRAW_COLORS = 4;
+                blit(FUELEXPLOSION, fuels->fuel[n].m_obj.m_posX, fuels->fuel[n].m_obj.m_posY, fuels->fuel[n].m_obj.m_width, fuels->fuel[n].m_obj.m_height, BLIT_1BPP);
             }
         }
     }
@@ -103,7 +123,7 @@ void Fuels_CollisionDetect(struct Fuels *fuels, struct Ship *ship, struct Game *
     for (n = 0; n < MAXFUELS; n++)
         if (fuels->fuel[n].m_obj.m_alive)
         {
-            if (GameObject_CollisionDetect(&fuels->fuel[n].m_obj, ship))
+            if (GameObject_CollisionDetect(&fuels->fuel[n].m_obj, &ship->m_obj) && fuels->fuel[n].m_obj.m_tickssincecollision == 0)
             {
 
                 if (ship->fuelingtickscountdown == 24)

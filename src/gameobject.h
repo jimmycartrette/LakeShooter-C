@@ -39,4 +39,5 @@ struct GameObject
 void GameObject_Initialize(struct GameObject *o);
 void GameObject_Update(struct GameObject *o);
 void GameObject_Draw(struct GameObject *o, struct Game *game);
-bool GameObject_CollisionDetect(struct GameObject *o, struct Ship *ship);
+bool GameObject_CollisionDetect(struct GameObject *o1, struct GameObject *o2);
+bool Detect_SpriteCollision(float posX, float posY, int width, int height, const char *sprite);

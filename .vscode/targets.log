@@ -1,6 +1,6 @@
 make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
 process_begin: CreateProcess(NULL, which wasm-opt, ...) failed.
-makefile:39: pipe: No error
+makefile:42: pipe: No error
  
 # GNU Make 4.3
 This program is built by Equation Solution <http://www.Equation.com>.
@@ -8,9 +8,8 @@ This program is built by Equation Solution <http://www.Equation.com>.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sun Sep 26 18:56:37 2021
+# Make data base, printed on Tue Oct 12 08:28:33 2021
 
 # Variables
 
@@ -27,7 +26,7 @@ USERPROFILE = C:\Users\jimmy
 # environment
 LOCALAPPDATA = C:\Users\jimmy\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-4ed3ccad-104a-4cee-8410-ce20d5230acb-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e51ad8ab-443a-4348-9d7a-d6f040ca9c10-sock
 # environment
 VSCODE_CWD = C:\Program Files\Microsoft VS Code
 # environment
@@ -45,9 +44,10 @@ GOPATH = C:\Users\jimmy\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_14120_RGAVNWVPHSIAKNJE
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5508_ZTRXLLVHVFVRSLML
 # environment
-FPS_BROWSER_USER_PROFILE_STRING = Default
+FPS_BROWSER_USER_PROFILE_STR 
+ING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -78,7 +78,7 @@ ONEDRIVE = C:\Users\jimmy\OneDrive
 CURDIR := c:/Users/jimmy/source/repos/LakeShooter
 # environment
 VSCODE_PIPE_LOGGING = true
-# makefile (from 'makefile', line 4)
+# makefile (from 'makefile', line 9)
 WASM_OPT = wasm-opt
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
@@ -101,7 +101,7 @@ MAKEFILE_LIST := Makefile build/bullets.d build/fuel.d build/game.d build/gameob
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 14120
+VSCODE_PID = 5508
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -166,15 +166,15 @@ PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW
 +F = $(notdir $+)
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
-# makefile (from 'makefile', line 30)
-OBJECTS = $(patsubst src/%.c, build/%.o, $(SOURCES))
+# makefile (from 'makefile', line 33)
+OBJECTS = $(patsubst src/%.c, build/%.o, $(wildcard src/*.c)) $(patsubst src/%.cpp, build/%.o, $(wildcard src/*.cpp))
 # environment
 USERDOMAIN = DESKTOP-8RO0NCS
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
 OS = Windows_NT
-# makefile (from 'makefile', line 27)
+# makefile (from 'makefile', line 10)
 WASM_OPT_FLAGS = -Oz --zero-filled-memory --strip-producers
 # makefile
 .DEFAULT_GOAL := all
@@ -184,8 +184,8 @@ MAKE_VERSION := 4.3
 .SHELLSTATUS := 127
 # environment
 PROGRAMFILES(X86) = C:\Program Files (x86)
-# makefile (from 'makefile', line 23)
-LDFLAGS = --no-entry --import-memory --initial-memory=65536 --max-memory=65536 --global-base=6560 -zstack-size=1024 --strip-all --export-dynamic --gc-sections --lto-O3 -O3
+# makefile (from 'makefile', line 29)
+LDFLAGS = -Wl,-zstack-size=1024,--no-entry,--import-memory -mexec-model=reactor -Wl,--initial-memory=65536,--max-memory=65536,--global-base=6560 -Wl,--strip-all,--gc-sections,--lto-O3 -Oz
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-8RO0NCS
 # environment
@@ -194,8 +194,8 @@ NUMBER_OF_PROCESSORS = 16
 PUBLIC = C:\Users\Public
 # environment
 APPDATA = C:\Users\jimmy\AppData\Roaming
-# makefile (from 'makefile', line 14)
-CFLAGS = -std=c99  -nostdlib --target=wasm32 -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -DNDEBUG -Oz -flto
+# makefile (from 'makefile', line 20)
+CFLAGS = -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DNDEBUG -Oz -flto
 # environment
 HOMEDRIVE = C:
 # environment
@@ -214,30 +214,28 @@ VSCODE_IPC_HOOK = \\.\pipe\aff898ef38ccbcd719ed09a64d7178b4-1.60.2-main-sock
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
-# makefile (from 'makefile', line 31)
+# makefile (from 'makefile', line 34)
 DEPS = $(OBJECTS:.o=.d)
 # default
 SUFFIXES := 
 # environment
 ALLUSERSPROFILE = C:\ProgramData
-# makefile (from 'makefile', line 3)
-LD = wasm-ld
 # environment
 SESSIONNAME = Console
-# makefile (from 'makefile', line 7)
+# makefile (from 'makefile', line 13)
 DEBUG = 0
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
 PROCESSOR_REVISION = 7100
-# makefile (from 'makefile', line 2)
-CC = clang
-# makefile (from 'makefile', line 29)
-SOURCES = $(wildcard src/*.c)
+# makefile (from 'makefile', line 6)
+CXX = $(WASI_SDK_PATH)/bin/clang++ --sysroot=$(WASI_SDK_PATH)/share/wasi-sysroot
+# makefile (from 'makefile', line 5)
+CC = $(WASI_SDK_PATH)/bin/clang --sysroot=$(WASI_SDK_PATH)/share/wasi-sysroot
 # environment
 PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 # variable set hash-table stats:
-# Load=111/1024=11%, Rehash=0, Collisions=10/176=6%
+# Load=110/1024=11%, Rehash=0, Collisions=10/176=6%
 
 # Pattern-specific Variable Values
 
@@ -245,38 +243,43 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 
 # Directories
 
-# . (key c:/Users/jimmy/source/repos/LakeShooter, mtime 1632519539): 11 files, no impossibilities.
+# . (key c:/Users/jimmy/source/repos/LakeShooter, mtime 1634041683): 12 files, no impossibilities.
 # src (key c:/Users/jimmy/source/repos/LakeShooter/src, mtime 1632185583): 25 files, no impossibilities.
 
-# 36 files, no impossibilities in 2 directories.
+# 37 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
 build/%.o: src/%.c
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-# 1 implicit rules, 0 (0.0%) terminal.
+build/%.o: src/%.cpp
+#  recipe to execute (from 'makefile', line 56):
+	@mkdir -p build
+	$(CXX) -c $< -o $@ $(CFLAGS)
+
+# 2 implicit rules, 0 (0.0%) terminal.
 # Files
 
 # Not a target:
 build/input.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-24 17:38:59
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/ship.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-22 13:00:16
+#  Last modified 2021-09-26 21:27:46
 #  File has been updated.
 #  Successfully updated.
 
 src\game.h:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-20 21:21:23
+#  Last modified 2021-10-11 12:39:27
 #  File has been updated.
 #  Successfully updated.
 
@@ -289,17 +292,17 @@ src\global.h:
 build/main.o: src/main.c src\main.c src\wasm4.h src\utils.h src\game.h src\ship.h src\gameobject.h src\input.h src\playarea.h src\bullets.h src\fuel.h src\global.h src\sound.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Not a target:
 src\bullets.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-18 10:34:21
+#  Last modified 2021-10-11 15:23:39
 #  File has been updated.
 #  Successfully updated.
 
@@ -318,7 +321,7 @@ src\playarea.h:
 
 src\gameobject.h:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-23 07:07:21
+#  Last modified 2021-09-26 21:27:35
 #  File has been updated.
 #  Successfully updated.
 
@@ -331,11 +334,11 @@ src\wasm4.h:
 build/fuel.o: src/fuel.c src\fuel.c src\fuel.h src\gameobject.h src\playarea.h src\ship.h src\input.h src\wasm4.h src\game.h src\bullets.h src\global.h src\sound.h src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'fuel'
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:19
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 .PHONY: clean
@@ -346,7 +349,7 @@ build/fuel.o: src/fuel.c src\fuel.c src\fuel.h src\gameobject.h src\playarea.h s
 # Not a target:
 build/bullets.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:19
 #  File has been updated.
 #  Successfully updated.
 
@@ -359,20 +362,20 @@ build/bullets.d:
 # Not a target:
 build/playarea.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 12:03:33
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/utils.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-24 17:38:59
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
 
 src\bullets.h:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-17 16:33:17
+#  Last modified 2021-09-26 21:17:02
 #  File has been updated.
 #  Successfully updated.
 
@@ -383,24 +386,17 @@ src\input.c:
 #  File has been updated.
 #  Successfully updated.
 
-bundle:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 55):
-	w4 bundle build/cart.wasm --html index.html
-
 # Not a target:
 src/game.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:59:01
+#  Last modified 2021-10-11 12:48:20
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/ship.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-24 17:38:59
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
 
@@ -414,11 +410,11 @@ src\utils.c:
 build/input.o: src/input.c src\input.c src\input.h src\wasm4.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'input'
-#  Last modified 2021-09-24 17:38:59
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Not a target:
@@ -431,28 +427,28 @@ src/global.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-24 17:35:20
+#  Last modified 2021-10-12 08:28:14
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/sound.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-22 17:28:54
+#  Last modified 2021-10-10 11:57:40
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/gameobject.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-22 15:30:30
+#  Last modified 2021-10-11 13:20:18
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src\ship.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-22 13:00:16
+#  Last modified 2021-09-26 21:27:46
 #  File has been updated.
 #  Successfully updated.
 
@@ -465,18 +461,18 @@ src\input.h:
 # Not a target:
 src\fuel.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-24 17:34:44
+#  Last modified 2021-10-11 15:24:32
 #  File has been updated.
 #  Successfully updated.
 
 build/bullets.o: src/bullets.c src\bullets.c src\bullets.h src\gameobject.h src\playarea.h src\ship.h src\input.h src\wasm4.h src\utils.h src\sound.h src\game.h src\fuel.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'bullets'
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:19
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 src\utils.h:
@@ -488,27 +484,27 @@ src\utils.h:
 build/playarea.o: src/playarea.c src\playarea.c src\playarea.h src\ship.h src\gameobject.h src\input.h src\global.h src\utils.h src\wasm4.h src\fuel.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'playarea'
-#  Last modified 2021-09-26 12:03:33
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 build/utils.o: src/utils.c src\utils.c src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'utils'
-#  Last modified 2021-09-24 17:38:59
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Not a target:
 src\main.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-24 17:34:14
+#  Last modified 2021-09-26 21:35:33
 #  File has been updated.
 #  Successfully updated.
 
@@ -527,45 +523,45 @@ src\fuel.h:
 # Not a target:
 build/game.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:59:02
+#  Last modified 2021-10-12 08:25:19
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/global.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/fuel.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-24 17:34:44
+#  Last modified 2021-10-11 15:24:32
 #  File has been updated.
 #  Successfully updated.
 
 build/ship.o: src/ship.c src\ship.c src\ship.h src\gameobject.h src\input.h src\global.h src\wasm4.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ship'
-#  Last modified 2021-09-24 17:38:59
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Not a target:
 build/sound.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/gameobject.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
 
@@ -574,13 +570,13 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 53):
-	rd build /s /q
+#  recipe to execute (from 'makefile', line 61):
+	rm -rf build
 
 # Not a target:
 src\sound.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-22 17:28:54
+#  Last modified 2021-10-10 11:57:40
 #  File has been updated.
 #  Successfully updated.
 
@@ -594,75 +590,74 @@ src/input.c:
 # Not a target:
 build/main.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
 
 build/cart.wasm: build/bullets.o build/fuel.o build/game.o build/gameobject.o build/global.o build/input.o build/main.o build/playarea.o build/ship.o build/sound.o build/utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2021-09-26 12:03:33
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 37):
-	$(LD) -o $@ $(OBJECTS) $(LDFLAGS)
+#  recipe to execute (from 'makefile', line 40):
+	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
 	@echo Tip: $(WASM_OPT) was not found. Install it from binaryen for smaller builds!
 
 build/game.o: src/game.c src\game.c src\game.h src\ship.h src\gameobject.h src\input.h src\playarea.h src\bullets.h src\fuel.h src\global.h src\wasm4.h src\utils.h src\sound.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'game'
-#  Last modified 2021-09-26 11:59:02
+#  Last modified 2021-10-12 08:25:19
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 src\sound.h:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-22 17:28:52
+#  Last modified 2021-10-10 11:56:45
 #  File has been updated.
 #  Successfully updated.
 
 build/global.o: src/global.c src\global.c src\global.h src\game.h src\ship.h src\gameobject.h src\input.h src\playarea.h src\bullets.h src\fuel.h src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'global'
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Not a target:
 build/fuel.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:19
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/bullets.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-18 10:34:21
+#  Last modified 2021-10-11 15:23:39
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src\game.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 11:59:01
+#  Last modified 2021-10-11 12:48:20
 #  File has been updated.
 #  Successfully updated.
 
-build/sound.o: src/sound.c src\sound.c src\sound.h src\game.h src\ship.h src\gameobject.h src\input.h src\pla 
-yarea.h src\bullets.h src\fuel.h src\wasm4.h
+build/sound.o: src/sound.c src\sound.c src\sound.h src\game.h src\ship.h src\gameobject.h src\input.h src\playarea.h src\bullets.h src\fuel.h src\wasm4.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'sound'
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Not a target:
@@ -675,17 +670,17 @@ src\global.c:
 build/gameobject.o: src/gameobject.c src\gameobject.c src\gameobject.h src\wasm4.h src\utils.h src\sound.h src\game.h src\ship.h src\input.h src\playarea.h src\bullets.h src\fuel.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'gameobject'
-#  Last modified 2021-09-26 11:49:22
+#  Last modified 2021-10-12 08:25:20
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'makefile', line 48):
-	@if not exist build (mkdir build)
+#  recipe to execute (from 'makefile', line 51):
+	@mkdir -p build
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Not a target:
 src/playarea.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 12:03:32
+#  Last modified 2021-09-26 18:58:17
 #  File has been updated.
 #  Successfully updated.
 
@@ -699,38 +694,38 @@ src/utils.c:
 # Not a target:
 src\playarea.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-26 12:03:32
+#  Last modified 2021-09-26 18:58:17
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src\gameobject.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-22 15:30:30
+#  Last modified 2021-10-11 13:20:18
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-09-24 17:34:14
+#  Last modified 2021-09-26 21:35:33
 #  File has been updated.
 #  Successfully updated.
 
 # files hash-table stats:
-# Load=63/1024=6%, Rehash=0, Collisions=8/329=2%
+# Load=62/1024=6%, Rehash=0, Collisions=8/328=2%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 109 / storage = 1176 B / avg = 10 B
-# current buf: size = 8162 B / used = 1176 B / count = 109 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 110 / storage = 1192 B / avg = 10 B
+# current buf: size = 8162 B / used = 1192 B / count = 110 / avg = 10 B
 
-# strcache performance: lookups = 417 / hit rate = 73%
+# strcache performance: lookups = 418 / hit rate = 73%
 # hash-table stats:
-# Load=109/8192=1%, Rehash=0, Collisions=3/417=1%
-# Finished Make data base on Sun Sep 26 18:56:37 2021
+# Load=110/8192=1%, Rehash=0, Collisions=3/418=1%
+# Finished Make data base on Tue Oct 12 08:28:33 2021
 
  

@@ -24,7 +24,29 @@ bool Detect_BoxCollision(float posXA, float posYA, int widthA, int heightA, floa
     }
     return false;
 }
+bool Detect_SpriteCollision(float posX, float posY, int width, int height, const char *sprite)
+{
 
+    for (int column = posX; column < posX + width; column++)
+    {
+
+        for (int row = posY; row < posY + height; row++)
+        {
+            if (sprite[row - (int)posY] & 1 << (7 - column - (int)posX))
+            {
+                unsigned char *checkframe = FRAMEBUFFER + row * 40 + column / 4;
+
+                int val = (*checkframe) >> (2 ^ (2 - (column % 4)));
+                if ((val & 3) == 2) // if hit green
+                {
+
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 void GameObject_Initialize(struct GameObject *o)
 {
     o->m_type = OBJECT_NONE;
@@ -32,15 +54,29 @@ void GameObject_Initialize(struct GameObject *o)
 }
 void GameObject_Draw(struct GameObject *o, struct Game *game)
 {
-    if (o->m_type == OBJECT_SHIP && o->m_tickssincecollision > 0)
+    if (o->m_tickssincecollision > 0)
     {
 
         if (o->m_tickssincecollision == 1)
         {
-            Sound_PlayShipCollision(game);
+            if (o->m_type == OBJECT_SHIP)
+            {
+                Sound_PlayShipCollision(game);
+            }
+            else
+            {
+                Sound_PlayOtherCollision(game);
+            }
         }
         *DRAW_COLORS = 2;
-        blit(o->m_spriteexplosion, o->m_posX, o->m_posY, o->m_width, o->m_height, BLIT_1BPP);
+        if (o->m_type == OBJECT_SHIP)
+        {
+            blit(o->m_spriteexplosion, o->m_posX, o->m_posY, o->m_width, o->m_height, BLIT_1BPP);
+        }
+        else
+        {
+            blit(EXPLOSION, o->m_posX, o->m_posY, 8, 8, BLIT_1BPP);
+        }
         return;
     }
     else
@@ -51,19 +87,28 @@ void GameObject_Draw(struct GameObject *o, struct Game *game)
 }
 void GameObject_Update(struct GameObject *o)
 {
-    o->m_height = o->m_height;
-}
-bool GameObject_CollisionDetect(struct GameObject *o, struct Ship *ship)
-{
-    // check if ship colliding with land by pixel
-    if (o->m_type == OBJECT_FUEL)
+    if (o->m_type != OBJECT_SHIP)
     {
-        if (Detect_BoxCollision(ship->m_obj.m_posX, ship->m_obj.m_posY, ship->m_obj.m_width, ship->m_obj.m_height, o->m_posX, o->m_posY, o->m_width, o->m_height))
+        if (o->m_tickssincecollision > 0)
         {
-            return true;
+            if (o->m_tickssincecollision > 60)
+            {
+                o->m_alive = false;
+                o->m_tickssincecollision = 0;
+            }
+            else
+            {
+                o->m_tickssincecollision++;
+            }
         }
     }
+}
+bool GameObject_CollisionDetect(struct GameObject *o1, struct GameObject *o2)
+{
+
+    if (Detect_BoxCollision(o2->m_posX, o2->m_posY, o2->m_width, o2->m_height, o1->m_posX, o1->m_posY, o1->m_width, o1->m_height))
+    {
+        return true;
+    }
     return false;
-    // check if ship colliding with fuel by box
-    // check if ship colliding with enemy by box
 }

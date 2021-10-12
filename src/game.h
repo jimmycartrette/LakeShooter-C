@@ -1,7 +1,5 @@
 #pragma once
 
-#define MAX_BULLETS 20
-
 #include "stdint.h"
 #include "ship.h"
 #include "playarea.h"
@@ -13,7 +11,8 @@ enum GameState
 {
     GAMESTATE_STARTUP = 0,
     GAMESTATE_PLAY = 1,
-    GAMESTATE_GAMEOVER = 2
+    GAMESTATE_SHIPCOLLISION = 2,
+    GAMESTATE_GAMEOVER = 3
 };
 
 struct Game

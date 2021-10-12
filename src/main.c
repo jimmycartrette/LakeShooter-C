@@ -5,16 +5,6 @@
 #include <stdbool.h>
 #include "sound.h"
 
-typedef struct
-{
-    int x;
-    int y;
-    float velocity;
-    int alive;
-} Bullet;
-Bullet bulletsra[MAX_BULLETS];
-Bullet *bullets = bulletsra;
-
 unsigned char previousGamepad;
 static char *debugtext;
 

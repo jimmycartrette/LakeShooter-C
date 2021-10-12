@@ -17,7 +17,10 @@ void Bullets_Init(struct Bullets *bullets)
     {
         bullets->bullet[n].m_obj.m_posX = 0;
         bullets->bullet[n].m_obj.m_posY = 0;
+        bullets->bullet[n].m_obj.m_width = 8;
+        bullets->bullet[n].m_obj.m_height = 3;
         bullets->bullet[n].m_obj.m_alive = false;
+        //bullets->bullet[n].m_obj.m_spritefacingup = BULLET;
     }
 }
 void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship, struct Game *game)
@@ -30,7 +33,7 @@ void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship, struct G
         {
             bullets->bullet[n].m_obj.m_alive = true;
             bullets->bullet[n].m_obj.m_posX = ship->m_obj.m_posX;
-            bullets->bullet[n].m_obj.m_posY = ship->m_obj.m_posY + 8;
+            bullets->bullet[n].m_obj.m_posY = ship->m_obj.m_posY + 6;
             Sound_PlayBulletShoot(game);
             return;
         }
@@ -40,8 +43,11 @@ void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct S
 {
     int n;
     for (n = 0; n < MAXBULLETS; n++)
+    {
         if (bullets->bullet[n].m_obj.m_alive)
         {
+
+            GameObject_Update(&bullets->bullet[n].m_obj);
             if (bullets->bullet[n].m_obj.m_posY < playarea->m_offsetY)
             {
                 bullets->bullet[n].m_obj.m_alive = false;
@@ -52,6 +58,7 @@ void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct S
                 bullets->bullet[n].m_obj.m_posX += (ship->m_obj.m_posX - ship->m_obj.m_prePosX);
             }
         }
+    }
 }
 void Bullets_Draw(struct Bullets *bullets)
 {
@@ -59,11 +66,42 @@ void Bullets_Draw(struct Bullets *bullets)
     for (n = 0; n < MAXBULLETS; n++)
         if (bullets->bullet[n].m_obj.m_alive)
         {
-            *DRAW_COLORS = 3;
-            blit(BULLET, bullets->bullet[n].m_obj.m_posX, bullets->bullet[n].m_obj.m_posY, 8, 3, BLIT_1BPP);
+            *DRAW_COLORS = 2;
+            blit(BULLET, bullets->bullet[n].m_obj.m_posX, bullets->bullet[n].m_obj.m_posY, bullets->bullet[n].m_obj.m_width, bullets->bullet[n].m_obj.m_height, BLIT_1BPP);
         }
 }
-void Bullets_CollisionDetect(struct Bullets *bullets)
+void Bullets_CollisionDetect(struct Bullets *bullets, struct Game *game)
 {
-    bullets->bullet->m_obj.m_vaccel = 1;
+    int n;
+    game;
+    for (int i = 0; i < MAXBULLETS; i++)
+    {
+        if (bullets->bullet[i].m_obj.m_alive)
+        {
+
+            // check land
+            if (Detect_SpriteCollision(bullets->bullet[i].m_obj.m_posX, bullets->bullet[i].m_obj.m_posY, bullets->bullet[i].m_obj.m_width, bullets->bullet[i].m_obj.m_height, BULLET))
+            {
+                bullets->bullet[i].m_obj.m_alive = false;
+                trace("sprite collision");
+            }
+            // check fuel
+            for (int f = 0; f < MAXFUELS; f++)
+            {
+                if (bullets->bullet[i].m_obj.m_alive && game->m_fuels.fuel[f].m_obj.m_alive && game->m_fuels.fuel[f].m_obj.m_tickssincecollision == 0)
+                {
+                    tracef("b %d fuel %d check", i, f);
+                    if (GameObject_CollisionDetect(&game->m_fuels.fuel[f].m_obj, &bullets->bullet[i].m_obj))
+                    {
+                        tracef("fuel collision with bullet %d", f);
+                        game->m_fuels.fuel[f].m_obj.m_tickssincecollision++;
+                        bullets->bullet[i].m_obj.m_alive = false;
+                        break;
+                    }
+                }
+            }
+
+            // check enemies
+        }
+    }
 }

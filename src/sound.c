@@ -41,6 +41,12 @@ void Sound_PlayShipCollision(struct Game *game)
 
     PlaySoundEffect(&shipcollision, false, game);
 }
+void Sound_PlayOtherCollision(struct Game *game)
+{
+    struct SoundEffect shipcollision = {.m_freq1 = 260, .m_attack = 4, .m_decay = 6, .m_sustain = 5, .m_release = 4, .m_volume = 34, .m_channel = 3};
+
+    PlaySoundEffect(&shipcollision, false, game);
+}
 void Sound_PlayBulletShoot(struct Game *game)
 {
     struct SoundEffect bulletshoot = {.m_freq1 = 270, .m_freq2 = 220, .m_attack = 8, .m_decay = 4, .m_sustain = 14, .m_release = 4, .m_volume = 35};
