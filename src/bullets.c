@@ -62,8 +62,7 @@ void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct S
 }
 void Bullets_Draw(struct Bullets *bullets)
 {
-    int n;
-    for (n = 0; n < MAXBULLETS; n++)
+    for (int n = 0; n < MAXBULLETS; n++)
         if (bullets->bullet[n].m_obj.m_alive)
         {
             *DRAW_COLORS = 2;
@@ -72,31 +71,29 @@ void Bullets_Draw(struct Bullets *bullets)
 }
 void Bullets_CollisionDetect(struct Bullets *bullets, struct Game *game)
 {
-    int n;
-    game;
     for (int i = 0; i < MAXBULLETS; i++)
     {
         if (bullets->bullet[i].m_obj.m_alive)
         {
 
             // check land
-            if (Detect_SpriteCollision(bullets->bullet[i].m_obj.m_posX, bullets->bullet[i].m_obj.m_posY, bullets->bullet[i].m_obj.m_width, bullets->bullet[i].m_obj.m_height, BULLET))
+            if (Detect_PixelCollision(bullets->bullet[i].m_obj.m_posX, bullets->bullet[i].m_obj.m_posY))
             {
                 bullets->bullet[i].m_obj.m_alive = false;
-                trace("sprite collision");
+                continue;
             }
             // check fuel
             for (int f = 0; f < MAXFUELS; f++)
             {
-                if (bullets->bullet[i].m_obj.m_alive && game->m_fuels.fuel[f].m_obj.m_alive && game->m_fuels.fuel[f].m_obj.m_tickssincecollision == 0)
+                if (game->m_fuels.fuel[f].m_obj.m_alive && game->m_fuels.fuel[f].m_obj.m_tickssincecollision == 0)
                 {
-                    tracef("b %d fuel %d check", i, f);
+                    // tracef("b %d fuel %d check", i, f);
                     if (GameObject_CollisionDetect(&game->m_fuels.fuel[f].m_obj, &bullets->bullet[i].m_obj))
                     {
-                        tracef("fuel collision with bullet %d", f);
+                        //   tracef("fuel collision with bullet %d", f);
                         game->m_fuels.fuel[f].m_obj.m_tickssincecollision++;
                         bullets->bullet[i].m_obj.m_alive = false;
-                        break;
+                        continue;
                     }
                 }
             }

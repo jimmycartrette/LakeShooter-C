@@ -1,5 +1,5 @@
 #pragma once
-#define MAXBULLETS 10
+#define MAXBULLETS 4
 #include "gameobject.h"
 #include "playarea.h"
 #include "ship.h"

@@ -1,9 +1,29 @@
-make.exe --dry-run --keep-going --print-directory
+make.exe --dry-run --always-make --keep-going --print-directory
 make: Entering directory 'c:/Users/jimmy/source/repos/LakeShooter'
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/bullets.c -o build/bullets.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/fuel.c -o build/fuel.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/game.c -o build/game.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
  
-process_begin: CreateProcess(NULL, which wasm-opt, ...) failed.
-makefile:42: pipe: No error
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/gameobject.c -o build/gameobject.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
  
-make: Nothing to be done for 'all'.
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/global.c -o build/global.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/input.c -o build/input.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/main.c -o build/main.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/playarea.c -o build/playarea.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/ship.c -o build/ship.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/sound.c -o build/sound.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+if not exist build (mkdir build)
+C:\Program Files (x86)\wasi-sdk/bin/clang --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -c src/utils.c -o build/utils.o -W -Wall -Wextra -Werror -Wno-unused -MMD -MP -fno-exceptions -DDEBUG -O0 -g
+C:\Program Files (x86)\wasi-sdk/bin/clang++ --sysroot="C:\Program Files (x86)\wasi-sdk/share/wasi-sysroot" -o build/cart.wasm  build/bullets.o  build/fuel.o  build/game.o  build/gameobject.o  build/global.o  build/input.o  build/main.o  build/playarea.o  build/ship.o  build/sound.o  build/utils.o  -Wl,-zstack-size=1024,--no-entry,--import-memory -mexec-model=reactor -Wl,--initial-memory=65536,--max-memory=65536,--global-base=6560 -Wl,--export-all,--no-gc-sections
 make: Leaving directory 'c:/Users/jimmy/source/repos/LakeShooter'
  

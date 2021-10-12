@@ -24,6 +24,19 @@ bool Detect_BoxCollision(float posXA, float posYA, int widthA, int heightA, floa
     }
     return false;
 }
+bool Detect_PixelCollision(int posX, int posY)
+{
+
+    unsigned char *checkframe = FRAMEBUFFER + posY * 40 + posX / 4;
+
+    int val = (*checkframe) >> (2 ^ (2 - (posX % 4)));
+    if ((val & 3) == 2) // if hit green
+    {
+
+        return true;
+    }
+    return false;
+}
 bool Detect_SpriteCollision(float posX, float posY, int width, int height, const char *sprite)
 {
 
