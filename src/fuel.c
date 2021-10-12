@@ -119,22 +119,22 @@ void Fuels_Draw(struct Fuels *fuels)
         }
     }
 }
-void Fuels_AndShipCollisionDetect(struct Fuels *fuels, struct Ship *ship, struct Game *game)
+void Fuels_AndJetCollisionDetect(struct Fuels *fuels, struct Jet *jet, struct Game *game)
 {
     int n;
     for (n = 0; n < MAXFUELS; n++)
         if (fuels->fuel[n].m_obj.m_alive)
         {
-            if (GameObject_CollisionDetect(&fuels->fuel[n].m_obj, &ship->m_obj) && fuels->fuel[n].m_obj.m_tickssincecollision == 0)
+            if (GameObject_CollisionDetect(&fuels->fuel[n].m_obj, &jet->m_obj) && fuels->fuel[n].m_obj.m_tickssincecollision == 0)
             {
 
-                if (ship->fuelingtickscountdown == 24)
+                if (jet->fuelingtickscountdown == 24)
                 {
                     Sound_PlayFuelUp(game);
                 }
                 else
                 {
-                    ship->fuelingtickscountdown = 25;
+                    jet->fuelingtickscountdown = 25;
                 }
 
                 if (game->m_fuellevel <= 9950)

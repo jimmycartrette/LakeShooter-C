@@ -1,5 +1,5 @@
 #pragma once
-#include "ship.h"
+#include "jet.h"
 #include <stdint.h>
 
 struct PlayBlock
@@ -23,6 +23,6 @@ struct PlayArea
 };
 
 void PlayArea_Initialize(struct PlayArea *p);
-bool PlayArea_Update(struct PlayArea *p, struct Ship *ship, int gameticks, const int ticks); // true if created playblock
+bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, const int ticks); // true if created playblock
 void PlayArea_Draw(struct PlayArea *p);
 void PlayArea_NewDraw(struct PlayArea *p);

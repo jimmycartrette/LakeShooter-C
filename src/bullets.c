@@ -1,7 +1,7 @@
 #include "bullets.h"
 #include "playarea.h"
 #include "wasm4.h"
-#include "ship.h"
+#include "jet.h"
 #include "utils.h"
 #include "sound.h"
 
@@ -23,7 +23,7 @@ void Bullets_Init(struct Bullets *bullets)
         //bullets->bullet[n].m_obj.m_spritefacingup = BULLET;
     }
 }
-void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship, struct Game *game)
+void Bullets_GenerateBullet(struct Bullets *bullets, struct Jet *jet, struct Game *game)
 {
 
     int n;
@@ -34,14 +34,14 @@ void Bullets_GenerateBullet(struct Bullets *bullets, struct Ship *ship, struct G
             bullets->bullet[n].m_obj.m_alive = true;
             bullets->bullet[n].m_obj.m_width = 8;
             bullets->bullet[n].m_obj.m_height = 3;
-            bullets->bullet[n].m_obj.m_posX = ship->m_obj.m_posX;
-            bullets->bullet[n].m_obj.m_posY = ship->m_obj.m_posY + 6;
+            bullets->bullet[n].m_obj.m_posX = jet->m_obj.m_posX;
+            bullets->bullet[n].m_obj.m_posY = jet->m_obj.m_posY + 6;
             Sound_PlayBulletShoot(game);
             return;
         }
     }
 }
-void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct Ship *ship)
+void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct Jet *jet)
 {
     int n;
     for (n = 0; n < MAXBULLETS; n++)
@@ -57,7 +57,7 @@ void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct S
             else
             {
                 bullets->bullet[n].m_obj.m_posY -= 4;
-                bullets->bullet[n].m_obj.m_posX += (ship->m_obj.m_posX - ship->m_obj.m_prePosX);
+                bullets->bullet[n].m_obj.m_posX += (jet->m_obj.m_posX - jet->m_obj.m_prePosX);
             }
         }
     }

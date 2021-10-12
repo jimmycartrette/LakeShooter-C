@@ -1,7 +1,7 @@
 #pragma once
 
 #include "stdint.h"
-#include "ship.h"
+#include "jet.h"
 #include "playarea.h"
 #include "input.h"
 #include "bullets.h"
@@ -11,7 +11,7 @@ enum GameState
 {
     GAMESTATE_STARTUP = 0,
     GAMESTATE_PLAY = 1,
-    GAMESTATE_SHIPCOLLISION = 2,
+    GAMESTATE_JETCOLLISION = 2,
     GAMESTATE_GAMEOVER = 3
 };
 
@@ -27,7 +27,7 @@ struct Game
 
     struct Input m_input;
 
-    struct Ship m_ship;
+    struct Jet m_jet;
     struct PlayArea m_playarea;
     struct Bullets m_bullets;
     struct Fuels m_fuels;
