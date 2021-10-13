@@ -119,7 +119,7 @@ void Fuels_Draw(struct Fuels *fuels)
         }
     }
 }
-void Fuels_AndJetCollisionDetect(struct Fuels *fuels, struct Jet *jet, struct Game *game)
+void Fuels_Jet_CollisionDetect(struct Fuels *fuels, struct Jet *jet, struct Game *game)
 {
     int n;
     for (n = 0; n < MAXFUELS; n++)

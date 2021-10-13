@@ -1,6 +1,8 @@
 #include "jet.h"
 #include "global.h"
 #include "wasm4.h"
+#include "ship.h"
+#include "game.h"
 
 const char JETSTRAIGHT[16] = {
     0xF7, // |    X   |
@@ -146,11 +148,30 @@ void Jet_Draw(struct Jet *s, struct Game *game)
 {
     GameObject_Draw(&s->m_obj, game);
 }
-void Jet_CollisionDetect(struct Jet *s)
+void Jet_Land_CollisionDetect(struct Jet *s)
 {
 
     if (Detect_SpriteCollision(s->m_obj.m_posX, s->m_obj.m_posY, s->m_obj.m_width, s->m_obj.m_height, s->m_obj.m_spritefacingup))
     {
         s->m_obj.m_tickssincecollision++;
+    }
+}
+void Jet_Ships_CollisionDetect(struct Jet *jet, struct Ships *ships, struct Game *game)
+{
+
+    for (int i = 0; i < MAXSHIPS; i++)
+    {
+        if (ships->ship[i].m_obj.m_alive && ships->ship[i].m_obj.m_tickssincecollision == 0)
+        {
+            if (Detect_BoxCollision(jet->m_obj.m_posX, jet->m_obj.m_posY, jet->m_obj.m_width,
+                                    jet->m_obj.m_height, ships->ship[i].m_obj.m_posX, ships->ship[i].m_obj.m_posY,
+                                    ships->ship[i].m_obj.m_width, ships->ship[i].m_obj.m_height))
+            {
+                ships->ship[i].m_obj.m_tickssincecollision++;
+                jet->m_obj.m_tickssincecollision++;
+                game->m_tickssincecollision++;
+                break;
+            }
+        }
     }
 }

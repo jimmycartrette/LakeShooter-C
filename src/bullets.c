@@ -71,7 +71,7 @@ void Bullets_Draw(struct Bullets *bullets)
             blit(BULLET, bullets->bullet[n].m_obj.m_posX, bullets->bullet[n].m_obj.m_posY, bullets->bullet[n].m_obj.m_width, bullets->bullet[n].m_obj.m_height, BLIT_1BPP);
         }
 }
-void Bullets_CollisionDetect(struct Bullets *bullets, struct Game *game)
+void Bullets_Anything_CollisionDetect(struct Bullets *bullets, struct Game *game)
 {
     for (int i = 0; i < MAXBULLETS; i++)
     {
@@ -102,6 +102,21 @@ void Bullets_CollisionDetect(struct Bullets *bullets, struct Game *game)
             }
 
             // check enemies
+            for (int f = 0; f < MAXSHIPS; f++)
+            {
+                if (game->m_ships.ship[f].m_obj.m_alive && game->m_ships.ship[f].m_obj.m_tickssincecollision == 0)
+                {
+                    // tracef("b %d ship %d check", i, f);
+                    if (GameObject_CollisionDetect(&game->m_ships.ship[f].m_obj, &bullets->bullet[i].m_obj))
+                    {
+                        //   tracef("ship collision with bullet %d", f);
+                        bullets->bullet[i]
+                            .m_obj.m_alive = false;
+                        GameObject_StartExplosion(&game->m_ships.ship[f].m_obj);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

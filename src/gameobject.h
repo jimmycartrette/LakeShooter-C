@@ -7,7 +7,8 @@ enum ObjectType
     OBJECT_NONE = 0,
     OBJECT_JET = 1,
     OBJECT_BULLET = 2,
-    OBJECT_FUEL = 3
+    OBJECT_FUEL = 3,
+    OBJECT_SHIP = 4
 };
 
 enum Direction
@@ -43,3 +44,4 @@ bool GameObject_CollisionDetect(struct GameObject *o1, struct GameObject *o2);
 void GameObject_StartExplosion(struct GameObject *o1);
 bool Detect_SpriteCollision(float posX, float posY, int width, int height, const char *sprite);
 bool Detect_PixelCollision(int posX, int posY);
+bool Detect_BoxCollision(float posXA, float posYA, int widthA, int heightA, float posXB, float posYB, int widthB, int heightB);
