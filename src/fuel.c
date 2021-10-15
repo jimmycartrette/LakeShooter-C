@@ -78,13 +78,13 @@ void Fuels_Create(struct Fuels *fuels, struct PlayArea *p)
         }
     }
 }
-void Fuels_Update(struct Fuels *fuels, struct PlayArea *p)
+void Fuels_Update(struct Fuels *fuels, struct PlayArea *p, struct Game *game)
 {
     int n;
     for (n = 0; n < MAXFUELS; n++)
         if (fuels->fuel[n].m_obj.m_alive)
         {
-            GameObject_Update(&fuels->fuel[n].m_obj);
+            GameObject_Update(&fuels->fuel[n].m_obj, game);
             fuels->fuel[n].m_obj.m_posY -= p->m_changedy;
             if (fuels->fuel[n].m_obj.m_posY > 120)
             {

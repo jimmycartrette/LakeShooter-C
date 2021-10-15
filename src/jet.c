@@ -72,7 +72,7 @@ void Jet_Initialize(struct Jet *s)
     o->m_spritefacingright1 = &JETMOVE[0];
     o->m_spriteexplosion = &JETEXPLOSION[0];
 }
-void Jet_Update(struct Jet *s, struct Input *i)
+void Jet_Update(struct Jet *s, struct Input *i,struct Game *game)
 {
     s->m_obj.m_prePosX = s->m_obj.m_posX;
     s->m_obj.m_prePosY = s->m_obj.m_posY;
@@ -142,7 +142,7 @@ void Jet_Update(struct Jet *s, struct Input *i)
             s->m_obj.m_vaccel -= .03;
         }
     }
-    GameObject_Update(&s->m_obj);
+    GameObject_Update(&s->m_obj,game);
 }
 void Jet_Draw(struct Jet *s, struct Game *game)
 {

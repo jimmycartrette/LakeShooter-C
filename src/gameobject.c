@@ -98,13 +98,13 @@ void GameObject_Draw(struct GameObject *o, struct Game *game)
         blit(o->m_dir == DIRECTION_UP ? o->m_spritefacingup : o->m_spritefacingright1, o->m_posX, o->m_posY, o->m_width, o->m_height, BLIT_1BPP | (o->m_dir == DIRECTION_LEFT ? BLIT_FLIP_X : 0));
     }
 }
-void GameObject_Update(struct GameObject *o)
+void GameObject_Update(struct GameObject *o, struct Game *g)
 {
     if (o->m_type != OBJECT_JET)
     {
         if (o->m_tickssincecollision > 0)
         {
-            if (o->m_tickssincecollision > 60)
+            if (o->m_tickssincecollision > 14)
             {
                 o->m_alive = false;
                 o->m_tickssincecollision = 0;
@@ -112,6 +112,34 @@ void GameObject_Update(struct GameObject *o)
             else
             {
                 o->m_tickssincecollision++;
+            }
+        }
+    }
+    if (o->m_startedMoving && o->m_tickssincecollision == 0)
+    {
+        if (g->m_ticks % 2 == 0)
+        {
+            if (o->m_dir == DIRECTION_LEFT)
+            {
+                if (o->m_posX-- <= o->m_edgewidth - 1 || (o->m_islandwidth > 0 && o->m_posX > 80 && o->m_posX-- <= 80 + o->m_islandwidth + 1))
+                {
+                    o->m_dir = DIRECTION_RIGHT;
+                }
+                else
+                {
+                    o->m_posX--;
+                }
+            }
+            if (o->m_dir == DIRECTION_RIGHT)
+            {
+                if (o->m_posX++ >= 160 - o->m_width - o->m_edgewidth - 1 || (o->m_islandwidth > 0 && o->m_posX < 80 && o->m_posX++ >= 80 - o->m_islandwidth - 1))
+                {
+                    o->m_dir = DIRECTION_LEFT;
+                }
+                else
+                {
+                    o->m_posX++;
+                }
             }
         }
     }

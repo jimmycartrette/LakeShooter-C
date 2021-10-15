@@ -28,6 +28,10 @@ struct GameObject
     double m_prePosX, m_prePosY;
     float m_vaccel, m_haccel;
     uint8_t m_tickssincecollision;
+    uint8_t m_scoreworth;
+    bool m_startedMoving;
+    uint8_t m_islandwidth;
+    uint8_t m_edgewidth;
     enum Direction m_dir;
     bool m_animated;
     bool m_alive;
@@ -38,7 +42,7 @@ struct GameObject
 };
 
 void GameObject_Initialize(struct GameObject *o);
-void GameObject_Update(struct GameObject *o);
+void GameObject_Update(struct GameObject *o, struct Game *game);
 void GameObject_Draw(struct GameObject *o, struct Game *game);
 bool GameObject_CollisionDetect(struct GameObject *o1, struct GameObject *o2);
 void GameObject_StartExplosion(struct GameObject *o1);

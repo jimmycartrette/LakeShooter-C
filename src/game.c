@@ -85,15 +85,15 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         }
         // tracef("y is %d", game->m_playarea.m_y);
         bool isNewBlock = PlayArea_Update(&game->m_playarea, &game->m_jet, game->m_ticks, ticks);
-        if (isNewBlock && lsfr.m_lfsrvalue % 5 == 0)
+        if (isNewBlock && (lsfr.m_lfsrvalue >> 1) % 5 == 0)
         {
             Fuels_Create(&game->m_fuels, &game->m_playarea);
         }
-        if (isNewBlock && lsfr.m_lfsrvalue % 4 == 0)
+        if (isNewBlock && (lsfr.m_lfsrvalue >> 2) % 7 == 0)
         {
             Ships_Create(&game->m_ships, &game->m_playarea);
         }
-        Jet_Update(&game->m_jet, &game->m_input);
+        Jet_Update(&game->m_jet, &game->m_input, game);
 
         if (game->m_jet.m_obj.m_tickssincecollision > 0)
         {
@@ -133,9 +133,9 @@ void Game_UpdateObjects(struct Game *game)
         Jet_Land_CollisionDetect(&game->m_jet);
         Jet_Ships_CollisionDetect(&game->m_jet, &game->m_ships, game);
         Bullets_Anything_CollisionDetect(&game->m_bullets, game);
-        Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_jet);
+        Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_jet, game);
         Fuels_Jet_CollisionDetect(&game->m_fuels, &game->m_jet, game);
-        Fuels_Update(&game->m_fuels, &game->m_playarea);
+        Fuels_Update(&game->m_fuels, &game->m_playarea, game);
         Ships_Update(&game->m_ships, &game->m_playarea);
         // fuels colliding with jet
 

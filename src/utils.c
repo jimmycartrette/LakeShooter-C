@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "utils.h"
+#include "wasm4.h"
 
 extern struct LSFR lsfr;
 
@@ -56,12 +57,21 @@ void lfsr_start(uint16_t seed, struct Lsfr *lsfr)
 }
 uint16_t lfsr_next(struct Lsfr *lsfr)
 {
-    unsigned lsb = lsfr->m_lfsrvalue & 1;
+    char s[16 + 1];
+
+    unsigned lsb = lsfr->m_lfsrvalue & 1u;
     lsfr->m_lfsrvalue >>= 1;
-    if (lsb == 1)
+    if (lsb)
     {
         lsfr->m_lfsrvalue ^= 0xB400u; // taps at 11, 13, 14, 16
     }
+    // for (int i = 0; i < 16; i++)
+    // {
+    //     s[15 - i] = (lsfr->m_lfsrvalue & (1 << i)) ? '1' : '0';
+    // }
+    // s[16] = '\0';
+    // trace(s);
+    // tracef("%d", lsfr->m_lfsrvalue);
     return lsfr->m_lfsrvalue;
 }
 int abs(int i)

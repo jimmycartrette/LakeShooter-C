@@ -18,6 +18,6 @@ struct Bullets
 
 void Bullets_Init(struct Bullets *bullets);
 void Bullets_GenerateBullet(struct Bullets *bullets, struct Jet *jet, struct Game *game);
-void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct Jet *jet);
+void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct Jet *jet, struct Game *game);
 void Bullets_Draw(struct Bullets *bullets);
 void Bullets_Anything_CollisionDetect(struct Bullets *bullets, struct Game *game);

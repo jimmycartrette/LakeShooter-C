@@ -41,7 +41,7 @@ void Bullets_GenerateBullet(struct Bullets *bullets, struct Jet *jet, struct Gam
         }
     }
 }
-void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct Jet *jet)
+void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct Jet *jet, struct Game *game)
 {
     int n;
     for (n = 0; n < MAXBULLETS; n++)
@@ -49,7 +49,7 @@ void Bullets_Update(struct Bullets *bullets, struct PlayArea *playarea, struct J
         if (bullets->bullet[n].m_obj.m_alive)
         {
 
-            GameObject_Update(&bullets->bullet[n].m_obj);
+            GameObject_Update(&bullets->bullet[n].m_obj, game);
             if (bullets->bullet[n].m_obj.m_posY < playarea->m_offsetY)
             {
                 bullets->bullet[n].m_obj.m_alive = false;
@@ -109,10 +109,12 @@ void Bullets_Anything_CollisionDetect(struct Bullets *bullets, struct Game *game
                     // tracef("b %d ship %d check", i, f);
                     if (GameObject_CollisionDetect(&game->m_ships.ship[f].m_obj, &bullets->bullet[i].m_obj))
                     {
-                        //   tracef("ship collision with bullet %d", f);
+
                         bullets->bullet[i]
                             .m_obj.m_alive = false;
+                        game->m_score = game->m_score + game->m_ships.ship[f].m_obj.m_scoreworth;
                         GameObject_StartExplosion(&game->m_ships.ship[f].m_obj);
+
                         break;
                     }
                 }
