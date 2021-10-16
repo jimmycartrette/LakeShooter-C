@@ -34,16 +34,19 @@ void Draw_Status(struct Game *game)
 
 void Game_Init(struct Game *game)
 {
+    if (game->m_state == GAMESTATE_INIT)
+    {
+        game->m_fuellevel = 10000;
+        game->m_ticks = 0;
+        game->m_tickssincecollision = 0;
 
-    game->m_state = GAMESTATE_STARTUP;
-    game->m_fuellevel = 10000;
-    game->m_score = 0;
-    game->m_ticks = 0;
-
-    Jet_Initialize(&game->m_jet);
-    PlayArea_Initialize(&game->m_playarea);
-    Bullets_Init(&game->m_bullets);
-    Fuels_Initialize(&game->m_fuels);
+        Jet_Initialize(&game->m_jet);
+        PlayArea_Initialize(&game->m_playarea);
+        Bullets_Init(&game->m_bullets);
+        Fuels_Initialize(&game->m_fuels);
+        Ships_Initialize(&game->m_ships);
+        game->m_state = GAMESTATE_BEGINLEVEL;
+    }
 }
 void Game_UpdateBackground(struct Game *game, const int ticks)
 {
@@ -51,7 +54,7 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
     Input_Update(&game->m_input);
     if (game->m_fuellevel <= 0)
     {
-        game->m_state = GAMESTATE_GAMEOVER;
+        game->m_state = GAMESTATE_FUELGONE;
     }
     if (game->m_state == GAMESTATE_GAMEOVER && Input_GamepadButtonPress(&game->m_input, 2))
     {
@@ -59,13 +62,35 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
     }
     switch (game->m_state)
     {
-    case GAMESTATE_STARTUP:
-        game->m_state = GAMESTATE_PLAY;
+    case GAMESTATE_INIT:
         break;
+    case GAMESTATE_BEGINLEVEL:
+        if (Input_GamepadButtonPress(&game->m_input, 0) || Input_GamepadButtonPress(&game->m_input, 1))
+        {
+            game->m_state = GAMESTATE_PLAY;
+        }
+        break;
+    case GAMESTATE_FUELGONE:
+        game->m_state = GAMESTATE_ENDLIFE;
+        break;
+    case GAMESTATE_ENDLIFE:
+
+        if (game->m_lives_left-- == 0)
+        {
+            game->m_state = GAMESTATE_GAMEOVER;
+        }
+        else
+        {
+            game->m_state = GAMESTATE_INIT;
+        }
+        break;
+    case GAMESTATE_GAMEOVER:
+        break;
+
     case GAMESTATE_JETCOLLISION:
         if (game->m_tickssincecollision++ > 100)
         {
-            game->m_state = GAMESTATE_GAMEOVER;
+            game->m_state = GAMESTATE_ENDLIFE;
         }
 
         break;
@@ -116,6 +141,17 @@ void Game_UpdateObjects(struct Game *game)
 
     switch (game->m_state)
     {
+    case GAMESTATE_INIT:
+        break;
+    case GAMESTATE_BEGINLEVEL:
+        break;
+    case GAMESTATE_FUELGONE:
+        break;
+    case GAMESTATE_ENDLIFE:
+        break;
+
+    case GAMESTATE_GAMEOVER:
+        break;
     case GAMESTATE_JETCOLLISION:
 
         break;
@@ -146,6 +182,10 @@ void Game_DrawBackground(struct Game *game)
 {
     switch (game->m_state)
     {
+    case GAMESTATE_INIT:
+    case GAMESTATE_BEGINLEVEL:
+    case GAMESTATE_FUELGONE:
+    case GAMESTATE_ENDLIFE:
     case GAMESTATE_PLAY:
     case GAMESTATE_JETCOLLISION:
         PlayArea_NewDraw(&game->m_playarea);
@@ -163,6 +203,18 @@ void Game_DrawObjects(struct Game *game)
 {
     switch (game->m_state)
     {
+    case GAMESTATE_INIT:
+        break;
+
+    case GAMESTATE_FUELGONE:
+        break;
+    case GAMESTATE_ENDLIFE:
+        break;
+    case GAMESTATE_GAMEOVER:
+        break;
+    case GAMESTATE_BEGINLEVEL:
+        *DRAW_COLORS = 2;
+        text("press to play", 30, 50);
     case GAMESTATE_JETCOLLISION:
     case GAMESTATE_PLAY:
 

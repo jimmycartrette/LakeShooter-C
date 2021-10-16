@@ -10,18 +10,22 @@
 
 enum GameState
 {
-    GAMESTATE_STARTUP = 0,
-    GAMESTATE_PLAY = 1,
-    GAMESTATE_JETCOLLISION = 2,
-    GAMESTATE_GAMEOVER = 3
+    GAMESTATE_INIT = 0,
+    GAMESTATE_BEGINLEVEL = 1,
+    GAMESTATE_PLAY = 2,
+    GAMESTATE_JETCOLLISION = 3,
+    GAMESTATE_FUELGONE = 4,
+    GAMESTATE_ENDLIFE = 5,
+    GAMESTATE_GAMEOVER = 6
 };
 
 struct Game
 {
     int64_t m_ticks;
-    int8_t m_state;
+    int8_t m_lives_left;
+    enum GameState m_state;
     int64_t m_fuellevel;
-    int64_t m_score;
+    int16_t m_score;
     int64_t m_tickssincecollision;
     int16_t m_soundeffectcountdown;
     char *m_worldmap;
