@@ -4,6 +4,7 @@
 #include "jet.h"
 #include "utils.h"
 #include "sound.h"
+#include "global.h"
 
 const char BULLET[3] = {
     0b11101111,
@@ -77,6 +78,21 @@ void Bullets_Anything_CollisionDetect(struct Bullets *bullets, struct Game *game
     {
         if (bullets->bullet[i].m_obj.m_alive)
         {
+            for (uint8_t x = 0; x < 7; x++)
+            {
+                if (game->m_playarea.m_playblocks[x].m_hasbridge == true)
+                {
+                    uint8_t topblock = game->m_playarea.m_currenttopblock;
+                    uint8_t attempt = 7 - ((x + topblock) % 7);
+                    uint8_t bridgeY = (attempt * 20) - abs(game->m_playarea.m_offsetY);
+                    if (bullets->bullet[i].m_obj.m_posY < bridgeY)
+                    {
+
+                        game->m_playarea.m_playblocks[x].m_hasbridge = false;
+                        Generate_PlayBlock(0, false, false, false, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(x + 1) % 7], &game->m_playarea.m_playblocks[x]);
+                    }
+                }
+            }
 
             // check land
             if (bullets->bullet[i].m_obj.m_posY > 0 && Detect_PixelCollision(bullets->bullet[i].m_obj.m_posX, bullets->bullet[i].m_obj.m_posY))

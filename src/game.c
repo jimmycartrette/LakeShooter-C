@@ -39,7 +39,7 @@ void Game_Init(struct Game *game)
         game->m_fuellevel = 10000;
         game->m_ticks = 0;
         game->m_tickssincecollision = 0;
-
+        lsfr.m_lfsrvalue = game->m_savedlsfr;
         Jet_Initialize(&game->m_jet);
         PlayArea_Initialize(&game->m_playarea);
         Bullets_Init(&game->m_bullets);
@@ -118,6 +118,10 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         {
             Ships_Create(&game->m_ships, &game->m_playarea);
         }
+        if (isNewBlock && (lsfr.m_lfsrvalue >> 4) % 4 == 0)
+        {
+            Clouds_GenerateCloud(game);
+        }
         Jet_Update(&game->m_jet, &game->m_input, game);
 
         if (game->m_jet.m_obj.m_tickssincecollision > 0)
@@ -173,6 +177,7 @@ void Game_UpdateObjects(struct Game *game)
         Fuels_Jet_CollisionDetect(&game->m_fuels, &game->m_jet, game);
         Fuels_Update(&game->m_fuels, &game->m_playarea, game);
         Ships_Update(&game->m_ships, &game->m_playarea);
+        Clouds_Update(&game->m_clouds, game);
         // fuels colliding with jet
 
         break;
@@ -223,6 +228,7 @@ void Game_DrawObjects(struct Game *game)
         Jet_Draw(&game->m_jet, game);
         Bullets_Draw(&game->m_bullets);
         Draw_Status(game);
+        Clouds_Draw(&game->m_clouds);
         break;
     }
 }

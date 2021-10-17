@@ -20,6 +20,7 @@ void start()
     game.m_lives_left = 3;
     game.m_score = 0;
     game.m_state = GAMESTATE_INIT;
+    game.m_savedlsfr = lsfr.m_lfsrvalue;
 }
 
 void update()

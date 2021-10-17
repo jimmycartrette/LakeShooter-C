@@ -36,7 +36,6 @@ void Generate_PlayBlock_Pattern(struct PlayBlock *playblock, struct PlayBlock *p
         }
         for (uint16_t column = 0; column < 10; column++)
         {
-
             unsigned char field = 0b00000000;
 
             if (column >= wantededgewidth / 8)
@@ -59,12 +58,23 @@ void Generate_PlayBlock_Pattern(struct PlayBlock *playblock, struct PlayBlock *p
                 }
                 field <<= wantedislandwidth - (8 * (9 - column));
             }
+            if (playblock->m_hasbridge && row > 12)
+            {
+                if (row % 2 == 1)
+                {
+                    field = 0b0000000u;
+                }
+                else
+                {
+                    field = 0b1111111u;
+                }
+            }
             playblock->m_displaypattern[row * 10 + column] = field;
         }
     }
 }
 
-void Generate_PlayBlock(bool start, bool noisland, const char seed, struct PlayBlock *previousplayblock, struct PlayBlock *generatedplayblock)
+void Generate_PlayBlock(uint8_t index, bool first, bool start, bool noisland, const char seed, struct PlayBlock *previousplayblock, struct PlayBlock *generatedplayblock)
 {
 
     if (seed % 4 == 0 || start)
@@ -94,27 +104,51 @@ void Generate_PlayBlock(bool start, bool noisland, const char seed, struct PlayB
         generatedplayblock->m_edgewidth = previousplayblock->m_edgewidth;
         generatedplayblock->m_islandwidth = previousplayblock->m_islandwidth;
     }
+    if (first)
+    {
+        generatedplayblock->m_islandwidth = 0;
+
+        if (index < 3)
+        {
+            generatedplayblock->m_edgewidth = 40;
+        }
+        else if (index == 3)
+        {
+            generatedplayblock->m_edgewidth = 60;
+            generatedplayblock->m_hasbridge = true;
+        }
+        else
+        {
+            generatedplayblock->m_edgewidth = 60;
+        }
+    }
     generatedplayblock->m_edgetransitionspeed = 2 + (abs(seed) % 5);
     generatedplayblock->m_islandtransitionspeed = 2 + (abs(seed) >> 2 % 5);
+
     Generate_PlayBlock_Pattern(generatedplayblock, start ? generatedplayblock : previousplayblock);
 }
 
 void PlayArea_Initialize(struct PlayArea *p)
 {
+
     p->m_y = 983040;
     p->m_x = 0;
     p->m_width = PLAY_WIDTH;
     p->m_height = PLAY_HEIGHT;
     p->m_currenttopblock = 0;
+    p->m_offsetX = 0;
+    p->m_offsetY = 0;
     for (uint8_t i = 0; i < 7; i++)
     {
         bool isstart = i == 0;
         bool noisland = true;
-        Generate_PlayBlock(isstart, noisland, lsfr.m_lfsrvalue, &p->m_playblocks[i - 1], &p->m_playblocks[i]);
+        Generate_PlayBlock(i, true, isstart, noisland, lsfr.m_lfsrvalue, &p->m_playblocks[i - 1], &p->m_playblocks[i]);
+
         lfsr_next(&lsfr);
         // tracef("lfsr is %x", lsfr.m_lfsrvalue);
         // tracef("playblock %x has width %d", i, p->m_playblocks[i].m_edgewidth);
     }
+    // override initial playblocks with start values
 }
 
 bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, const int ticks)
@@ -145,7 +179,7 @@ bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, const i
         {
             p->m_currenttopblock--;
         }
-        Generate_PlayBlock(false, false, lsfr.m_lfsrvalue, &p->m_playblocks[(p->m_currenttopblock + 1) % 7], &p->m_playblocks[p->m_currenttopblock]);
+        Generate_PlayBlock(0, false, false, false, lsfr.m_lfsrvalue, &p->m_playblocks[(p->m_currenttopblock + 1) % 7], &p->m_playblocks[p->m_currenttopblock]);
 
         lfsr_next(&lsfr);
         return true;
@@ -172,7 +206,7 @@ void PlayArea_NewDraw(struct PlayArea *p)
         *DRAW_COLORS = 1;
         if (DEBUG == 1)
         {
-            //  text(buffer, 0, (pb * 20) + p->m_offsetY);
+            text(buffer, 0, (pb * 20) + p->m_offsetY);
         }
     }
 }

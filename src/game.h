@@ -6,6 +6,7 @@
 #include "input.h"
 #include "bullets.h"
 #include "fuel.h"
+#include "cloud.h"
 #include "ship.h"
 
 enum GameState
@@ -25,6 +26,7 @@ struct Game
     int8_t m_lives_left;
     enum GameState m_state;
     int64_t m_fuellevel;
+    uint16_t m_savedlsfr;
     int16_t m_score;
     int64_t m_tickssincecollision;
     int16_t m_soundeffectcountdown;
@@ -37,6 +39,7 @@ struct Game
     struct Bullets m_bullets;
     struct Ships m_ships;
     struct Fuels m_fuels;
+    struct Clouds m_clouds;
 };
 
 void Game_Init(struct Game *game);
