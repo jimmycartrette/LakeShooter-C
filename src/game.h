@@ -30,6 +30,7 @@ struct Game
     int16_t m_score;
     int64_t m_tickssincecollision;
     int16_t m_soundeffectcountdown;
+    uint16_t m_levelblocksrendered;
     char *m_worldmap;
 
     struct Input m_input;

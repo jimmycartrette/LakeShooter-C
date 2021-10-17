@@ -74,8 +74,9 @@ void Generate_PlayBlock_Pattern(struct PlayBlock *playblock, struct PlayBlock *p
     }
 }
 
-void Generate_PlayBlock(uint8_t index, bool first, bool start, bool noisland, const char seed, struct PlayBlock *previousplayblock, struct PlayBlock *generatedplayblock)
+void Generate_PlayBlock(uint8_t index, bool init, bool start, bool noisland, const char seed, struct PlayBlock *previousplayblock, struct PlayBlock *generatedplayblock, uint16_t *levelblocksrendered)
 {
+    generatedplayblock->m_hasbridge = false;
 
     if (seed % 4 == 0 || start)
     {
@@ -104,7 +105,7 @@ void Generate_PlayBlock(uint8_t index, bool first, bool start, bool noisland, co
         generatedplayblock->m_edgewidth = previousplayblock->m_edgewidth;
         generatedplayblock->m_islandwidth = previousplayblock->m_islandwidth;
     }
-    if (first)
+    if (init)
     {
         generatedplayblock->m_islandwidth = 0;
 
@@ -121,6 +122,13 @@ void Generate_PlayBlock(uint8_t index, bool first, bool start, bool noisland, co
         {
             generatedplayblock->m_edgewidth = 60;
         }
+    }
+    if (!init && *levelblocksrendered > 40 && (seed >> 1) % 40 == 0)
+    {
+        //TODO check all for existing bridges first
+        generatedplayblock->m_islandwidth = 0;
+        generatedplayblock->m_edgewidth = 60;
+        generatedplayblock->m_hasbridge = true;
     }
     generatedplayblock->m_edgetransitionspeed = 2 + (abs(seed) % 5);
     generatedplayblock->m_islandtransitionspeed = 2 + (abs(seed) >> 2 % 5);
@@ -142,7 +150,7 @@ void PlayArea_Initialize(struct PlayArea *p)
     {
         bool isstart = i == 0;
         bool noisland = true;
-        Generate_PlayBlock(i, true, isstart, noisland, lsfr.m_lfsrvalue, &p->m_playblocks[i - 1], &p->m_playblocks[i]);
+        Generate_PlayBlock(i, true, isstart, noisland, lsfr.m_lfsrvalue, &p->m_playblocks[i - 1], &p->m_playblocks[i], 0);
 
         lfsr_next(&lsfr);
         // tracef("lfsr is %x", lsfr.m_lfsrvalue);
@@ -151,12 +159,12 @@ void PlayArea_Initialize(struct PlayArea *p)
     // override initial playblocks with start values
 }
 
-bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, const int ticks)
+bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, uint16_t *levelblocksrendered)
 {
     p->m_previousx = p->m_x;
     p->m_previousy = p->m_y;
 
-    p->m_y = p->m_y - jet->m_obj.m_vaccel * 2.2 * ticks;
+    p->m_y = p->m_y - jet->m_obj.m_vaccel * 2.2;
 
     int previousyoffset = p->m_offsetY;
 
@@ -179,8 +187,9 @@ bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, const i
         {
             p->m_currenttopblock--;
         }
-        Generate_PlayBlock(0, false, false, false, lsfr.m_lfsrvalue, &p->m_playblocks[(p->m_currenttopblock + 1) % 7], &p->m_playblocks[p->m_currenttopblock]);
-
+        Generate_PlayBlock(0, false, false, false, lsfr.m_lfsrvalue, &p->m_playblocks[(p->m_currenttopblock + 1) % 7], &p->m_playblocks[p->m_currenttopblock], levelblocksrendered);
+        (*levelblocksrendered)++;
+        tracef("blocks rendered is %d", *levelblocksrendered);
         lfsr_next(&lsfr);
         return true;
         // tracef("lfsr is %x", lsfr.m_lfsrvalue);

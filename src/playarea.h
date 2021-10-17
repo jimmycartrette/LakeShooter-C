@@ -27,7 +27,7 @@ struct PlayArea
 };
 
 void PlayArea_Initialize(struct PlayArea *p);
-bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, const int ticks); // true if created playblock
-void Generate_PlayBlock(uint8_t index, bool first, bool start, bool noisland, const char seed, struct PlayBlock *previousplayblock, struct PlayBlock *generatedplayblock);
+bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks, uint16_t *levelblocksrendered); // true if created playblock
+void Generate_PlayBlock(uint8_t index, bool first, bool start, bool noisland, const char seed, struct PlayBlock *previousplayblock, struct PlayBlock *generatedplayblock, uint16_t *levelblocksrendered);
 void PlayArea_Draw(struct PlayArea *p);
 void PlayArea_NewDraw(struct PlayArea *p);

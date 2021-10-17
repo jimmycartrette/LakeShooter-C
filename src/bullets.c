@@ -85,11 +85,17 @@ void Bullets_Anything_CollisionDetect(struct Bullets *bullets, struct Game *game
                     uint8_t topblock = game->m_playarea.m_currenttopblock;
                     uint8_t attempt = 7 - ((x + topblock) % 7);
                     uint8_t bridgeY = (attempt * 20) - abs(game->m_playarea.m_offsetY);
-                    if (bullets->bullet[i].m_obj.m_posY < bridgeY)
+                    if (bridgeY > 90 && bullets->bullet[i].m_obj.m_posY < bridgeY)
                     {
 
                         game->m_playarea.m_playblocks[x].m_hasbridge = false;
-                        Generate_PlayBlock(0, false, false, false, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(x + 1) % 7], &game->m_playarea.m_playblocks[x]);
+                        if (game->m_levelblocksrendered > 10)
+                        {
+                            game->m_savedlsfr = lsfr.m_lfsrvalue;
+                            tracef("saving lsfr as %d", game->m_savedlsfr);
+                        }
+                        game->m_levelblocksrendered = 0;
+                        Generate_PlayBlock(0, false, false, false, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(x + 1) % 7], &game->m_playarea.m_playblocks[x], &game->m_levelblocksrendered);
                     }
                 }
             }

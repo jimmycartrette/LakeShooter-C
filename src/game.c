@@ -36,9 +36,11 @@ void Game_Init(struct Game *game)
 {
     if (game->m_state == GAMESTATE_INIT)
     {
+
         game->m_fuellevel = 10000;
         game->m_ticks = 0;
         game->m_tickssincecollision = 0;
+        tracef("init running setting lsfr to %d", game->m_savedlsfr);
         lsfr.m_lfsrvalue = game->m_savedlsfr;
         Jet_Initialize(&game->m_jet);
         PlayArea_Initialize(&game->m_playarea);
@@ -109,12 +111,12 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
             game->m_jet.fuelingtickscountdown--;
         }
         // tracef("y is %d", game->m_playarea.m_y);
-        bool isNewBlock = PlayArea_Update(&game->m_playarea, &game->m_jet, game->m_ticks, ticks);
+        bool isNewBlock = PlayArea_Update(&game->m_playarea, &game->m_jet, game->m_ticks, &game->m_levelblocksrendered);
         if (isNewBlock && (lsfr.m_lfsrvalue >> 1) % 5 == 0)
         {
             Fuels_Create(&game->m_fuels, &game->m_playarea);
         }
-        if (isNewBlock && (lsfr.m_lfsrvalue >> 2) % 7 == 0)
+        else if (isNewBlock && (lsfr.m_lfsrvalue >> 2) % 7 == 0)
         {
             Ships_Create(&game->m_ships, &game->m_playarea);
         }
