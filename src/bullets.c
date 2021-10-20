@@ -83,19 +83,24 @@ void Bullets_Anything_CollisionDetect(struct Bullets *bullets, struct Game *game
                 if (game->m_playarea.m_playblocks[x].m_hasbridge == true)
                 {
                     uint8_t topblock = game->m_playarea.m_currenttopblock;
-                    uint8_t attempt = 7 - ((x + topblock) % 7);
-                    uint8_t bridgeY = (attempt * 20) - abs(game->m_playarea.m_offsetY);
-                    if (bridgeY > 90 && bullets->bullet[i].m_obj.m_posY < bridgeY)
-                    {
 
+                    int8_t attempt = (8 + x - topblock) % 7;
+                    // tracef("topblock is %d block wbridge is %d attempt is %d", topblock, x, attempt);
+                    uint8_t bridgeY = (attempt * 20) - abs(game->m_playarea.m_offsetY);
+                    // tracef("bridgey is %d and bullety is %d", bridgeY, (int)bullets->bullet[i].m_obj.m_posY);
+
+                    if (bridgeY > 40 && bullets->bullet[i].m_obj.m_posY < bridgeY)
+                    {
+                        bullets->bullet[i].m_obj.m_alive = false;
                         game->m_playarea.m_playblocks[x].m_hasbridge = false;
-                        if (game->m_levelblocksrendered > 10)
+                        if (game->m_playarea.m_currentblockindex > 12)
                         {
                             game->m_savedlsfr = lsfr.m_lfsrvalue;
                             tracef("saving lsfr as %d", game->m_savedlsfr);
                         }
+                        game->m_playarea.m_bridgeblockindex += 40;
                         game->m_levelblocksrendered = 0;
-                        Generate_PlayBlock(0, false, false, false, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(x + 1) % 7], &game->m_playarea.m_playblocks[x], &game->m_levelblocksrendered);
+                        Generate_PlayBlock(game->m_playarea.m_currentblockindex, false, false, false, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(x + 1) % 7], &game->m_playarea.m_playblocks[x], game->m_playarea.m_bridgeblockindex);
                     }
                 }
             }
