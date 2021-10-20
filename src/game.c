@@ -111,7 +111,7 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
             game->m_jet.fuelingtickscountdown--;
         }
         // tracef("y is %d", game->m_playarea.m_y);
-        bool isNewBlock = PlayArea_Update(&game->m_playarea, &game->m_jet, game->m_ticks, &game->m_levelblocksrendered);
+        bool isNewBlock = PlayArea_Update(&game->m_playarea, &game->m_jet, game->m_ticks);
         if (isNewBlock && (lsfr.m_lfsrvalue >> 1) % 5 == 0)
         {
             Fuels_Create(&game->m_fuels, &game->m_playarea);
