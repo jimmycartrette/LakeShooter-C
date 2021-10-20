@@ -40,7 +40,7 @@ void Game_Init(struct Game *game)
         game->m_fuellevel = 10000;
         game->m_ticks = 0;
         game->m_tickssincecollision = 0;
-        tracef("init running setting lsfr to %d", game->m_savedlsfr);
+        // tracef("init running setting lsfr to %d", game->m_savedlsfr);
         lsfr.m_lfsrvalue = game->m_savedlsfr;
         Jet_Initialize(&game->m_jet);
         PlayArea_Initialize(&game->m_playarea);
@@ -69,6 +69,17 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
     case GAMESTATE_BEGINLEVEL:
         if (Input_GamepadButtonPress(&game->m_input, 0) || Input_GamepadButtonPress(&game->m_input, 1))
         {
+            for (uint8_t i = 0; i < 7; i++)
+            {
+                if (game->m_playarea.m_playblocks[i].m_hasbridge)
+                {
+                    game->m_playarea.m_playblocks[game->m_playarea.m_bridgeblockindex].m_hasbridge = false;
+                    tracef("bbi is %d", game->m_playarea.m_bridgeblockindex);
+
+                    Generate_PlayBlock(game->m_playarea.m_currentblockindex, false, false, false, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(i + 1) % 7], &game->m_playarea.m_playblocks[i], game->m_playarea.m_bridgeblockindex);
+                }
+            }
+
             game->m_state = GAMESTATE_PLAY;
         }
         break;
