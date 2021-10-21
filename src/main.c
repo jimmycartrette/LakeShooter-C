@@ -19,9 +19,10 @@ void start()
     lfsr_start(0xB3C4u, &lsfr);
     game.m_lives_left = 30;
     game.m_score = 0;
+    game.m_level = 1;
     game.m_state = GAMESTATE_INIT;
     game.m_savedlsfr = lsfr.m_lfsrvalue;
-    tracef("initial saved lsfr is %d", game.m_savedlsfr);
+    //tracef("initial saved lsfr is %d", game.m_savedlsfr);
 }
 
 void update()

@@ -74,14 +74,14 @@ void Generate_PlayBlock_Pattern(struct PlayBlock *playblock, struct PlayBlock *p
     }
 }
 
-void Generate_PlayBlock(uint16_t currentplayblockindex, bool init, bool start, bool noisland, const char seed, struct PlayBlock *previousplayblock, struct PlayBlock *generatedplayblock, uint16_t bridgeblockindex)
+void Generate_PlayBlock(uint16_t currentplayblockindex, bool allowgeneration, bool start, bool noisland, const char seed, struct PlayBlock *previousplayblock, struct PlayBlock *generatedplayblock, uint16_t bridgeblockindex)
 {
-    init;
+
     int8_t bridgedistance = bridgeblockindex - currentplayblockindex;
     // tracef("currindex %d bridgeat %d dist %d startis %d", currentplayblockindex, bridgeblockindex, bridgedistance, start);
     generatedplayblock->m_hasbridge = false;
 
-    if (seed % 4 == 0 || start)
+    if (allowgeneration && (seed % 4 == 0 || start))
     {
         // trace("in seed");
         generatedplayblock->m_edgewidth = 10 + (abs(seed) % 50);
@@ -186,7 +186,7 @@ bool PlayArea_Update(struct PlayArea *p, struct Jet *jet, int gameticks)
         {
             p->m_currenttopblock--;
         }
-        Generate_PlayBlock(p->m_currentblockindex, false, false, false, lsfr.m_lfsrvalue, &p->m_playblocks[(p->m_currenttopblock + 1) % 7], &p->m_playblocks[p->m_currenttopblock], p->m_bridgeblockindex);
+        Generate_PlayBlock(p->m_currentblockindex, true, false, false, lsfr.m_lfsrvalue, &p->m_playblocks[(p->m_currenttopblock + 1) % 7], &p->m_playblocks[p->m_currenttopblock], p->m_bridgeblockindex);
         p->m_currentblockindex++;
         // tracef("currentblockindex is %d", p->m_currentblockindex);
         lfsr_next(&lsfr);

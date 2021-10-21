@@ -26,6 +26,7 @@ struct Game
     int8_t m_lives_left;
     enum GameState m_state;
     int64_t m_fuellevel;
+    uint8_t m_level;
     uint16_t m_savedlsfr;
     int16_t m_score;
     int64_t m_tickssincecollision;

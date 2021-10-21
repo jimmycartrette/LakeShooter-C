@@ -96,11 +96,12 @@ void Bullets_Anything_CollisionDetect(struct Bullets *bullets, struct Game *game
                         if (game->m_playarea.m_currentblockindex > 12)
                         {
                             game->m_savedlsfr = lsfr.m_lfsrvalue;
-                            tracef("saving lsfr as %d", game->m_savedlsfr);
+                            //   tracef("saving lsfr as %d", game->m_savedlsfr);
                         }
                         game->m_playarea.m_bridgeblockindex += 40;
                         game->m_levelblocksrendered = 0;
-                        Generate_PlayBlock(game->m_playarea.m_currentblockindex, false, false, false, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(x + 1) % 7], &game->m_playarea.m_playblocks[x], game->m_playarea.m_bridgeblockindex);
+                        game->m_level++;
+                        Generate_PlayBlock(game->m_playarea.m_currentblockindex, false, false, true, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(x + 1) % 7], &game->m_playarea.m_playblocks[x], game->m_playarea.m_bridgeblockindex);
                     }
                 }
             }

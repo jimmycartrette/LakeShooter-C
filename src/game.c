@@ -24,6 +24,11 @@ void Draw_Status(struct Game *game)
     *DRAW_COLORS = 2;
     text("E", 62, PLAY_HEIGHT + 16);
     text("F", 101, PLAY_HEIGHT + 16);
+    char leveltext[3];
+    itoa(leveltext, game->m_level);
+    int leveloffset = digitsofbase10(game->m_level, 0);
+
+    text(leveltext, 20 - leveloffset * 8, PLAY_HEIGHT + 26);
     if (DEBUG == 1)
     {
         char buffer[3];
@@ -36,7 +41,6 @@ void Game_Init(struct Game *game)
 {
     if (game->m_state == GAMESTATE_INIT)
     {
-
         game->m_fuellevel = 10000;
         game->m_ticks = 0;
         game->m_tickssincecollision = 0;
@@ -74,9 +78,9 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
                 if (game->m_playarea.m_playblocks[i].m_hasbridge)
                 {
                     game->m_playarea.m_playblocks[game->m_playarea.m_bridgeblockindex].m_hasbridge = false;
-                    tracef("bbi is %d", game->m_playarea.m_bridgeblockindex);
+                    // tracef("bbi is %d", game->m_playarea.m_bridgeblockindex);
 
-                    Generate_PlayBlock(game->m_playarea.m_currentblockindex, false, false, false, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(i + 1) % 7], &game->m_playarea.m_playblocks[i], game->m_playarea.m_bridgeblockindex);
+                    Generate_PlayBlock(game->m_playarea.m_currentblockindex, false, false, true, lsfr.m_lfsrvalue, &game->m_playarea.m_playblocks[(i + 1) % 7], &game->m_playarea.m_playblocks[i], game->m_playarea.m_bridgeblockindex);
                 }
             }
 
@@ -127,7 +131,7 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         {
             Fuels_Create(&game->m_fuels, &game->m_playarea);
         }
-        else if (isNewBlock && (lsfr.m_lfsrvalue >> 2) % 7 == 0)
+        else if (isNewBlock && (lsfr.m_lfsrvalue >> 2) % 3 == 0)
         {
             Ships_Create(&game->m_ships, &game->m_playarea);
         }

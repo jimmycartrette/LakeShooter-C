@@ -1,7 +1,7 @@
 #pragma once
 #include "gameobject.h"
 
-#define MAXSHIPS 3
+#define MAXSHIPS 5
 
 struct PlayArea;
 struct Ship

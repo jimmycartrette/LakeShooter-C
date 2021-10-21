@@ -71,7 +71,7 @@ uint16_t lfsr_next(struct Lsfr *lsfr)
     // }
     // s[16] = '\0';
     // trace(s);
-    tracef("%d", lsfr->m_lfsrvalue);
+    //tracef("%d", lsfr->m_lfsrvalue);
     return lsfr->m_lfsrvalue;
 }
 int abs(int i)
