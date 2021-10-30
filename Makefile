@@ -33,10 +33,10 @@ OBJECTS = $(patsubst src/%.c, build/%.o, $(wildcard src/*.c))
 OBJECTS += $(patsubst src/%.cpp, build/%.o, $(wildcard src/*.cpp))
 DEPS = $(OBJECTS:.o=.d)
 
-all: build/lakeshooter.wasm
+all: build/cart.wasm
 
 # Link cart.wasm from all object files and run wasm-opt
-build/lakeshooter.wasm: $(OBJECTS)
+build/cart.wasm: $(OBJECTS)
 	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS)
 ifneq ($(DEBUG), 1)
 ifeq (, $(shell which $(WASM_OPT)))
@@ -60,6 +60,6 @@ build/%.o: src/%.cpp
 clean:
 	rd build /s /q
 bundle:
-	w4 bundle build/lakeshooter.wasm --html index.html
+	w4 bundle build/cart.wasm --html index.html
 
 -include $(DEPS)

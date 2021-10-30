@@ -104,6 +104,10 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         }
         break;
     case GAMESTATE_GAMEOVER:
+        if (Input_GamepadButtonPress(&game->m_input, 0) || Input_GamepadButtonPress(&game->m_input, 1))
+        {
+            game->m_state = GAMESTATE_INIT;
+        }
         break;
 
     case GAMESTATE_JETCOLLISION:
@@ -253,10 +257,12 @@ void Game_DrawObjects(struct Game *game)
     case GAMESTATE_ENDLIFE:
         break;
     case GAMESTATE_GAMEOVER:
+        *DRAW_COLORS = 2;
+        text("press X to restart", 10, 50);
         break;
     case GAMESTATE_BEGINLEVEL:
         *DRAW_COLORS = 2;
-        text("press to play", 30, 50);
+        text("press X to start", 16, 50);
     case GAMESTATE_JETCOLLISION:
     case GAMESTATE_PLAY:
 
