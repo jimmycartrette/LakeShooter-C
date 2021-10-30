@@ -130,18 +130,18 @@ void Bullets_Anything_CollisionDetect(struct Bullets *bullets, struct Game *game
             }
 
             // check enemies
-            for (int f = 0; f < MAXSHIPS; f++)
+            for (int f = 0; f < MAXENEMYS; f++)
             {
-                if (game->m_ships.ship[f].m_obj.m_alive && game->m_ships.ship[f].m_obj.m_tickssincecollision == 0)
+                if (game->m_enemys.enemy[f].m_obj.m_alive && game->m_enemys.enemy[f].m_obj.m_tickssincecollision == 0)
                 {
-                    // tracef("b %d ship %d check", i, f);
-                    if (GameObject_CollisionDetect(&game->m_ships.ship[f].m_obj, &bullets->bullet[i].m_obj))
+                    // tracef("b %d enemy %d check", i, f);
+                    if (GameObject_CollisionDetect(&game->m_enemys.enemy[f].m_obj, &bullets->bullet[i].m_obj))
                     {
 
                         bullets->bullet[i]
                             .m_obj.m_alive = false;
-                        game->m_score = game->m_score + game->m_ships.ship[f].m_obj.m_scoreworth;
-                        GameObject_StartExplosion(&game->m_ships.ship[f].m_obj);
+                        game->m_score = game->m_score + game->m_enemys.enemy[f].m_obj.m_scoreworth;
+                        GameObject_StartExplosion(&game->m_enemys.enemy[f].m_obj);
 
                         break;
                     }

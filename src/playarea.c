@@ -85,7 +85,10 @@ void Generate_PlayBlock(uint16_t currentplayblockindex, bool allowgeneration, bo
     {
         // trace("in seed");
         generatedplayblock->m_edgewidth = 10 + (abs(seed) % 50);
-
+        if (previousplayblock->m_islandwidth + 10 + generatedplayblock->m_edgewidth > 80)
+        {
+            generatedplayblock->m_edgewidth = previousplayblock->m_islandwidth + 15;
+        }
         if (generatedplayblock->m_edgewidth < 25)
         {
             if (seed % 2 == 0 && !noisland)

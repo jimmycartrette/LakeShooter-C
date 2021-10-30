@@ -81,6 +81,7 @@ void GameObject_Draw(struct GameObject *o, struct Game *game)
                 Sound_PlayOtherCollision(game);
             }
         }
+        o->m_tickssincecollision++;
         *DRAW_COLORS = 2;
         if (o->m_type == OBJECT_JET)
         {

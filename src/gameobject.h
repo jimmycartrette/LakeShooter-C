@@ -8,7 +8,8 @@ enum ObjectType
     OBJECT_JET = 1,
     OBJECT_BULLET = 2,
     OBJECT_FUEL = 3,
-    OBJECT_SHIP = 4
+    OBJECT_SHIP = 4,
+    OBJECT_HELI = 5
 };
 
 enum Direction

@@ -6,6 +6,7 @@ struct Lsfr
 {
     uint16_t m_start_state;
     uint16_t m_lfsrvalue;
+    uint8_t m_period;
 };
 
 char *itoa(char *dest, int i);

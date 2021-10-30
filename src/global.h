@@ -1,4 +1,6 @@
 #pragma once
+#include "stdint.h"
+#include <stdbool.h>
 
 #define SCREEN_WIDTH 160
 #define SCREEN_HEIGHT 160
@@ -8,6 +10,10 @@
 
 #define PLAY_WIDTH 160
 #define PLAY_HEIGHT 120
+
+extern uint8_t counter;
+extern bool LEVELDEBUGMODE;
+extern uint8_t WANTEDLEVEL;
 
 extern struct Game game;
 extern struct Lsfr lsfr;

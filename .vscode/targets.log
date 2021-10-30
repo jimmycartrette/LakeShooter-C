@@ -6,7 +6,7 @@ This program is built by Equation Solution <http://www.Equation.com>.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Oct 20 15:30:04 2021
+# Make data base, printed on Sat Oct 30 08:19:06 2021
 
 # Variables
 
@@ -23,11 +23,10 @@ USERPROFILE = C:\Users\jimmy
 # environment
 LOCALAPPDATA = C:\Users\jimmy\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-eaacb135-b16a-4826-b986-f21e92540b5c-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-ff24395d-7d74-4185-89d7-dd7ee7724f2d-sock
 # environment
 VSCODE_CWD = C:\Program Files\Microsoft VS Code
-# env 
-ironment
+# environment
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 SYSTEMROOT = C:\WINDOWS
@@ -42,7 +41,7 @@ GOPATH = C:\Users\jimmy\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_11068_APOTQQRSGOWDACOR
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_13548_VDAYGIIPTNFKFFIN
 # environment
 FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
@@ -65,7 +64,8 @@ LANG = C
 .LOADED := 
 # environment
 TMP = C:\Users\jimmy\AppData\Local\Temp
-# environment
+# e 
+nvironment
 CONFIGSETROOT = C:\WINDOWS\ConfigSetRoot
 # makefile
 MAKEFLAGS = pqrR
@@ -98,7 +98,7 @@ MAKEFILE_LIST := Makefile build/bullets.d build/cloud.d build/fuel.d build/game.
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 11068
+VSCODE_PID = 13548
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -275,7 +275,7 @@ src/ship.c:
 build/cloud.o: src/cloud.c src\cloud.c src\cloud.h src\gameobject.h src\game.h src\jet.h src\input.h src\ship.h src\playarea.h src\bullets.h src\fuel.h src\utils.h src\global.h src\wasm4.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'cloud'
-#  Last modified 2021-10-20 11:30:32
+#  Last modified 2021-10-21 08:40:48
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -284,7 +284,7 @@ build/cloud.o: src/cloud.c src\cloud.c src\cloud.h src\gameobject.h src\game.h s
 
 src\game.h:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-17 15:57:11
+#  Last modified 2021-10-21 08:13:20
 #  File has been updated.
 #  Successfully updated.
 
@@ -297,7 +297,7 @@ src\global.h:
 build/main.o: src/main.c src\main.c src\wasm4.h src\utils.h src\game.h src\jet.h src\gameobject.h src\input.h src\ship.h src\playarea.h src\bullets.h src\fuel.h src\cloud.h src\global.h src\sound.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -307,7 +307,7 @@ build/main.o: src/main.c src\main.c src\wasm4.h src\utils.h src\game.h src\jet.h
 # Not a target:
 src\bullets.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 14:10:35
+#  Last modified 2021-10-21 08:38:55
 #  File has been updated.
 #  Successfully updated.
 
@@ -339,7 +339,7 @@ src\wasm4.h:
 build/fuel.o: src/fuel.c src\fuel.c src\fuel.h src\gameobject.h src\playarea.h src\jet.h src\input.h src\ship.h src\wasm4.h src\game.h src\bullets.h src\cloud.h src\global.h src\sound.h src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'fuel'
-#  Last modified 2021-10-20 11:30:32
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -354,7 +354,7 @@ build/fuel.o: src/fuel.c src\fuel.c src\fuel.h src\gameobject.h src\playarea.h s
 # Not a target:
 build/bullets.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 14:10:36
+#  Last modified 2021-10-21 08:40:48
 #  File has been updated.
 #  Successfully updated.
 
@@ -374,21 +374,21 @@ src/jet.c:
 # Not a target:
 build/playarea.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 14:10:31
+#  Last modified 2021-10-22 10:18:28
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/utils.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-17 16:43:13
+#  Last modified 2021-10-21 08:12:46
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/jet.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 
@@ -408,7 +408,7 @@ src\input.c:
 build/jet.o: src/jet.c src\jet.c src\jet.h src\gameobject.h src\input.h src\ship.h src\global.h src\wasm4.h src\game.h src\playarea.h src\bullets.h src\fuel.h src\cloud.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'jet'
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -425,21 +425,21 @@ bundle:
 # Not a target:
 src/game.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:17
+#  Last modified 2021-10-21 08:40:37
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/ship.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:33
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src\utils.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-17 16:43:12
+#  Last modified 2021-10-21 08:12:46
 #  File has been updated.
 #  Successfully updated.
 
@@ -497,7 +497,7 @@ src\input.h:
 # Not a target:
 src\fuel.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-14 22:34:39
+#  Last modified 2021-10-21 08:31:17
 #  File has been updated.
 #  Successfully updated.
 
@@ -511,7 +511,7 @@ src/cloud.c:
 build/bullets.o: src/bullets.c src\bullets.c src\bullets.h src\gameobject.h src\playarea.h src\jet.h src\input.h src\ship.h src\wasm4.h src\utils.h src\sound.h src\game.h src\fuel.h src\cloud.h src\global.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'bullets'
-#  Last modified 2021-10-20 14:10:36
+#  Last modified 2021-10-21 08:40:48
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -527,7 +527,7 @@ src\utils.h:
 build/playarea.o: src/playarea.c src\playarea.c src\playarea.h src\jet.h src\gameobject.h src\input.h src\ship.h src\global.h src\utils.h src\wasm4.h src\fuel.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'playarea'
-#  Last modified 2021-10-20 14:10:31
+#  Last modified 2021-10-22 10:18:28
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -537,7 +537,7 @@ build/playarea.o: src/playarea.c src\playarea.c src\playarea.h src\jet.h src\gam
 build/utils.o: src/utils.c src\utils.c src\utils.h src\wasm4.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'utils'
-#  Last modified 2021-10-17 16:43:13
+#  Last modified 2021-10-21 08:12:46
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -547,13 +547,13 @@ build/utils.o: src/utils.c src\utils.c src\utils.h src\wasm4.h
 # Not a target:
 src\main.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-17 16:48:11
+#  Last modified 2021-10-21 08:14:02
 #  File has been updated.
 #  Successfully updated.
 
 src\ship.h:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-13 08:20:05
+#  Last modified 2021-10-21 08:40:48
 #  File has been updated.
 #  Successfully updated.
 
@@ -566,28 +566,28 @@ src\fuel.h:
 # Not a target:
 build/game.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/global.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/fuel.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-14 22:34:39
+#  Last modified 2021-10-21 08:31:17
 #  File has been updated.
 #  Successfully updated.
 
 build/ship.o: src/ship.c src\ship.c src\ship.h src\gameobject.h src\wasm4.h src\playarea.h src\jet.h src\input.h src\game.h src\bullets.h src\fuel.h src\cloud.h src\global.h src\sound.h src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'ship'
-#  Last modified 2021-10-20 11:31:33
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -597,14 +597,14 @@ build/ship.o: src/ship.c src\ship.c src\ship.h src\gameobject.h src\wasm4.h src\
 # Not a target:
 build/sound.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:33
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 build/gameobject.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 
@@ -633,7 +633,7 @@ src\sound.c:
 # Not a target:
 build/cloud.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:30:32
+#  Last modified 2021-10-21 08:40:48
 #  File has been updated.
 #  Successfully updated.
 
@@ -647,7 +647,7 @@ src/input.c:
 # Not a target:
 build/main.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 
@@ -660,7 +660,7 @@ src\cloud.c:
 
 build/cart.wasm: build/bullets.o build/cloud.o build/fuel.o build/game.o build/gameobject.o build/global.o build/input.o build/jet.o build/main.o build/playarea.o build/ship.o build/sound.o build/utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2021-10-20 14:10:36
+#  Last modified 2021-10-22 10:18:29
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 40):
@@ -675,7 +675,7 @@ src\jet.h:
 build/game.o: src/game.c src\game.c src\game.h src\jet.h src\gameobject.h src\input.h src\ship.h src\playarea.h src\bullets.h src\fuel.h src\cloud.h src\global.h src\wasm4.h src\utils.h src\sound.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'game'
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -691,7 +691,7 @@ src\sound.h:
 build/global.o: src/global.c src\global.c src\global.h src\game.h src\jet.h src\gameobject.h src\input.h src\ship.h src\playarea.h src\bullets.h src\fuel.h src\cloud.h src\utils.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'global'
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -701,28 +701,28 @@ build/global.o: src/global.c src\global.c src\global.h src\game.h src\jet.h src\
 # Not a target:
 build/fuel.d:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:30:32
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/bullets.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 14:10:35
+#  Last modified 2021-10-21 08:38:55
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src\game.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 11:31:17
+#  Last modified 2021-10-21 08:40:37
 #  File has been updated.
 #  Successfully updated.
 
 build/sound.o: src/sound.c src\sound.c src\sound.h src\game.h src\jet.h src\gameobject.h src\input.h src\ship.h src\playarea.h src\bullets.h src\fuel.h src\cloud.h src\wasm4.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'sound'
-#  Last modified 2021-10-20 11:31:33
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -739,7 +739,7 @@ src\global.c:
 build/gameobject.o: src/gameobject.c src\gameobject.c src\gameobject.h src\wasm4.h src\utils.h src\sound.h src\game.h src\jet.h src\input.h src\ship.h src\playarea.h src\bullets.h src\fuel.h src\cloud.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'gameobject'
-#  Last modified 2021-10-20 11:31:18
+#  Last modified 2021-10-21 08:40:49
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 51):
@@ -749,15 +749,14 @@ build/gameobject.o: src/gameobject.c src\gameobject.c src\gameobject.h src\wasm4
 # Not a target:
 src/playarea.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 14:10:30
+#  Last modified 2021-10-22 10:18:28
 #  File has been updated.
 #  Successfully updated.
 
-# Not  
-a target:
+# Not a target:
 src/utils.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-17 16:43:12
+#  Last modified 2021-10-21 08:12:46
 #  File has been updated.
 #  Successfully updated.
 
@@ -770,7 +769,7 @@ src\cloud.h:
 # Not a target:
 src\playarea.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-20 14:10:30
+#  Last modified 2021-10-22 10:18:28
 #  File has been updated.
 #  Successfully updated.
 
@@ -784,7 +783,7 @@ src\gameobject.c:
 # Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-17 16:48:11
+#  Last modified 2021-10-21 08:14:02
 #  File has been updated.
 #  Successfully updated.
 
@@ -797,11 +796,12 @@ src/main.c:
 # No general ('VPATH' variable) search path.
 
 # strcache buffers: 1 (0) / strings = 126 / storage = 1338 B / avg = 10 B
-# current buf: size = 8162 B / used = 1338 B / count = 126 / avg = 10 B
+# curren 
+t buf: size = 8162 B / used = 1338 B / count = 126 / avg = 10 B
 
 # strcache performance: lookups = 585 / hit rate = 78%
 # hash-table stats:
 # Load=126/8192=2%, Rehash=0, Collisions=3/585=1%
-# Finished Make data base on Wed Oct 20 15:30:04 2021
+# Finished Make data base on Sat Oct 30 08:19:06 2021
 
  

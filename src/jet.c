@@ -1,7 +1,7 @@
 #include "jet.h"
 #include "global.h"
 #include "wasm4.h"
-#include "ship.h"
+#include "enemy.h"
 #include "game.h"
 
 const char JETSTRAIGHT[16] = {
@@ -156,18 +156,18 @@ void Jet_Land_CollisionDetect(struct Jet *s)
         s->m_obj.m_tickssincecollision++;
     }
 }
-void Jet_Ships_CollisionDetect(struct Jet *jet, struct Ships *ships, struct Game *game)
+void Jet_Enemys_CollisionDetect(struct Jet *jet, struct Enemys *enemys, struct Game *game)
 {
 
-    for (int i = 0; i < MAXSHIPS; i++)
+    for (int i = 0; i < MAXENEMYS; i++)
     {
-        if (ships->ship[i].m_obj.m_alive && ships->ship[i].m_obj.m_tickssincecollision == 0)
+        if (enemys->enemy[i].m_obj.m_alive && enemys->enemy[i].m_obj.m_tickssincecollision == 0)
         {
             if (Detect_BoxCollision(jet->m_obj.m_posX, jet->m_obj.m_posY, jet->m_obj.m_width,
-                                    jet->m_obj.m_height, ships->ship[i].m_obj.m_posX, ships->ship[i].m_obj.m_posY,
-                                    ships->ship[i].m_obj.m_width, ships->ship[i].m_obj.m_height))
+                                    jet->m_obj.m_height, enemys->enemy[i].m_obj.m_posX, enemys->enemy[i].m_obj.m_posY,
+                                    enemys->enemy[i].m_obj.m_width, enemys->enemy[i].m_obj.m_height))
             {
-                ships->ship[i].m_obj.m_tickssincecollision++;
+                enemys->enemy[i].m_obj.m_tickssincecollision++;
                 jet->m_obj.m_tickssincecollision++;
                 game->m_tickssincecollision++;
                 break;

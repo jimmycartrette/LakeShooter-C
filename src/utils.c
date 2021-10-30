@@ -54,6 +54,7 @@ void lfsr_start(uint16_t seed, struct Lsfr *lsfr)
 {
     lsfr->m_lfsrvalue = seed;
     lsfr->m_start_state = seed;
+    lsfr->m_period = 0;
 }
 uint16_t lfsr_next(struct Lsfr *lsfr)
 {
@@ -65,13 +66,14 @@ uint16_t lfsr_next(struct Lsfr *lsfr)
     {
         lsfr->m_lfsrvalue ^= 0xB400u; // taps at 11, 13, 14, 16
     }
+    lsfr->m_period++;
     // for (int i = 0; i < 16; i++)
     // {
     //     s[15 - i] = (lsfr->m_lfsrvalue & (1 << i)) ? '1' : '0';
     // }
     // s[16] = '\0';
     // trace(s);
-    //tracef("%d", lsfr->m_lfsrvalue);
+
     return lsfr->m_lfsrvalue;
 }
 int abs(int i)

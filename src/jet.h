@@ -2,7 +2,7 @@
 
 #include "gameobject.h"
 #include "input.h"
-#include "ship.h"
+#include "enemy.h"
 
 struct Jet
 {
@@ -16,4 +16,4 @@ void Jet_Initialize(struct Jet *jet);
 void Jet_Update(struct Jet *jet, struct Input *i, struct Game *game);
 void Jet_Draw(struct Jet *jet, struct Game *game);
 void Jet_Land_CollisionDetect(struct Jet *jet);
-void Jet_Ships_CollisionDetect(struct Jet *jet, struct Ships *ships, struct Game *game);
+void Jet_Enemys_CollisionDetect(struct Jet *jet, struct Enemys *enemys, struct Game *game);

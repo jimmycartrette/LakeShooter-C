@@ -7,7 +7,8 @@
 #include "bullets.h"
 #include "fuel.h"
 #include "cloud.h"
-#include "ship.h"
+#include "enemy.h"
+#include "global.h"
 
 enum GameState
 {
@@ -39,7 +40,7 @@ struct Game
     struct Jet m_jet;
     struct PlayArea m_playarea;
     struct Bullets m_bullets;
-    struct Ships m_ships;
+    struct Enemys m_enemys;
     struct Fuels m_fuels;
     struct Clouds m_clouds;
 };

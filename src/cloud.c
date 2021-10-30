@@ -113,7 +113,7 @@ void Clouds_Draw(struct Clouds *clouds)
 
             *DRAW_COLORS = 4;
 
-            //   blit(CLOUDS[clouds->cloud[n].m_cloudindex], clouds->cloud[n].m_obj.m_posX, clouds->cloud[n].m_obj.m_posY, clouds->cloud[n].m_obj.m_width, clouds->cloud[n].m_obj.m_height, BLIT_1BPP | (clouds->cloud[n].m_hflip ? BLIT_FLIP_X : 0) | (clouds->cloud[n].m_vflip ? BLIT_FLIP_Y : 0));
+            blit(CLOUDS[clouds->cloud[n].m_cloudindex], clouds->cloud[n].m_obj.m_posX, clouds->cloud[n].m_obj.m_posY, clouds->cloud[n].m_obj.m_width, clouds->cloud[n].m_obj.m_height, BLIT_1BPP | (clouds->cloud[n].m_hflip ? BLIT_FLIP_X : 0) | (clouds->cloud[n].m_vflip ? BLIT_FLIP_Y : 0));
         }
     }
 }

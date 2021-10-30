@@ -7,6 +7,7 @@
 #include "sound.h"
 #include "bullets.h"
 #include "fuel.h"
+#include "global.h"
 
 void Draw_Status(struct Game *game)
 {
@@ -50,7 +51,8 @@ void Game_Init(struct Game *game)
         PlayArea_Initialize(&game->m_playarea);
         Bullets_Init(&game->m_bullets);
         Fuels_Initialize(&game->m_fuels);
-        Ships_Initialize(&game->m_ships);
+        Enemys_Initialize(&game->m_enemys);
+        Enemys_Create(&game->m_enemys, &game->m_playarea, OBJECT_HELI);
         game->m_state = GAMESTATE_BEGINLEVEL;
     }
 }
@@ -126,6 +128,16 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
             game->m_jet.fuelingtickscountdown--;
         }
         // tracef("y is %d", game->m_playarea.m_y);
+
+        if (LEVELDEBUGMODE && WANTEDLEVEL > game->m_level)
+        {
+
+            game->m_jet.m_obj.m_vaccel = 64;
+        }
+        if (LEVELDEBUGMODE && WANTEDLEVEL == game->m_level)
+        {
+            game->m_jet.m_obj.m_vaccel = 1;
+        }
         bool isNewBlock = PlayArea_Update(&game->m_playarea, &game->m_jet, game->m_ticks);
         if (isNewBlock && (lsfr.m_lfsrvalue >> 1) % 5 == 0)
         {
@@ -133,22 +145,26 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         }
         else if (isNewBlock && (lsfr.m_lfsrvalue >> 2) % 3 == 0)
         {
-            Ships_Create(&game->m_ships, &game->m_playarea);
+            Enemys_Create(&game->m_enemys, &game->m_playarea, OBJECT_SHIP);
         }
-        if (isNewBlock && (lsfr.m_lfsrvalue >> 4) % 4 == 0)
+        else if (isNewBlock && (lsfr.m_lfsrvalue >> 4) % 2 == 0)
         {
-            Clouds_GenerateCloud(game);
+            Enemys_Create(&game->m_enemys, &game->m_playarea, OBJECT_HELI);
         }
+        // if (isNewBlock && (lsfr.m_lfsrvalue >> 4) % 4 == 0)
+        // {
+        //     Clouds_GenerateCloud(game);
+        // }
         Jet_Update(&game->m_jet, &game->m_input, game);
 
         if (game->m_jet.m_obj.m_tickssincecollision > 0)
         {
             game->m_tickssincecollision++;
         }
-        // if (DEBUG == 0)
-        // {
-        game->m_fuellevel -= (game->m_jet.m_obj.m_vaccel * 4);
-        // }
+        if (!LEVELDEBUGMODE)
+        {
+            game->m_fuellevel -= (game->m_jet.m_obj.m_vaccel * 4);
+        }
         if (game->m_fuellevel < 1800 && game->m_ticks % 33 == 0)
         {
             Sound_PlayFuelAlarm(game);
@@ -187,13 +203,17 @@ void Game_UpdateObjects(struct Game *game)
         {
             Bullets_GenerateBullet(&game->m_bullets, &game->m_jet, game);
         }
-        Jet_Land_CollisionDetect(&game->m_jet);
-        Jet_Ships_CollisionDetect(&game->m_jet, &game->m_ships, game);
+        if (!LEVELDEBUGMODE)
+        {
+            Jet_Land_CollisionDetect(&game->m_jet);
+            Jet_Enemys_CollisionDetect(&game->m_jet, &game->m_enemys, game);
+        }
         Bullets_Anything_CollisionDetect(&game->m_bullets, game);
         Bullets_Update(&game->m_bullets, &game->m_playarea, &game->m_jet, game);
         Fuels_Jet_CollisionDetect(&game->m_fuels, &game->m_jet, game);
+
         Fuels_Update(&game->m_fuels, &game->m_playarea, game);
-        Ships_Update(&game->m_ships, &game->m_playarea);
+        Enemys_Update(&game->m_enemys, &game->m_playarea);
         Clouds_Update(&game->m_clouds, game);
         // fuels colliding with jet
 
@@ -241,7 +261,11 @@ void Game_DrawObjects(struct Game *game)
     case GAMESTATE_PLAY:
 
         Fuels_Draw(&game->m_fuels);
-        Ships_Draw(&game->m_ships);
+        Enemys_Draw(&game->m_enemys, counter < 2 ? 0 : 1);
+        if (++counter == 4)
+        {
+            counter = 0;
+        }
         Jet_Draw(&game->m_jet, game);
         Bullets_Draw(&game->m_bullets);
         Draw_Status(game);
