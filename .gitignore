@@ -1,4 +1,5 @@
 .vscode/
 build/*
 !build/cart.wasm
+!build/lakeshooter.wasm
 *.pdb
