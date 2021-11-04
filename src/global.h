@@ -14,6 +14,7 @@
 extern uint8_t counter;
 extern bool LEVELDEBUGMODE;
 extern uint8_t WANTEDLEVEL;
+extern uint16_t INITIAL_LFSRSEED;
 
 extern struct Game game;
 extern struct Lsfr lsfr;

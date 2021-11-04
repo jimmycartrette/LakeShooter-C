@@ -15,12 +15,12 @@ void start()
     PALETTE[1] = 0xcdc23c; // 2 = yellow
     PALETTE[2] = 0x6c9850; // 3 = green
     PALETTE[3] = 0x909090; // 4 = grey
-    lfsr_start(0xB3C4u, &lsfr);
-
+    lfsr_start(INITIAL_LFSRSEED, &lsfr);
     game.m_level = 1;
     game.m_lives_left = 5;
     game.m_score = 0;
     game.m_state = GAMESTATE_INIT;
+
     game.m_savedlsfr = lsfr.m_lfsrvalue;
     //tracef("initial saved lsfr is %d", game.m_savedlsfr);
 }

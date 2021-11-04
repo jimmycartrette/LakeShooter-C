@@ -104,6 +104,15 @@ void Game_UpdateBackground(struct Game *game, const int ticks)
         }
         break;
     case GAMESTATE_GAMEOVER:
+
+        if (game->m_lives_left != 5)
+        {
+            lfsr_start(INITIAL_LFSRSEED, &lsfr);
+            game->m_level = 1;
+            game->m_lives_left = 5;
+            game->m_score = 0;
+        }
+
         if (Input_GamepadButtonPress(&game->m_input, 0) || Input_GamepadButtonPress(&game->m_input, 1))
         {
             game->m_state = GAMESTATE_INIT;
